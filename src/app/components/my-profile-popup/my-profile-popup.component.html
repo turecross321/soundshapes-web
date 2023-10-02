@@ -1,0 +1,8 @@
+<div class="navbar-bg navbar-text p-4 rounded-lg grid grid-cols-1 gap-2">
+  <app-navbar-dropdown-button [faIcon]="faUser" label="Profile"></app-navbar-dropdown-button>
+  <app-navbar-dropdown-button [faIcon]="faKey" label="Authentication"></app-navbar-dropdown-button>
+  <app-navbar-dropdown-button [faIcon]="faGear" label="Account Settings"></app-navbar-dropdown-button>
+  <app-divider></app-divider>
+  <app-navbar-dropdown-button (click)="logOut()" [faIcon]="faArrowRightFromBracket"
+                              label="Log out"></app-navbar-dropdown-button>
+</div>

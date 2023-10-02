@@ -1,0 +1,15 @@
+<button [ngClass]="{
+          'navbar-selected-button' : this.highlighted,
+          'animate-pulse' : this.loading
+        }"
+        class="flex w-full navbar-bg navbar-text gap-2 p-2 hover:bg-[#241f1f] rounded">
+  <div class="flex justify-between w-full">
+    <div class="flex gap-2">
+      <fa-icon [fixedWidth]="true" [icon]="faIcon" size="lg"></fa-icon>
+      <p>{{label}}</p>
+    </div>
+    <fa-icon *ngIf="loading" [fixedWidth]="true" [icon]="faSpinner" class="animate-spin"
+             size="lg"></fa-icon>
+  </div>
+
+</button>

@@ -1,0 +1,13 @@
+<div class="navbar-bg navbar-text p-4 rounded-lg grid grid-cols-1 gap-2">
+  <form (ngSubmit)="logIn()" [formGroup]="loginForm" class="grid grid-cols-1 gap-2">
+    <app-input-field [fGroup]="loginForm" [faIcon]="faEnvelope" class="w-full" fControlName="email" id="email"
+                     placeholder="Email Address"></app-input-field>
+    <app-input-field [fGroup]="loginForm" [faIcon]="faKey" [type]="InputType.Password" class="w-full" fControlName="password"
+                     id="password" placeholder="Password"></app-input-field>
+    <app-navbar-dropdown-button [faIcon]="faArrowRightToBracket" [loading]="loggingIn"
+                                label="Log in"></app-navbar-dropdown-button>
+  </form>
+  <app-divider></app-divider>
+  <app-navbar-dropdown-button [faIcon]="faKey" label="Reset Password"></app-navbar-dropdown-button>
+  <app-navbar-dropdown-button [faIcon]="faUserPlus" label="Register"></app-navbar-dropdown-button>
+</div>

@@ -1,0 +1,81 @@
+<div class="navbar-bg navbar-text px-6 py-4 flex justify-between">
+
+  <!-- left wide side -->
+  <div class="lg:flex items-center gap-4 hidden">
+    <!-- home -->
+    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.home}" routerLink="/">
+      <fa-icon [icon]="faHouse" size="lg"></fa-icon>
+    </button>
+
+    <div class="navbar-vertical-divider"></div>
+
+    <!-- levels -->
+    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.levels}" class="flex gap-2 items-center"
+            routerLink="/levels">
+      <fa-icon [icon]="faMusic" size="lg"></fa-icon>
+      <p>Levels</p>
+    </button>
+
+    <!-- albums -->
+    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.albums}" class="flex gap-2 items-center"
+            routerLink="/albums">
+      <fa-icon [icon]="faCompactDisc" size="lg"></fa-icon>
+      <p>Albums</p>
+    </button>
+
+    <!-- users -->
+    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.users}" class="flex gap-2 items-center"
+            routerLink="/users">
+      <fa-icon [icon]="faUsers" size="lg"></fa-icon>
+      <p>Users</p>
+    </button>
+
+  </div>
+
+  <!-- left mobile side -->
+  <div class="flex items-center gap-4 lg:hidden">
+    <!-- toggle hamburger menu -->
+    <button (click)="toggleHamburgerPopUp()">
+      <fa-icon [icon]="faBars" size="lg"></fa-icon>
+    </button>
+  </div>
+
+  <!-- right side (both wide and mobile) -->
+  <div [ngSwitch]="loggedIn()" class="flex items-center gap-4">
+    <!-- log in button -->
+    <button (click)="toggleAccountPopUp()" *ngSwitchCase="false" class="flex gap-2 items-center">
+      <fa-icon [icon]="faRightToBracket" size="lg"></fa-icon>
+      <p class="hidden lg:block">Log in</p>
+    </button>
+
+    <!-- my profile button -->
+    <button (click)="toggleAccountPopUp()" *ngSwitchCase="true" class="flex gap-2 items-center">
+      <fa-icon [icon]="faCircleUser" size="lg"></fa-icon>
+      <p class="hidden lg:block">{{session()!.User.Username}}</p>
+    </button>
+  </div>
+</div>
+
+<!-- account popups -->
+<div *ngIf="showAccountPopUp" [ngSwitch]="loggedIn()">
+  <app-login-popup *ngSwitchCase="false" class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-login-popup>
+  <app-my-profile-popup *ngSwitchCase="true"
+                        class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-my-profile-popup>
+</div>
+
+<!-- hamburger menu -->
+<div *ngIf="showHamburgerPopUp" class="lg:hidden">
+  <div class="absolute left-0 right-0 m-1 navbar-bg navbar-text p-4 rounded-lg grid grid-cols-1 gap-2">
+
+    <app-navbar-dropdown-button [faIcon]="faHouse" [highlighted]="currentPage == PageType.home" label="Home"
+                                routerLink="/"></app-navbar-dropdown-button>
+    <app-divider></app-divider>
+    <app-navbar-dropdown-button [faIcon]="faMusic" [highlighted]="currentPage == PageType.levels" label="Levels"
+                                routerLink="/levels"></app-navbar-dropdown-button>
+    <app-navbar-dropdown-button [faIcon]="faCompactDisc" [highlighted]="currentPage == PageType.albums" label="Albums"
+                                routerLink="/albums"></app-navbar-dropdown-button>
+    <app-navbar-dropdown-button [faIcon]="faUsers" [highlighted]="currentPage == PageType.users" label="Users"
+                                routerLink="/users"></app-navbar-dropdown-button>
+
+  </div>
+</div>
