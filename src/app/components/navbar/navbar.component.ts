@@ -15,7 +15,7 @@ import {
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {NavigationEnd, Router} from "@angular/router";
 import {ApiClientService} from "../../api/api-client.service";
-import {ApiSession} from "../../api/types/api-session";
+import {ApiUser} from "../../api/types/api-user";
 
 @Component({
   selector: 'app-navbar',
@@ -72,8 +72,8 @@ export class NavbarComponent {
     return this.ApiClient.loggedIn();
   }
 
-  session(): ApiSession | undefined {
-    return this.ApiClient.session;
+  user(): ApiUser | undefined {
+    return this.ApiClient.user;
   }
 
   toggleAccountPopUp() {

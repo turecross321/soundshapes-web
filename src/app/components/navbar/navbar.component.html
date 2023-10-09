@@ -13,21 +13,21 @@
     <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.levels}" class="flex gap-2 items-center"
             routerLink="/levels">
       <fa-icon [icon]="faMusic" size="lg"></fa-icon>
-      <p>Levels</p>
+      <label>Levels</label>
     </button>
 
     <!-- albums -->
     <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.albums}" class="flex gap-2 items-center"
             routerLink="/albums">
       <fa-icon [icon]="faCompactDisc" size="lg"></fa-icon>
-      <p>Albums</p>
+      <label>Albums</label>
     </button>
 
     <!-- users -->
     <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.users}" class="flex gap-2 items-center"
             routerLink="/users">
       <fa-icon [icon]="faUsers" size="lg"></fa-icon>
-      <p>Users</p>
+      <label>Users</label>
     </button>
 
   </div>
@@ -45,13 +45,13 @@
     <!-- log in button -->
     <button (click)="toggleAccountPopUp()" *ngSwitchCase="false" class="flex gap-2 items-center">
       <fa-icon [icon]="faRightToBracket" size="lg"></fa-icon>
-      <p class="hidden lg:block">Log in</p>
+      <label class="hidden lg:block">Log in</label>
     </button>
 
     <!-- my profile button -->
     <button (click)="toggleAccountPopUp()" *ngSwitchCase="true" class="flex gap-2 items-center">
       <fa-icon [icon]="faCircleUser" size="lg"></fa-icon>
-      <p class="hidden lg:block">{{session()!.User.Username}}</p>
+      <label class="hidden lg:block">{{user()!.Username}}</label>
     </button>
   </div>
 </div>
