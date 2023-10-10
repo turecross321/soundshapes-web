@@ -8,6 +8,6 @@
                                 label="Log in"></app-navbar-dropdown-button>
   </form>
   <app-divider></app-divider>
-  <app-navbar-dropdown-button [faIcon]="faKey" label="Reset Password"></app-navbar-dropdown-button>
-  <app-navbar-dropdown-button [faIcon]="faUserPlus" label="Register"></app-navbar-dropdown-button>
+  <app-navbar-dropdown-button (click)="close()" [faIcon]="faKey" label="Reset Password"></app-navbar-dropdown-button>
+  <app-navbar-dropdown-button (click)="close()" [faIcon]="faUserPlus" label="Register"></app-navbar-dropdown-button>
 </div>

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {faArrowRightToBracket, faEnvelope, faKey, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {FormBuilder} from "@angular/forms";
@@ -11,6 +11,12 @@ import {InputType} from "../input-field/input-field.component";
   styleUrls: []
 })
 export class LoginPopupComponent {
+  @Output() onClose: EventEmitter<void> = new EventEmitter();
+
+  close(): void {
+    this.onClose.emit();
+  }
+
   faEnvelope: IconDefinition = faEnvelope;
   faKey: IconDefinition = faKey;
   faArrowRightToBracket: IconDefinition = faArrowRightToBracket;
@@ -35,6 +41,7 @@ export class LoginPopupComponent {
     this.loggingIn = true;
     this.apiClient.logIn(email, password).then(() => {
       this.loggingIn = false;
+      close();
     }).catch(() => {
       this.loggingIn = false;
     });

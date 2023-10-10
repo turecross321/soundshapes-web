@@ -10,6 +10,7 @@ import {ToastrService} from "ngx-toastr";
 import {ApiLoginResponse} from "./types/responses/api-login-response";
 import {ApiUser} from "./types/api-user";
 import {RefreshTokenRequest} from "./types/requests/refresh-token-request";
+import {ApiGameAuthenticationSettings} from "./types/api-game-authentication-settings";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -17,12 +18,23 @@ export class ApiClientService {
   token: ApiToken | undefined = undefined;
   user: ApiUser | undefined = undefined;
 
+  hasTriedLoggedInAutomatically = false;
+
   constructor(private httpClient: HttpClient, private toastr: ToastrService) {
-    this.logInWithRefreshToken()
+    this.logInWithRefreshToken().then(() => {
+      this.hasTriedLoggedInAutomatically = true;
+    });
   }
 
   loggedIn(): boolean {
     return this.token != undefined;
+  }
+
+  async logOut() {
+    await this.makeRequest("post", "account/logOut");
+    this.token = undefined;
+    this.deleteRefreshToken();
+    this.toastr.success("You have been logged out.", "Goodbye!")
   }
 
   async logIn(email: string, password: string) {
@@ -34,10 +46,8 @@ export class ApiClientService {
     this.toastr.success(`Successfully logged in as ${this.user.Username}`, "Welcome!");
   }
 
-  async logOut() {
-    await this.makeRequest("post", "account/logOut");
-    this.token = undefined;
-    this.deleteRefreshToken();
+  async getAuthenticationSettings(): Promise<ApiResponse<ApiGameAuthenticationSettings>> {
+    return await this.makeRequest<ApiGameAuthenticationSettings>("GET", "gameAuth/settings");
   }
 
   private async logInWithRefreshToken() {
@@ -68,9 +78,19 @@ export class ApiClientService {
     localStorage.removeItem("refreshToken");
   }
 
+  async uploadAuthenticationSettings(settings: ApiGameAuthenticationSettings): Promise<ApiResponse<null>> {
+    return await this.makeRequest<null>("POST", "gameAuth/settings", settings);
+  }
+
   private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null): Promise<ApiResponse<TData>> {
+    while (endpoint != "account/refreshToken" && !this.hasTriedLoggedInAutomatically) {
+      // wait one second if automatic login hasn't been tried yet. this is to avoid cases where a website tries to
+      // get authenticated content while automatically logging in
+      await new Promise(f => setTimeout(f, 1000));
+    }
+
     try {
-      return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {body: body}));
+      return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {body: body, headers: {"Authorization": this.token?.Id ?? ""}}));
     } catch (e: any) {
       if (!(e instanceof HttpErrorResponse)) {
         throw e;
@@ -79,7 +99,7 @@ export class ApiClientService {
       if (e.status == 0) {
         this.toastr.error("Could not reach server. Please try again.", "Error");
       } else if (e.status == 403 && this.loggedIn()) {
-        this.toastr.info("Got 403 despite being logged in?");
+        this.toastr.error("Got 403 despite being logged in?", "???");
       } else {
         const res = e.error as ApiResponse<null>;
         this.toastr.error(res.Error?.Message ?? "A description was not provided.", res.Error?.Name ?? "Unknown error");
@@ -87,4 +107,5 @@ export class ApiClientService {
       throw e;
     }
   }
+
 }

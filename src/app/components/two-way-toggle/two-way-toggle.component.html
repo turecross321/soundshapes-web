@@ -1,0 +1,6 @@
+<div class="flex gap-1">
+    <app-toggle-button (click)="clicked(false)" [faIcon]="faTimes" [isToggled]="!toggled"
+                       class="w-full"></app-toggle-button>
+    <app-toggle-button (click)="clicked(true)" [faIcon]="faCheck" [isToggled]="toggled"
+                       class="w-full"></app-toggle-button>
+</div>

@@ -18,6 +18,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MyProfilePopupComponent} from './components/my-profile-popup/my-profile-popup.component';
+import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.component';
+import {AuthenticationPageComponent} from './pages/authentication-page/authentication-page.component';
+import {TwoWayToggleComponent} from './components/two-way-toggle/two-way-toggle.component';
+import {ToggleButtonComponent} from './components/toggle-button/toggle-button.component';
+import {LoadingComponent} from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +36,12 @@ import {MyProfilePopupComponent} from './components/my-profile-popup/my-profile-
     InputFieldComponent,
     NavbarDropdownButtonComponent,
     DividerComponent,
-    MyProfilePopupComponent
+    MyProfilePopupComponent,
+    NotFoundPageComponent,
+    AuthenticationPageComponent,
+    TwoWayToggleComponent,
+    ToggleButtonComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,46 @@
+<div class="flex flex-col gap-4">
+    <h1 class="mx-2">Authentication</h1>
+    <div class="horizontal-divider w-full"></div>
+    <!-- content -->
+    <div class="flex mx-2">
+        <!-- configuration -->
+        <div class="flex flex-col gap-2 w-full lg:w-80">
+            <div class="flex gap-2 items-center">
+                <fa-icon [icon]="faWrench" size="xl"></fa-icon>
+                <h2>Configuration</h2>
+            </div>
+            <!-- toggles -->
+            <div [ngSwitch]="loadingSettings" class="border flex flex-col gap-2">
+                <div *ngSwitchCase="true" class="flex justify-center">
+                    <div class="animate-spin w-min">
+                        <app-loading></app-loading>
+                    </div>
+                </div>
+                <div *ngSwitchCase="false">
+                    <!-- PSN authentication -->
+                    <div class="flex flex-col gap-1">
+                        <label>PSN Authentication</label>
+                        <app-two-way-toggle (onClick)="changePsn($event)"
+                                            [toggled]="settings?.AllowPsnAuthentication!"
+                                            class="w-full"></app-two-way-toggle>
+                    </div>
+
+                    <!-- RPCN authentication -->
+                    <div class="flex flex-col gap-1">
+                        <label>RPCN Authentication</label>
+                        <app-two-way-toggle (onClick)="changeRpcn($event)"
+                                            [toggled]="settings?.AllowRpcnAuthentication!"
+                                            class="w-full"></app-two-way-toggle>
+                    </div>
+
+                    <!-- IP authentication -->
+                    <div class="flex flex-col gap-1">
+                        <label>IP Authentication</label>
+                        <app-two-way-toggle (onClick)="changeIp($event)" [toggled]="settings?.AllowIpAuthentication!"
+                                            class="w-full"></app-two-way-toggle>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

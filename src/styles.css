@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -6,12 +8,27 @@
   font-family: Sora, Rubik, system-ui, sans-serif;
 }
 
-.container {
-  background: #FFF0E4;
+h1 {
+  font-size: 2.5rem;
+  font-weight: bolder;
 }
 
-.background {
-  background: #2F2A2A;
+h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.horizontal-divider {
+  border-bottom: 1px solid #61493C;
+  height: 1px;
+  margin-bottom: 4px;
+  margin-top: 4px;
+}
+
+.border {
+  border: #EED4BF 2px solid;
+  padding: 16px;
+  border-radius: 8px;
 }
 
 .navbar-bg {
@@ -29,6 +46,15 @@
 
 .navbar-selected-button {
   color: #f07167
+}
+
+.container {
+  background: #FFF0E4;
+  color: #181515;
+}
+
+.background {
+  background: #2F2A2A;
 }
 
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
@@ -211,11 +237,11 @@ button.toast-close-button {
 }
 
 .toast-info {
-  background-color: #2F96B4;
+  background-color: #181515;
 }
 
 .toast-warning {
-  background-color: #F89406;
+  background-color: #181515;
 }
 
 .toast-progress {

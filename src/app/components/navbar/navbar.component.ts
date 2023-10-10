@@ -33,7 +33,7 @@ export class NavbarComponent {
 
   currentPage: PageType = PageType.other;
   showAccountPopUp: boolean = false;
-  showHamburgerPopUp: boolean = false;
+  showHamburgerMenu: boolean = false;
   protected readonly PageType = PageType;
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faKey = faKey;
@@ -43,27 +43,23 @@ export class NavbarComponent {
   constructor(router: Router, private ApiClient: ApiClientService) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        switch (event.url) {
-          case "/":
+        switch (true) {
+          case event.url == "/":
             this.currentPage = PageType.home;
             break;
-          case "/levels":
+          case event.url.startsWith("/levels"):
             this.currentPage = PageType.levels;
             break;
-          case "/albums":
+          case event.url.startsWith("/albums"):
             this.currentPage = PageType.albums;
             break;
-          case "/users":
+          case event.url.startsWith("/users"):
             this.currentPage = PageType.users;
             break;
           default:
             this.currentPage = PageType.other;
             break;
         }
-
-        // Close mobile hamburger pop up when route is changed
-        if (this.showHamburgerPopUp)
-          this.showHamburgerPopUp = false;
       }
     });
   }
@@ -77,21 +73,29 @@ export class NavbarComponent {
   }
 
   toggleAccountPopUp() {
-    if (this.showAccountPopUp || this.showHamburgerPopUp) {
-      this.showAccountPopUp = false;
-      this.showHamburgerPopUp = false;
+    if (this.showAccountPopUp || this.showHamburgerMenu) {
+      this.setAccountPopUpVisibility(false);
+      this.showHamburgerMenu = false;
     } else {
-      this.showAccountPopUp = true;
+      this.setAccountPopUpVisibility(true);
     }
   }
 
-  toggleHamburgerPopUp() {
-    if (this.showAccountPopUp || this.showHamburgerPopUp) {
-      this.showAccountPopUp = false;
-      this.showHamburgerPopUp = false;
+  setAccountPopUpVisibility(visibility: boolean) {
+    this.showAccountPopUp = visibility;
+  }
+
+  toggleHamburgerMenu() {
+    if (this.showAccountPopUp || this.showHamburgerMenu) {
+      this.setAccountPopUpVisibility(false);
+      this.setHamburgerMenuVisibility(false);
     } else {
-      this.showHamburgerPopUp = true;
+      this.setHamburgerMenuVisibility(true);
     }
+  }
+
+  setHamburgerMenuVisibility(visibility: boolean) {
+    this.showHamburgerMenu = visibility;
   }
 }
 
