@@ -4,7 +4,7 @@
     <!-- content -->
     <div class="flex mx-2">
         <!-- configuration -->
-        <div class="flex flex-col gap-2 w-full lg:w-80">
+        <div class="flex flex-col gap-4 w-full lg:w-80">
             <div class="flex gap-2 items-center">
                 <fa-icon [icon]="faWrench" size="xl"></fa-icon>
                 <h2>Configuration</h2>
@@ -16,7 +16,7 @@
                         <app-loading></app-loading>
                     </div>
                 </div>
-                <div *ngSwitchCase="false">
+                <div *ngSwitchCase="false" class="flex flex-col gap-2">
                     <!-- PSN authentication -->
                     <div class="flex flex-col gap-1">
                         <label>PSN Authentication</label>
