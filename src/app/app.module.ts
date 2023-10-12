@@ -23,6 +23,8 @@ import {AuthenticationPageComponent} from './pages/authentication-page/authentic
 import {TwoWayToggleComponent} from './components/two-way-toggle/two-way-toggle.component';
 import {ToggleButtonComponent} from './components/toggle-button/toggle-button.component';
 import {LoadingComponent} from './components/loading/loading.component';
+import {GenericButtonComponent} from './components/generic-button/generic-button.component';
+import {GameIpComponent} from './components/game-ip/game-ip.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import {LoadingComponent} from './components/loading/loading.component';
     TwoWayToggleComponent,
     ToggleButtonComponent,
     LoadingComponent,
+    GenericButtonComponent,
+    GameIpComponent,
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,7 @@ import {ApiUser} from "../../api/types/api-user";
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: []
+  styleUrls: ['navbar.component.css']
 })
 export class NavbarComponent {
   faHouse: IconDefinition = faHouse;

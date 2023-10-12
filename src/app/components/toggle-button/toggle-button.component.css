@@ -6,10 +6,16 @@ button {
 
 .toggled {
     background-color: #F07167;
-    color: #FFF0E4;
 }
 
 .un-toggled {
     background-color: #F4DECC;
+}
+
+.toggled-check {
+    color: #FFF0E4;
+}
+
+.un-toggled-check {
     color: #181515;
 }

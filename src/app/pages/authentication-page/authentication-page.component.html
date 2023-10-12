@@ -1,22 +1,22 @@
 <div class="flex flex-col gap-4">
     <h1 class="mx-2">Authentication</h1>
     <div class="horizontal-divider w-full"></div>
+
+    <!-- loading -->
+    <app-loading *ngIf="!loadedConfiguration"></app-loading>
+
     <!-- content -->
-    <div class="flex mx-2">
+    <div *ngIf="loadedConfiguration" class="flex mx-2 flex-col lg:flex-row gap-4">
+
         <!-- configuration -->
         <div class="flex flex-col gap-4 w-full lg:w-80">
-            <div class="flex gap-2 items-center">
+            <div class="flex gap-2 items-center h-8">
                 <fa-icon [icon]="faWrench" size="xl"></fa-icon>
                 <h2>Configuration</h2>
             </div>
             <!-- toggles -->
-            <div [ngSwitch]="loadingSettings" class="border flex flex-col gap-2">
-                <div *ngSwitchCase="true" class="flex justify-center">
-                    <div class="animate-spin w-min">
-                        <app-loading></app-loading>
-                    </div>
-                </div>
-                <div *ngSwitchCase="false" class="flex flex-col gap-2">
+            <div class="border flex flex-col gap-2">
+                <div class="flex flex-col gap-2">
                     <!-- PSN authentication -->
                     <div class="flex flex-col gap-1">
                         <label>PSN Authentication</label>
@@ -38,6 +38,65 @@
                         <label>IP Authentication</label>
                         <app-two-way-toggle (onClick)="changeIp($event)" [toggled]="settings?.AllowIpAuthentication!"
                                             class="w-full"></app-two-way-toggle>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ip authentication -->
+        <div class="flex flex-col gap-4 w-full">
+            <div class="flex items-center justify-between h-8">
+                <!-- left -->
+                <div class="flex gap-2 items-center h-8">
+                    <fa-icon [icon]="faBroadcastTower" size="xl"></fa-icon>
+                    <h2>IP Authentication</h2>
+                </div>
+
+                <!-- right -->
+                <div>
+                    <app-generic-button (click)="fetchIps()" *ngIf="settings?.AllowIpAuthentication && showIps"
+                                        [faIcon]="faRedo"
+                                        label="Refresh"></app-generic-button>
+                </div>
+            </div>
+            <div class="border flex flex-col gap-2 h-full">
+                <!-- disabled -->
+                <div *ngIf="!settings?.AllowIpAuthentication"
+                     class="w-full h-full flex flex-col justify-center items-center gap-2">
+                    <p>IP Authentication is currently disabled.</p>
+                    <app-generic-button (click)="changeIp(true)" [faIcon]="null" label="Enable"></app-generic-button>
+                </div>
+
+                <!-- sensitive -->
+                <div *ngIf="settings?.AllowIpAuthentication && !showIps"
+                     class="w-full h-full flex flex-col justify-center items-center gap-2">
+                    <p>This contains personal information. Proceed with caution.</p>
+                    <app-generic-button (click)="showIpAuthentication()" [faIcon]="null"
+                                        label="Show"></app-generic-button>
+                </div>
+
+                <!-- actual content -->
+                <div *ngIf="settings?.AllowIpAuthentication && showIps"
+                     [ngSwitch]="loadingIps" class="w-full h-full flex flex-col justify-center items-center gap-2">
+                    <app-loading *ngSwitchCase="true"></app-loading>
+                    <div *ngSwitchCase="false" class="w-full h-full flex flex-col gap-4">
+                        <div class="flex flex-col gap-2">
+                            <span>Allowed</span>
+                            <app-divider></app-divider>
+                            <ng-container *ngFor="let ip of authorizedIps()">
+                                <app-game-ip (onAuthorize)="authorizeIp(ip, $event)" (onRemove)="removeIp(ip)"
+                                             [ip]="ip"></app-game-ip>
+                            </ng-container>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <span>Pending</span>
+                            <app-divider></app-divider>
+                            <ng-container *ngFor="let ip of pendingIps()">
+                                <app-game-ip (onAuthorize)="authorizeIp(ip, $event)" (onRemove)="removeIp(ip)"
+                                             [ip]="ip"></app-game-ip>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
             </div>

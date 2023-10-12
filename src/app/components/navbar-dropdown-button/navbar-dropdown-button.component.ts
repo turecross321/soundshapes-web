@@ -5,7 +5,7 @@ import {faPoo, faSpinner} from "@fortawesome/free-solid-svg-icons";
 @Component({
   selector: 'app-navbar-dropdown-button',
   templateUrl: './navbar-dropdown-button.component.html',
-  styleUrls: []
+  styleUrls: ['navbar-dropdown-button.component.css']
 })
 export class NavbarDropdownButtonComponent {
   @Input() faIcon: IconDefinition = faPoo;

@@ -18,6 +18,11 @@ h2 {
   font-weight: bold;
 }
 
+button:hover {
+  filter: brightness(95%);
+  transition-duration: 150ms;
+}
+
 .horizontal-divider {
   border-bottom: 1px solid #61493C;
   height: 1px;

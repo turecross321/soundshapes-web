@@ -1,0 +1,12 @@
+<div class="border flex flex-col gap-2">
+    <b>{{ip.IpAddress}}</b>
+
+    <!-- actions -->
+    <div class="flex gap-1">
+        <app-generic-button (click)="authorize(false)" *ngIf="!ip.Authorized || ip.OneTimeUse" [faIcon]="faCheckCircle"
+                            label="Always Allow"></app-generic-button>
+        <app-generic-button (click)="authorize(true)" *ngIf="!ip.Authorized" [faIcon]="faStopwatch"
+                            label="Allow Once"></app-generic-button>
+        <app-generic-button (click)="remove()" [faIcon]="faTrashAlt" label="Remove"></app-generic-button>
+    </div>
+</div>
