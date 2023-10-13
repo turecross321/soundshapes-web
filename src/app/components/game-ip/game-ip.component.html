@@ -1,5 +1,11 @@
 <div class="border flex flex-col gap-2">
-    <b>{{ip.IpAddress}}</b>
+    <div class="flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <b>{{ip.IpAddress}}</b>
+            <fa-icon *ngIf="ip.OneTimeUse" [icon]="faStopwatch"></fa-icon>
+        </div>
+        <app-date [unix]="ip.ModificationDate"></app-date>
+    </div>
 
     <!-- actions -->
     <div class="flex gap-1">

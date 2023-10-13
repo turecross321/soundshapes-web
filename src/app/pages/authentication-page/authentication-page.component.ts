@@ -86,7 +86,8 @@ export class AuthenticationPageComponent {
 
   async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean) {
     ip.OneTimeUse = oneTimeUse;
-    ip.Authorized = true
+    ip.Authorized = true;
+    ip.ModificationDate = new Date().getTime() / 1000;
     await this.apiClient.authorizeIp(ip, oneTimeUse);
   }
 }

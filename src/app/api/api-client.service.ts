@@ -13,6 +13,7 @@ import {RefreshTokenRequest} from "./types/requests/refresh-token-request";
 import {ApiGameAuthenticationSettings} from "./types/api-game-authentication-settings";
 import {ApiGameIp} from "./types/api-game-ip";
 import {AuthenticateIpRequest} from "./types/requests/authenticate-ip-request";
+import {unixToDate} from "../date-convert";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -63,7 +64,7 @@ export class ApiClientService {
       return;
 
     const refreshToken: ApiToken = JSON.parse(refreshTokenJson);
-    const expiry: Date = new Date(Date.UTC(1970, 0, 1, 0, 0, refreshToken.ExpiryDate * 1000));
+      const expiry: Date = unixToDate(refreshToken.ExpiryDate);
 
     if (new Date() > expiry) {
       this.deleteRefreshToken();
@@ -100,8 +101,6 @@ export class ApiClientService {
 
     private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null): Promise<ApiResponse<TData>> {
         while (endpoint != "account/refreshToken" && !this.hasTriedLoggedInAutomatically) {
-            // wait one second if automatic login hasn't been tried yet. this is to avoid cases where a website tries to
-            // get authenticated content while automatically logging in
             await new Promise(f => setTimeout(f, 1000));
         }
 

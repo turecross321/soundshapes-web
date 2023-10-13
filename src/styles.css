@@ -18,6 +18,10 @@ h2 {
   font-weight: bold;
 }
 
+.date-text {
+  font-size: 0.75rem;
+}
+
 button:hover {
   filter: brightness(95%);
   transition-duration: 150ms;

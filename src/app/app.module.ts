@@ -25,6 +25,7 @@ import {ToggleButtonComponent} from './components/toggle-button/toggle-button.co
 import {LoadingComponent} from './components/loading/loading.component';
 import {GenericButtonComponent} from './components/generic-button/generic-button.component';
 import {GameIpComponent} from './components/game-ip/game-ip.component';
+import {DateComponent} from './components/date/date.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {GameIpComponent} from './components/game-ip/game-ip.component';
     LoadingComponent,
     GenericButtonComponent,
     GameIpComponent,
+    DateComponent,
   ],
   imports: [
     BrowserModule,

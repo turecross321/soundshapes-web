@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ApiGameIp} from "../../api/types/api-game-ip";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {faCheckCircle, faStopwatch, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
+import {unixToDate} from "../../date-convert";
 
 @Component({
   selector: 'app-game-ip',
@@ -23,4 +24,7 @@ export class GameIpComponent {
   authorize(oneTime: boolean) {
     this.onAuthorize.emit(oneTime);
   }
+
+
+  protected readonly unixToDate = unixToDate;
 }
