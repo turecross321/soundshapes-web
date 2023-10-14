@@ -1,84 +1,57 @@
 <div class="navbar-bg navbar-text px-6 py-4 flex justify-between">
 
-  <!-- left wide side -->
-  <div class="lg:flex items-center gap-4 hidden">
-    <!-- home -->
-    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.home}" routerLink="/">
-      <fa-icon [icon]="faHouse" size="lg"></fa-icon>
-    </button>
+    <!-- left wide side -->
+    <div class="lg:flex items-center gap-4 hidden">
+        <ng-container *ngFor="let button of buttons; index as i;">
+            <button [ngClass]="{'navbar-selected-button' : currentPage == i}" [routerLink]=button.path
+                    class="flex gap-2 items-center">
+                <fa-icon [icon]="button.icon" size="lg"></fa-icon>
+                <span *ngIf="i != PageType.home">{{button.label}}</span>
+            </button>
+            <div *ngIf="i == PageType.home" class="navbar-vertical-divider"></div>
+        </ng-container>
+    </div>
 
-    <div class="navbar-vertical-divider"></div>
+    <!-- left mobile side -->
+    <div class="flex items-center gap-4 lg:hidden">
+        <!-- toggle hamburger menu -->
+        <button (click)="toggleHamburgerMenu()">
+            <fa-icon [icon]="faBars" class="navbar-text" size="lg"></fa-icon>
+        </button>
+    </div>
 
-    <!-- levels -->
-    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.levels}" class="flex gap-2 items-center"
-            routerLink="/levels">
-      <fa-icon [icon]="faMusic" size="lg"></fa-icon>
-      <span>Levels</span>
-    </button>
+    <!-- right side (both wide and mobile) -->
+    <div [ngSwitch]="loggedIn()" class="flex items-center gap-4">
+        <!-- log in button -->
+        <button (click)="toggleAccountPopUp()" *ngSwitchCase="false" class="flex gap-2 items-center">
+            <fa-icon [icon]="faRightToBracket" class="navbar-text" size="lg"></fa-icon>
+            <span class="hidden lg:block">Log in</span>
+        </button>
 
-    <!-- albums -->
-    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.albums}" class="flex gap-2 items-center"
-            routerLink="/albums">
-      <fa-icon [icon]="faCompactDisc" size="lg"></fa-icon>
-      <span>Albums</span>
-    </button>
-
-    <!-- users -->
-    <button [ngClass]="{'navbar-selected-button' : currentPage == PageType.users}" class="flex gap-2 items-center"
-            routerLink="/users">
-      <fa-icon [icon]="faUsers" size="lg"></fa-icon>
-      <span>Users</span>
-    </button>
-
-  </div>
-
-  <!-- left mobile side -->
-  <div class="flex items-center gap-4 lg:hidden">
-    <!-- toggle hamburger menu -->
-    <button (click)="toggleHamburgerMenu()">
-      <fa-icon [icon]="faBars" class="navbar-text" size="lg"></fa-icon>
-    </button>
-  </div>
-
-  <!-- right side (both wide and mobile) -->
-  <div [ngSwitch]="loggedIn()" class="flex items-center gap-4">
-    <!-- log in button -->
-    <button (click)="toggleAccountPopUp()" *ngSwitchCase="false" class="flex gap-2 items-center">
-      <fa-icon [icon]="faRightToBracket" class="navbar-text" size="lg"></fa-icon>
-      <span class="hidden lg:block">Log in</span>
-    </button>
-
-    <!-- my profile button -->
-    <button (click)="toggleAccountPopUp()" *ngSwitchCase="true" class="flex gap-2 items-center">
-      <fa-icon [icon]="faCircleUser" class="navbar-text" size="lg"></fa-icon>
-      <span class="hidden lg:block">{{user()!.Username}}</span>
-    </button>
-  </div>
+        <!-- my profile button -->
+        <button (click)="toggleAccountPopUp()" *ngSwitchCase="true" class="flex gap-2 items-center">
+            <fa-icon [icon]="faCircleUser" class="navbar-text" size="lg"></fa-icon>
+            <span class="hidden lg:block">{{user()!.Username}}</span>
+        </button>
+    </div>
 </div>
 
 <!-- account popups -->
 <div *ngIf="showAccountPopUp" [ngSwitch]="loggedIn()">
-  <app-login-popup *ngSwitchCase="false" class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-login-popup>
-  <app-my-profile-popup (onClose)="setAccountPopUpVisibility(false)" *ngSwitchCase="true"
-                        class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-my-profile-popup>
+    <app-login-popup *ngSwitchCase="false" class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-login-popup>
+    <app-my-profile-popup (onClose)="setAccountPopUpVisibility(false)" *ngSwitchCase="true"
+                          class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-my-profile-popup>
 </div>
 
 <!-- hamburger menu -->
 <div *ngIf="showHamburgerMenu" class="lg:hidden">
-  <div class="absolute left-0 right-0 m-1 navbar-bg navbar-text p-4 rounded-lg grid grid-cols-1 gap-2">
-
-    <app-navbar-dropdown-button [faIcon]="faHouse" [highlighted]="currentPage == PageType.home" label="Home"
-                                (click)="setHamburgerMenuVisibility(false)" routerLink="/"></app-navbar-dropdown-button>
-    <app-divider></app-divider>
-    <app-navbar-dropdown-button [faIcon]="faMusic" [highlighted]="currentPage == PageType.levels" label="Levels"
-                                (click)="setHamburgerMenuVisibility(false)"
-                                routerLink="/levels"></app-navbar-dropdown-button>
-    <app-navbar-dropdown-button [faIcon]="faCompactDisc" [highlighted]="currentPage == PageType.albums" label="Albums"
-                                (click)="setHamburgerMenuVisibility(false)"
-                                routerLink="/albums"></app-navbar-dropdown-button>
-    <app-navbar-dropdown-button [faIcon]="faUsers" [highlighted]="currentPage == PageType.users" label="Users"
-                                (click)="setHamburgerMenuVisibility(false)"
-                                routerLink="/users"></app-navbar-dropdown-button>
-
-  </div>
+    <div class="absolute left-0 right-0 m-1 navbar-bg navbar-text p-4 rounded-lg grid grid-cols-1 gap-2">
+        <ng-container *ngFor="let button of buttons; index as i;">
+            <app-navbar-dropdown-button (click)="setHamburgerMenuVisibility(false)" [faIcon]="button.icon"
+                                        [highlighted]="currentPage == i"
+                                        [label]="button.label"
+                                        [routerLink]="button.path"></app-navbar-dropdown-button>
+            <app-divider *ngIf="i == PageType.home"></app-divider>
+        </ng-container>
+    </div>
 </div>

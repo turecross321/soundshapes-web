@@ -1,0 +1,42 @@
+<div class="flex justify-between items-start gap-8 flex-col lg:flex-row">
+    <div class="hidden lg:block">
+        <img alt="A collage of Sound Shapes levels" height="1080" ngSrc="assets/register_banner.png" priority="true"
+             width="960">
+    </div>
+    <div class="flex w-full flex-col gap-4">
+        <h1>Register</h1>
+        <app-divider class="w-full"></app-divider>
+        <div class="flex flex-col gap-2 w-full lg:w-2/3">
+            <form (ngSubmit)="register()" [formGroup]="registrationForm" class="flex flex-col gap-2 placeholder-icon">
+                <div class="flex gap-2">
+                    <label for="code">Registration code</label>
+                    <fa-icon [icon]="faQuestionCircle" style="color: #181515"
+                             title="You get this by connecting to the server."></fa-icon>
+                </div>
+                <app-input-field [fGroup]="registrationForm" [faIcon]="faHashtag" fControlName="code"
+                                 id="code" placeholder="12345678"></app-input-field>
+                <label for="email">E-mail address</label>
+                <app-input-field [fGroup]="registrationForm" [faIcon]="faEnvelope" fControlName="email"
+                                 id="email" placeholder="example@mail.com"></app-input-field>
+                <label for="password">Enter & confirm your password</label>
+                <app-input-field [fGroup]="registrationForm" [faIcon]="faKey" [type]="InputType.Password"
+                                 fControlName="password" id="password"
+                                 placeholder="Password"></app-input-field>
+                <app-input-field [fGroup]="registrationForm" [faIcon]="faKey" [type]="InputType.Password"
+                                 fControlName="passwordConfirm"
+                                 placeholder="Password"></app-input-field>
+            </form>
+            <div>
+                <p>By clicking “Register” you agree to our
+                    <a class="underline" routerLink="/eula" target=”_blank”>Terms & Conditions</a>
+                    .</p>
+            </div>
+            <app-generic-button [disabled]="!validForm().valid" [faIcon]="faUserPlus" [title]="validForm().message"
+                                label="Register"></app-generic-button>
+        </div>
+    </div>
+    <div class="lg:hidden">
+        <img alt="A collage of Sound Shapes levels" height="1080" ngSrc="assets/register_banner.png" priority="true"
+             width="960">
+    </div>
+</div>

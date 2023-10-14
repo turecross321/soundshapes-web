@@ -1,11 +1,11 @@
 <div [formGroup]="fGroup"
-     class="flex justify-between w-full px-3 py-2 rounded-lg navbar-bg text-[#FFDCBF] border-2 gap-2 border-[#8A7261]">
-  <div class="flex gap-2 w-full">
-    <fa-icon [fixedWidth]="true" [icon]="faIcon"></fa-icon>
-    <input [formControlName]="fControlName" [id]="id" [placeholder]="placeholder" [type]="typeString"
-           class="w-full bg-transparent focus:outline-none group placeholder-[#8A7261]">
-  </div>
-  <div (click)="toggleVisibility()" *ngIf="toggleable">
-    <fa-icon [fixedWidth]="true" [icon]="toggleVisibilityIcon"></fa-icon>
-  </div>
+     class="flex justify-between w-full gap-2 border-without-padding py-2 px-3">
+    <div class="flex gap-2 w-full">
+        <fa-icon [fixedWidth]="true" [icon]="faIcon" size="lg"></fa-icon>
+        <input [formControlName]="fControlName" [id]="id" [placeholder]="placeholder" [type]="typeString"
+               class="w-full bg-transparent focus:outline-none group placeholder-[#8A7261]">
+    </div>
+    <div (click)="toggleVisibility()" *ngIf="toggleable">
+        <fa-icon [fixedWidth]="true" [icon]="toggleVisibilityIcon"></fa-icon>
+    </div>
 </div>

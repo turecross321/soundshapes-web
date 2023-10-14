@@ -26,42 +26,49 @@ import {LoadingComponent} from './components/loading/loading.component';
 import {GenericButtonComponent} from './components/generic-button/generic-button.component';
 import {GameIpComponent} from './components/game-ip/game-ip.component';
 import {DateComponent} from './components/date/date.component';
+import {RegisterPageComponent} from './pages/register-page/register.component';
+import {NgOptimizedImage} from "@angular/common";
+import {EulaPageComponent} from './pages/eula-page/eula-page.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    HomePageComponent,
-    LevelsPageComponent,
-    AlbumsPageComponent,
-    UsersPageComponent,
-    LoginPopupComponent,
-    InputFieldComponent,
-    NavbarDropdownButtonComponent,
-    DividerComponent,
-    MyProfilePopupComponent,
-    NotFoundPageComponent,
-    AuthenticationPageComponent,
-    TwoWayToggleComponent,
-    ToggleButtonComponent,
-    LoadingComponent,
-    GenericButtonComponent,
-    GameIpComponent,
-    DateComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-left'
-    })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        HomePageComponent,
+        LevelsPageComponent,
+        AlbumsPageComponent,
+        UsersPageComponent,
+        LoginPopupComponent,
+        InputFieldComponent,
+        NavbarDropdownButtonComponent,
+        DividerComponent,
+        MyProfilePopupComponent,
+        NotFoundPageComponent,
+        AuthenticationPageComponent,
+        TwoWayToggleComponent,
+        ToggleButtonComponent,
+        LoadingComponent,
+        GenericButtonComponent,
+        GameIpComponent,
+        DateComponent,
+        RegisterPageComponent,
+        EulaPageComponent,
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        ToastrModule.forRoot({
+            positionClass: 'toast-bottom-left'
+        }),
+        NgOptimizedImage
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -1,16 +1,12 @@
 import {Component} from '@angular/core';
 import {
-  faArrowRightFromBracket,
-  faBars,
-  faCircleUser,
-  faCompactDisc,
-  faGear,
-  faHouse,
-  faKey,
-  faMusic,
-  faRightToBracket,
-  faUser,
-  faUsers
+    faBars,
+    faCircleUser,
+    faCompactDisc,
+    faHouse,
+    faMusic,
+    faRightToBracket,
+    faUsers
 } from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {NavigationEnd, Router} from "@angular/router";
@@ -23,22 +19,38 @@ import {ApiUser} from "../../api/types/api-user";
   styleUrls: ['navbar.component.css']
 })
 export class NavbarComponent {
-  faHouse: IconDefinition = faHouse;
   faBars: IconDefinition = faBars;
-  faMusic: IconDefinition = faMusic;
-  faCompactDisc: IconDefinition = faCompactDisc;
-  faUsers: IconDefinition = faUsers;
   faRightToBracket: IconDefinition = faRightToBracket;
   faCircleUser: IconDefinition = faCircleUser;
 
   currentPage: PageType = PageType.other;
   showAccountPopUp: boolean = false;
   showHamburgerMenu: boolean = false;
+
   protected readonly PageType = PageType;
-  protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
-  protected readonly faKey = faKey;
-  protected readonly faUser = faUser;
-  protected readonly faGear = faGear;
+
+    buttons: NavbarButton[] = [
+        {
+            path: "/",
+            label: "Home",
+            icon: faHouse
+        },
+        {
+            path: "/levels",
+            label: "Levels",
+            icon: faMusic
+        },
+        {
+            path: "/albums",
+            label: "Albums",
+            icon: faCompactDisc
+        },
+        {
+            path: "/users",
+            label: "Users",
+            icon: faUsers
+        }
+    ]
 
   constructor(router: Router, private ApiClient: ApiClientService) {
     router.events.subscribe((event) => {
@@ -105,4 +117,10 @@ enum PageType {
   albums = 2,
   users = 3,
   other = 4,
+}
+
+interface NavbarButton {
+    path: string,
+    label: string,
+    icon: IconDefinition
 }

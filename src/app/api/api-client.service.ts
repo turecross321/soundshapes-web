@@ -14,81 +14,53 @@ import {ApiGameAuthenticationSettings} from "./types/api-game-authentication-set
 import {ApiGameIp} from "./types/api-game-ip";
 import {AuthenticateIpRequest} from "./types/requests/authenticate-ip-request";
 import {unixToDate} from "../date-convert";
+import {ApiEula} from "./types/api-eula";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
-  apiUrl: string = environment.apiBaseUrl + "/api/v1/";
-  token: ApiToken | undefined = undefined;
-  user: ApiUser | undefined = undefined;
+    apiUrl: string = environment.apiBaseUrl + "/api/v1/";
+    token: ApiToken | undefined = undefined;
+    user: ApiUser | undefined = undefined;
 
-  hasTriedLoggedInAutomatically = false;
+    hasTriedLoggedInAutomatically = false;
+
+    constructor(private httpClient: HttpClient, private toastr: ToastrService) {
+        this.logInWithRefreshToken().then(() => {
+            this.hasTriedLoggedInAutomatically = true;
+        });
+    }
 
     async getGameIps(): Promise<ApiResponse<ApiGameIp[]>> {
         return await this.makeRequest<ApiGameIp[]>("GET", "gameAuth/ip");
     }
 
-
-  constructor(private httpClient: HttpClient, private toastr: ToastrService) {
-    this.logInWithRefreshToken().then(() => {
-      this.hasTriedLoggedInAutomatically = true;
-    });
-  }
-
-  loggedIn(): boolean {
-    return this.token != undefined;
-  }
-
-  async logOut() {
-    await this.makeRequest("post", "account/logOut");
-    this.token = undefined;
-    this.deleteRefreshToken();
-    this.toastr.success("You have been logged out.", "Goodbye!")
-  }
-
-  async logIn(email: string, password: string) {
-    const body: LogInRequest = {Email: email, PasswordSha512: sha512.sha512(password)};
-    const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
-    this.token = response.Data!.AccessToken;
-    this.user = response.Data!.User;
-    this.saveRefreshToken(response.Data!.RefreshToken);
-    this.toastr.success(`Successfully logged in as ${this.user.Username}`, "Welcome!");
-  }
-
-  async getAuthenticationSettings(): Promise<ApiResponse<ApiGameAuthenticationSettings>> {
-    return await this.makeRequest<ApiGameAuthenticationSettings>("GET", "gameAuth/settings");
-  }
-
-  private async logInWithRefreshToken() {
-    const refreshTokenJson = localStorage.getItem("refreshToken");
-    if (!refreshTokenJson)
-      return;
-
-    const refreshToken: ApiToken = JSON.parse(refreshTokenJson);
-      const expiry: Date = unixToDate(refreshToken.ExpiryDate);
-
-    if (new Date() > expiry) {
-      this.deleteRefreshToken();
-      this.toastr.info("Your refresh token has expired, so you will have to sign in manually in order to log in again.", "Welcome back!");
+    loggedIn(): boolean {
+        return this.token != undefined;
     }
 
-    const body: RefreshTokenRequest = {RefreshTokenId: refreshToken.Id};
-    const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/refreshToken", body);
-    this.token = response.Data!.AccessToken;
-    this.user = response.Data!.User;
-    this.saveRefreshToken(response.Data!.RefreshToken);
-  }
+    async logOut() {
+        await this.makeRequest("post", "account/logOut");
+        this.token = undefined;
+        this.deleteRefreshToken();
+        this.toastr.success("You have been logged out.", "Goodbye!")
+    }
 
-  private saveRefreshToken(token: ApiToken) {
-    localStorage.setItem("refreshToken", JSON.stringify(token))
-  }
+    async logIn(email: string, password: string) {
+        const body: LogInRequest = {Email: email, PasswordSha512: sha512.sha512(password)};
+        const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
+        this.token = response.Data!.AccessToken;
+        this.user = response.Data!.User;
+        this.saveRefreshToken(response.Data!.RefreshToken);
+        this.toastr.success(`Successfully logged in as ${this.user.Username}`, "Welcome!");
+    }
 
-  private deleteRefreshToken() {
-    localStorage.removeItem("refreshToken");
-  }
+    async getAuthenticationSettings(): Promise<ApiResponse<ApiGameAuthenticationSettings>> {
+        return await this.makeRequest<ApiGameAuthenticationSettings>("GET", "gameAuth/settings");
+    }
 
-  async uploadAuthenticationSettings(settings: ApiGameAuthenticationSettings): Promise<ApiResponse<null>> {
-    return await this.makeRequest<null>("POST", "gameAuth/settings", settings);
-  }
+    async uploadAuthenticationSettings(settings: ApiGameAuthenticationSettings): Promise<ApiResponse<null>> {
+        return await this.makeRequest<null>("POST", "gameAuth/settings", settings);
+    }
 
     async removeIp(ip: ApiGameIp): Promise<ApiResponse<null>> {
         return await this.makeRequest<null>("DELETE", "gameAuth/ip/address/" + ip.IpAddress);
@@ -97,6 +69,46 @@ export class ApiClientService {
     async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean): Promise<ApiResponse<null>> {
         const body: AuthenticateIpRequest = {IpAddress: ip.IpAddress, OneTimeUse: oneTimeUse}
         return await this.makeRequest<null>("POST", "gameAuth/ip/authorize", body);
+    }
+
+    async getEula(): Promise<ApiResponse<ApiEula>> {
+        return await this.makeRequest<ApiEula>("GET", "eula");
+    }
+
+    private async logInWithRefreshToken() {
+        const refreshTokenJson = localStorage.getItem("refreshToken");
+        if (!refreshTokenJson)
+            return;
+
+        const refreshToken: ApiToken = JSON.parse(refreshTokenJson);
+        const expiry: Date = unixToDate(refreshToken.ExpiryDate);
+
+        if (new Date() > expiry) {
+            this.deleteRefreshToken();
+            this.toastr.info("Your refresh token has expired, so you will have to sign in manually in order to log in again.", "Welcome back!");
+        }
+
+        const body: RefreshTokenRequest = {RefreshTokenId: refreshToken.Id};
+        try {
+            const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/refreshToken", body);
+            this.token = response.Data!.AccessToken;
+            this.user = response.Data!.User;
+            this.saveRefreshToken(response.Data!.RefreshToken);
+        } catch (e) {
+            if (!(e instanceof HttpErrorResponse)) {
+                throw e;
+            }
+            this.deleteRefreshToken();
+            throw e;
+        }
+    }
+
+    private saveRefreshToken(token: ApiToken) {
+        localStorage.setItem("refreshToken", JSON.stringify(token))
+    }
+
+    private deleteRefreshToken() {
+        localStorage.removeItem("refreshToken");
     }
 
     private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null): Promise<ApiResponse<TData>> {
