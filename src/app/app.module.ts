@@ -29,6 +29,7 @@ import {DateComponent} from './components/date/date.component';
 import {RegisterPageComponent} from './pages/register-page/register.component';
 import {NgOptimizedImage} from "@angular/common";
 import {EulaPageComponent} from './pages/eula-page/eula-page.component';
+import {TooltipComponent} from './components/tooltip/tooltip.component';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import {EulaPageComponent} from './pages/eula-page/eula-page.component';
         DateComponent,
         RegisterPageComponent,
         EulaPageComponent,
+        TooltipComponent,
     ],
     imports: [
         BrowserModule,

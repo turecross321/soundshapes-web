@@ -1,4 +1,4 @@
-export interface AuthenticateIpRequest {
+export interface ApiAuthenticateIpRequest {
     IpAddress: string;
     OneTimeUse: boolean;
 }

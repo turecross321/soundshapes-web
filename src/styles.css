@@ -57,7 +57,7 @@ button:hover {
     color: #FFDCBF;
 }
 
-.placeholder-icon {
+.placeholder-icons {
     & fa-icon {
         color: #8A7261;
     }

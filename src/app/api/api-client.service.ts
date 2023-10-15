@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {LogInRequest} from "./types/requests/log-in-request";
+import {ApiLogInRequest} from "./types/requests/api-log-in-request";
 import * as sha512 from 'js-sha512';
 import {ApiResponse} from "./types/responses/api-response";
 import {ApiToken} from "./types/api-token";
@@ -9,12 +9,13 @@ import {firstValueFrom} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {ApiLoginResponse} from "./types/responses/api-login-response";
 import {ApiUser} from "./types/api-user";
-import {RefreshTokenRequest} from "./types/requests/refresh-token-request";
+import {ApiRefreshTokenRequest} from "./types/requests/api-refresh-token-request";
 import {ApiGameAuthenticationSettings} from "./types/api-game-authentication-settings";
 import {ApiGameIp} from "./types/api-game-ip";
-import {AuthenticateIpRequest} from "./types/requests/authenticate-ip-request";
+import {ApiAuthenticateIpRequest} from "./types/requests/api-authenticate-ip-request";
 import {unixToDate} from "../date-convert";
 import {ApiEula} from "./types/api-eula";
+import {ApiRegisterRequest} from "./types/requests/api-register-request";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -46,7 +47,7 @@ export class ApiClientService {
     }
 
     async logIn(email: string, password: string) {
-        const body: LogInRequest = {Email: email, PasswordSha512: sha512.sha512(password)};
+        const body: ApiLogInRequest = {Email: email, PasswordSha512: sha512.sha512(password)};
         const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
         this.token = response.Data!.AccessToken;
         this.user = response.Data!.User;
@@ -67,12 +68,23 @@ export class ApiClientService {
     }
 
     async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean): Promise<ApiResponse<null>> {
-        const body: AuthenticateIpRequest = {IpAddress: ip.IpAddress, OneTimeUse: oneTimeUse}
+        const body: ApiAuthenticateIpRequest = {IpAddress: ip.IpAddress, OneTimeUse: oneTimeUse}
         return await this.makeRequest<null>("POST", "gameAuth/ip/authorize", body);
     }
 
     async getEula(): Promise<ApiResponse<ApiEula>> {
         return await this.makeRequest<ApiEula>("GET", "eula");
+    }
+
+    async register(code: string, email: string, password: string): Promise<ApiResponse<null>> {
+        const body: ApiRegisterRequest = {
+            RegistrationCode: code,
+            Email: email,
+            PasswordSha512: sha512.sha512(password),
+            AcceptEula: true
+        };
+
+        return await this.makeRequest<null>("POST", "account/register", body);
     }
 
     private async logInWithRefreshToken() {
@@ -88,7 +100,7 @@ export class ApiClientService {
             this.toastr.info("Your refresh token has expired, so you will have to sign in manually in order to log in again.", "Welcome back!");
         }
 
-        const body: RefreshTokenRequest = {RefreshTokenId: refreshToken.Id};
+        const body: ApiRefreshTokenRequest = {RefreshTokenId: refreshToken.Id};
         try {
             const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/refreshToken", body);
             this.token = response.Data!.AccessToken;

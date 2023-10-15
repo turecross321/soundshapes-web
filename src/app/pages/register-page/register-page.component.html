@@ -1,17 +1,19 @@
 <div class="flex justify-between items-start gap-8 flex-col lg:flex-row">
     <div class="hidden lg:block">
         <img alt="A collage of Sound Shapes levels" height="1080" ngSrc="assets/register_banner.png" priority="true"
+             rel="preconnect"
              width="960">
     </div>
     <div class="flex w-full flex-col gap-4">
         <h1>Register</h1>
         <app-divider class="w-full"></app-divider>
         <div class="flex flex-col gap-2 w-full lg:w-2/3">
-            <form (ngSubmit)="register()" [formGroup]="registrationForm" class="flex flex-col gap-2 placeholder-icon">
+            <form (ngSubmit)="register()" [formGroup]="registrationForm" class="flex flex-col gap-2 placeholder-icons">
                 <div class="flex gap-2">
                     <label for="code">Registration code</label>
-                    <fa-icon [icon]="faQuestionCircle" style="color: #181515"
-                             title="You get this by connecting to the server."></fa-icon>
+                    <app-tooltip text="You get this by connecting to the server.">
+                        <fa-icon [icon]="faQuestionCircle" style="color: #181515"></fa-icon>
+                    </app-tooltip>
                 </div>
                 <app-input-field [fGroup]="registrationForm" [faIcon]="faHashtag" fControlName="code"
                                  id="code" placeholder="12345678"></app-input-field>
@@ -31,12 +33,19 @@
                     <a class="underline" routerLink="/eula" target=”_blank”>Terms & Conditions</a>
                     .</p>
             </div>
-            <app-generic-button [disabled]="!validForm().valid" [faIcon]="faUserPlus" [title]="validForm().message"
-                                label="Register"></app-generic-button>
+            <div class="flex gap-2 items-center">
+                <app-tooltip [text]="validForm().message">
+                    <app-generic-button (click)="register()" [disabled]="!validForm().valid || loading"
+                                        [faIcon]="faUserPlus"
+                                        label="Register"></app-generic-button>
+                </app-tooltip>
+                <app-loading *ngIf="loading"></app-loading>
+            </div>
         </div>
     </div>
     <div class="lg:hidden">
         <img alt="A collage of Sound Shapes levels" height="1080" ngSrc="assets/register_banner.png" priority="true"
+             rel="preconnect"
              width="960">
     </div>
 </div>
