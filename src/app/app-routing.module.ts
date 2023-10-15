@@ -8,6 +8,7 @@ import {NotFoundPageComponent} from "./pages/not-found-page/not-found-page.compo
 import {AuthenticationPageComponent} from "./pages/authentication-page/authentication-page.component";
 import {RegisterPageComponent} from "./pages/register-page/register.component";
 import {EulaPageComponent} from "./pages/eula-page/eula-page.component";
+import {PasswordResetPageComponent} from "./pages/password-reset-page/password-reset-page.component";
 
 const routes: Routes = [
     {path: '', component: HomePageComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path: 'authentication', component: AuthenticationPageComponent},
     {path: 'register', component: RegisterPageComponent},
     {path: 'eula', component: EulaPageComponent},
+    {path: 'resetPassword', component: PasswordResetPageComponent},
     {path: '**', component: NotFoundPageComponent}
 ];
 

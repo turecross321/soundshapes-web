@@ -5,6 +5,8 @@ import {faEnvelope, faHashtag, faKey, faQuestionCircle, faUserPlus} from '@forta
 import {InputType} from "../../components/input-field/input-field.component";
 import {ApiClientService} from "../../api/api-client.service";
 import {Router} from "@angular/router";
+import {validEmail, validRegistrationCode} from "../../regex";
+import {formValidity} from "../../types/form-validity";
 
 @Component({
     selector: 'app-register-page',
@@ -23,7 +25,7 @@ export class RegisterPageComponent {
     faKey: IconDefinition = faKey;
     faUserPlus: IconDefinition = faUserPlus;
     faQuestionCircle: IconDefinition = faQuestionCircle;
-    emailRegex = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+
     loading: boolean = false;
     protected readonly InputType = InputType;
 
@@ -36,13 +38,16 @@ export class RegisterPageComponent {
         const password: string = this.registrationForm.get("password")?.value ?? "";
         const passwordConfirm: string = this.registrationForm.get("passwordConfirm")?.value ?? "";
 
-        if (code.length != 8)
+        if (!validRegistrationCode(code))
             return {valid: false, message: "Invalid registration code"}
+
+        if (password.length == 0)
+            return {valid: false, message: "Bad password"};
 
         if (password != passwordConfirm)
             return {valid: false, message: "Passwords don't match"}
 
-        if (!this.emailRegex.test(email))
+        if (!validEmail(email))
             return {valid: false, message: "Invalid e-mail address"}
 
         return {valid: true, message: ""};
@@ -63,9 +68,4 @@ export class RegisterPageComponent {
             this.loading = false;
         }
     }
-}
-
-interface formValidity {
-    valid: boolean;
-    message: string;
 }

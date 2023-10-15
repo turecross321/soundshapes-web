@@ -30,6 +30,7 @@ import {RegisterPageComponent} from './pages/register-page/register.component';
 import {NgOptimizedImage} from "@angular/common";
 import {EulaPageComponent} from './pages/eula-page/eula-page.component';
 import {TooltipComponent} from './components/tooltip/tooltip.component';
+import {PasswordResetPageComponent} from './pages/password-reset-page/password-reset-page.component';
 
 @NgModule({
     declarations: [
@@ -55,6 +56,7 @@ import {TooltipComponent} from './components/tooltip/tooltip.component';
         RegisterPageComponent,
         EulaPageComponent,
         TooltipComponent,
+        PasswordResetPageComponent,
     ],
     imports: [
         BrowserModule,

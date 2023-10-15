@@ -16,6 +16,8 @@ import {ApiAuthenticateIpRequest} from "./types/requests/api-authenticate-ip-req
 import {unixToDate} from "../date-convert";
 import {ApiEula} from "./types/api-eula";
 import {ApiRegisterRequest} from "./types/requests/api-register-request";
+import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-request";
+import {ApiSetPasswordRequest} from "./types/requests/api-set-password-request";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -85,6 +87,16 @@ export class ApiClientService {
         };
 
         return await this.makeRequest<null>("POST", "account/register", body);
+    }
+
+    async sendPasswordToken(email: string) {
+        const body: ApiPasswordTokenRequest = {Email: email};
+        return await this.makeRequest<null>("POST", "account/sendPasswordToken", body);
+    }
+
+    async setPassword(code: string, newPassword: string) {
+        const body: ApiSetPasswordRequest = {SetPasswordTokenId: code, NewPasswordSha512: sha512.sha512(newPassword)};
+        return await this.makeRequest<null>("POST", "account/setPassword", body);
     }
 
     private async logInWithRefreshToken() {
