@@ -6,6 +6,7 @@ import {faAngleRight, faEnvelope, faHashtag, faKey} from "@fortawesome/free-soli
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {validEmail, validPasswordResetCode} from "../../regex";
 import {formValidity} from "../../types/form-validity";
+import {InputType} from "../../components/input-field/input-field.component";
 
 @Component({
     selector: 'app-password-reset-page',
@@ -28,6 +29,7 @@ export class PasswordResetPageComponent {
     currentPage: pageType = pageType.emailInput;
     email: string = "";
     protected readonly pageType = pageType;
+    protected readonly InputType = InputType;
 
     constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService, private router: Router) {
 
