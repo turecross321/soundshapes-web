@@ -1,7 +1,4 @@
-<div class="flex flex-col gap-4">
-    <h1>Terms & conditions</h1>
-    <app-divider></app-divider>
-    <app-loading *ngIf="!eula"></app-loading>
+<app-page [loading]="!eula" header="Terms & conditions">
     <div *ngIf="eula">
         <p>{{eula.CustomContent}}</p>
         <br>
@@ -9,4 +6,4 @@
         <br>
         <p>Server source code can be found <a [href]="eula.GitRepo" class="underline" target=”_blank”>here</a>.</p>
     </div>
-</div>
+</app-page>

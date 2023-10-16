@@ -1,0 +1,50 @@
+<div class="border flex flex-col gap-2">
+    <div class="flex justify-between">
+        <div class="flex flex-col">
+            <div class="flex gap-2 items-center">
+                <span class="font-bold text-2xl">{{route.Method}}</span>
+                <code>{{route.RouteUri}}</code>
+            </div>
+
+            <p>{{route.Summary}}</p>
+        </div>
+
+        <!-- permissions-->
+        <div>
+            <app-tooltip *ngIf="route.AuthenticationRequired" text="Authentication is required">
+                <app-text-with-icon [faIcon]="faKey" text=""></app-text-with-icon>
+            </app-tooltip>
+
+            <app-tooltip *ngIf="route.MinimumPermissionsType != PermissionsType.Default"
+                         [text]="minimumPermissionsTooltip()">
+                <app-text-with-icon [faIcon]="faUserShield" [text]="minimumPermissionsString()"></app-text-with-icon>
+            </app-tooltip>
+        </div>
+    </div>
+
+    <!-- parameters -->
+    <div *ngIf="route.Parameters.length > 0">
+        <span class="font-bold text-lg">Parameters</span>
+        <div class="flex flex-col gap-2">
+            <ng-container *ngFor="let param of route.Parameters;">
+                <div class="flex gap-2 items-center">
+                    <code>{{paramString(param)}}</code>
+                    <p>{{param.Summary}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <!-- errors -->
+    <div *ngIf="route.PotentialErrors.length > 0">
+        <span class="font-bold text-lg">Potential Errors</span>
+        <div class="flex flex-col gap-2">
+            <ng-container *ngFor="let error of route.PotentialErrors;">
+                <div class="flex gap-2 items-center">
+                    <code>{{error.Name}}</code>
+                    <p>{{error.OccursWhen}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

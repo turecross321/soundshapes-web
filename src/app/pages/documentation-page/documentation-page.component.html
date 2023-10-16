@@ -1,0 +1,7 @@
+<app-page [loading]="loading" header="Documentation">
+    <div class="flex flex-col gap-2">
+        <ng-container *ngFor="let route of routes">
+            <app-documentation-route [route]="route"></app-documentation-route>
+        </ng-container>
+    </div>
+</app-page>

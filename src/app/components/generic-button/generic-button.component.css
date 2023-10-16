@@ -8,5 +8,9 @@ button {
 }
 
 button:disabled {
-    filter: brightness(60%);
+    background-color: #ffe7d5;
+}
+
+button:disabled:hover {
+    filter: brightness(100%);
 }

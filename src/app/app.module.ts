@@ -31,6 +31,11 @@ import {NgOptimizedImage} from "@angular/common";
 import {EulaPageComponent} from './pages/eula-page/eula-page.component';
 import {TooltipComponent} from './components/tooltip/tooltip.component';
 import {PasswordResetPageComponent} from './pages/password-reset-page/password-reset-page.component';
+import {DocumentationPageComponent} from './pages/documentation-page/documentation-page.component';
+import {PageComponent} from './components/page/page.component';
+import {DocumentationRouteComponent} from './components/documentation-route/documentation-route.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {TextWithIconComponent} from './components/text-with-icon/text-with-icon.component';
 
 @NgModule({
     declarations: [
@@ -57,6 +62,10 @@ import {PasswordResetPageComponent} from './pages/password-reset-page/password-r
         EulaPageComponent,
         TooltipComponent,
         PasswordResetPageComponent,
+        DocumentationPageComponent,
+        PageComponent,
+        DocumentationRouteComponent,
+        TextWithIconComponent,
     ],
     imports: [
         BrowserModule,
@@ -69,7 +78,8 @@ import {PasswordResetPageComponent} from './pages/password-reset-page/password-r
         ToastrModule.forRoot({
             positionClass: 'toast-bottom-left'
         }),
-        NgOptimizedImage
+        NgOptimizedImage,
+        InfiniteScrollModule
     ],
     providers: [],
     bootstrap: [AppComponent]

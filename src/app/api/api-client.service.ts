@@ -18,6 +18,8 @@ import {ApiEula} from "./types/api-eula";
 import {ApiRegisterRequest} from "./types/requests/api-register-request";
 import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-request";
 import {ApiSetPasswordRequest} from "./types/requests/api-set-password-request";
+import {ApiRoute} from "./types/api-route";
+import {PageData} from "../types/page-data";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -99,6 +101,10 @@ export class ApiClientService {
         return await this.makeRequest<null>("POST", "account/setPassword", body);
     }
 
+    async getDocumentation(): Promise<ApiResponse<ApiRoute[]>> {
+        return await this.makeRequest<ApiRoute[]>("GET", "documentation");
+    }
+
     private async logInWithRefreshToken() {
         const refreshTokenJson = localStorage.getItem("refreshToken");
         if (!refreshTokenJson)
@@ -135,15 +141,21 @@ export class ApiClientService {
         localStorage.removeItem("refreshToken");
     }
 
-    private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null): Promise<ApiResponse<TData>> {
+    private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null, pageData: PageData | null = null): Promise<ApiResponse<TData>> {
         while (endpoint != "account/refreshToken" && !this.hasTriedLoggedInAutomatically) {
             await new Promise(f => setTimeout(f, 1000));
         }
 
+
         try {
             return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {
                 body: body,
-                headers: {"Authorization": this.token?.Id ?? ""}
+                headers: {"Authorization": this.token?.Id ?? ""},
+                params: {
+                    "from": pageData?.From ?? "",
+                    "count": pageData?.Count ?? "",
+                    "descending": pageData?.Descending ?? ""
+                }
             }));
         } catch (e: any) {
             if (!(e instanceof HttpErrorResponse)) {
