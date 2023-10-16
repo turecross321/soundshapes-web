@@ -146,16 +146,23 @@ export class ApiClientService {
             await new Promise(f => setTimeout(f, 1000));
         }
 
+        let params = {}
+
+        if (pageData) {
+            params = {
+                "from": pageData?.From ?? "",
+                "count": pageData?.Count ?? "",
+                "descending": pageData?.Descending ?? ""
+            }
+        }
+
 
         try {
             return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {
                 body: body,
                 headers: {"Authorization": this.token?.Id ?? ""},
-                params: {
-                    "from": pageData?.From ?? "",
-                    "count": pageData?.Count ?? "",
-                    "descending": pageData?.Descending ?? ""
-                }
+                params: params
+
             }));
         } catch (e: any) {
             if (!(e instanceof HttpErrorResponse)) {

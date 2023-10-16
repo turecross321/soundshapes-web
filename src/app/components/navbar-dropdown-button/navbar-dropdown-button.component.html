@@ -4,9 +4,9 @@
           'animate-pulse' : this.loading
         }"
         class="flex w-full navbar-bg navbar-text gap-2 p-2 rounded justify-between">
-  <div class="flex gap-2">
-    <fa-icon [fixedWidth]="true" [icon]="faIcon" [ngClass]="{'!highlighted' : 'navbar-text'}" size="lg"></fa-icon>
-    <span class="text-lg">{{label}}</span>
-  </div>
-  <app-loading *ngIf="loading"></app-loading>
+    <div class="flex gap-2">
+        <fa-icon [fixedWidth]="true" [icon]="faIcon" [ngClass]="{'!highlighted' : 'navbar-text'}" size="lg"></fa-icon>
+        <span class="text-lg">{{label}}</span>
+    </div>
+    <app-loading *ngIf="loading"></app-loading>
 </button>
