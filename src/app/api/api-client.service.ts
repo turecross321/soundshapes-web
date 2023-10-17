@@ -2,11 +2,8 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ApiLogInRequest} from "./types/requests/api-log-in-request";
-import * as sha512 from 'js-sha512';
 import {ApiResponse} from "./types/responses/api-response";
 import {ApiToken} from "./types/api-token";
-import {firstValueFrom} from "rxjs";
-import {ToastrService} from "ngx-toastr";
 import {ApiLoginResponse} from "./types/responses/api-login-response";
 import {ApiUser} from "./types/api-user";
 import {ApiRefreshTokenRequest} from "./types/requests/api-refresh-token-request";
@@ -20,6 +17,9 @@ import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-reque
 import {ApiSetPasswordRequest} from "./types/requests/api-set-password-request";
 import {ApiRoute} from "./types/api-route";
 import {PageData} from "../types/page-data";
+import {hash} from "../sha512";
+import {firstValueFrom} from "rxjs/internal/firstValueFrom";
+import {ToastService} from "../services/toast.service";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -29,7 +29,7 @@ export class ApiClientService {
 
     hasTriedLoggedInAutomatically = false;
 
-    constructor(private httpClient: HttpClient, private toastr: ToastrService) {
+    constructor(private httpClient: HttpClient, private toastService: ToastService) {
         this.logInWithRefreshToken().then(() => {
             this.hasTriedLoggedInAutomatically = true;
         });
@@ -47,16 +47,16 @@ export class ApiClientService {
         await this.makeRequest("post", "account/logOut");
         this.token = undefined;
         this.deleteRefreshToken();
-        this.toastr.success("You have been logged out.", "Goodbye!")
+        this.toastService.success("Goodbye!", "You have been logged out.");
     }
 
     async logIn(email: string, password: string) {
-        const body: ApiLogInRequest = {Email: email, PasswordSha512: sha512.sha512(password)};
+        const body: ApiLogInRequest = {Email: email, PasswordSha512: await hash(password)};
         const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
         this.token = response.Data!.AccessToken;
         this.user = response.Data!.User;
         this.saveRefreshToken(response.Data!.RefreshToken);
-        this.toastr.success(`Successfully logged in as ${this.user.Username}`, "Welcome!");
+        this.toastService.success("Welcome!", `Successfully logged in as ${this.user.Username}`,);
     }
 
     async getAuthenticationSettings(): Promise<ApiResponse<ApiGameAuthenticationSettings>> {
@@ -84,7 +84,7 @@ export class ApiClientService {
         const body: ApiRegisterRequest = {
             RegistrationCode: code,
             Email: email,
-            PasswordSha512: sha512.sha512(password),
+            PasswordSha512: await hash(password),
             AcceptEula: true
         };
 
@@ -97,7 +97,7 @@ export class ApiClientService {
     }
 
     async setPassword(code: string, newPassword: string) {
-        const body: ApiSetPasswordRequest = {SetPasswordTokenId: code, NewPasswordSha512: sha512.sha512(newPassword)};
+        const body: ApiSetPasswordRequest = {SetPasswordTokenId: code, NewPasswordSha512: await hash(newPassword)};
         return await this.makeRequest<null>("POST", "account/setPassword", body);
     }
 
@@ -115,7 +115,7 @@ export class ApiClientService {
 
         if (new Date() > expiry) {
             this.deleteRefreshToken();
-            this.toastr.info("Your refresh token has expired, so you will have to sign in manually in order to log in again.", "Welcome back!");
+            this.toastService.info("Welcome back!", "Your refresh token has expired, so you will have to sign in manually in order to log in again.");
         }
 
         const body: ApiRefreshTokenRequest = {RefreshTokenId: refreshToken.Id};
@@ -156,7 +156,6 @@ export class ApiClientService {
             }
         }
 
-
         try {
             return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {
                 body: body,
@@ -170,12 +169,12 @@ export class ApiClientService {
             }
 
             if (e.status == 0) {
-                this.toastr.error("Could not reach server. Please try again.", "Error");
+                this.toastService.error("Error", "Could not reach server. Please try again.");
             } else if (e.status == 403 && this.loggedIn()) {
-                this.toastr.error("Got 403 despite being logged in?", "???");
+                this.toastService.error("???", "Got 403 despite being logged in?");
             } else {
                 const res = e.error as ApiResponse<null>;
-                this.toastr.error(res.Error?.Message ?? "A description was not provided.", res.Error?.Name ?? "Unknown error");
+                this.toastService.error(res.Error?.Name ?? "Unknown error", res.Error?.Message ?? "A description was not provided.",);
             }
             throw e;
         }

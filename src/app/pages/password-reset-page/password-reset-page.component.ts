@@ -2,11 +2,11 @@ import {Component} from '@angular/core';
 import {FormBuilder} from "@angular/forms";
 import {ApiClientService} from "../../api/api-client.service";
 import {Router} from "@angular/router";
-import {faAngleRight, faEnvelope, faHashtag, faKey} from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {validEmail, validPasswordResetCode} from "../../regex";
 import {formValidity} from "../../types/form-validity";
 import {InputType} from "../../components/input-field/input-field.component";
+import {faAngleRight, faEnvelope, faHashtag, faKey} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-password-reset-page',

@@ -15,7 +15,7 @@ import {InputFieldComponent} from './components/input-field/input-field.componen
 import {NavbarDropdownButtonComponent} from './components/navbar-dropdown-button/navbar-dropdown-button.component';
 import {DividerComponent} from './components/divider/divider.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ToastrModule} from "ngx-toastr";
+//import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MyProfilePopupComponent} from './components/my-profile-popup/my-profile-popup.component';
 import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.component';
@@ -34,8 +34,11 @@ import {PasswordResetPageComponent} from './pages/password-reset-page/password-r
 import {DocumentationPageComponent} from './pages/documentation-page/documentation-page.component';
 import {PageComponent} from './components/page/page.component';
 import {DocumentationRouteComponent} from './components/documentation-route/documentation-route.component';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {TextWithIconComponent} from './components/text-with-icon/text-with-icon.component';
+import {BorderComponent} from './components/border/border.component';
+import {CodeBlockComponent} from './components/code-block/code-block.component';
+import {ToastComponent} from './components/toast/toast.component';
+import {ToastMessageComponent} from './components/toast-message/toast-message.component';
 
 @NgModule({
     declarations: [
@@ -66,6 +69,10 @@ import {TextWithIconComponent} from './components/text-with-icon/text-with-icon.
         PageComponent,
         DocumentationRouteComponent,
         TextWithIconComponent,
+        BorderComponent,
+        CodeBlockComponent,
+        ToastComponent,
+        ToastMessageComponent,
     ],
     imports: [
         BrowserModule,
@@ -75,11 +82,7 @@ import {TextWithIconComponent} from './components/text-with-icon/text-with-icon.
         ReactiveFormsModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        ToastrModule.forRoot({
-            positionClass: 'toast-bottom-left'
-        }),
         NgOptimizedImage,
-        InfiniteScrollModule
     ],
     providers: [],
     bootstrap: [AppComponent]

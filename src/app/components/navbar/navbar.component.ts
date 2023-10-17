@@ -1,4 +1,8 @@
 import {Component} from '@angular/core';
+import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {NavigationEnd, Router} from "@angular/router";
+import {ApiClientService} from "../../api/api-client.service";
+import {ApiUser} from "../../api/types/api-user";
 import {
     faBars,
     faCircleUser,
@@ -7,16 +11,12 @@ import {
     faMusic,
     faRightToBracket,
     faUsers
-} from "@fortawesome/free-solid-svg-icons";
-import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {NavigationEnd, Router} from "@angular/router";
-import {ApiClientService} from "../../api/api-client.service";
-import {ApiUser} from "../../api/types/api-user";
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['navbar.component.css']
+    styleUrls: []
 })
 export class NavbarComponent {
     faBars: IconDefinition = faBars;

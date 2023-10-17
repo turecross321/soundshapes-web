@@ -1,14 +1,14 @@
-<div class="navbar-bg navbar-text px-6 py-4 flex justify-between">
+<div class="bg-dark-background text-light px-6 py-4 flex justify-between">
 
     <!-- left wide side -->
     <div class="lg:flex items-center gap-4 hidden">
         <ng-container *ngFor="let button of buttons; index as i;">
-            <button [ngClass]="{'navbar-selected-button' : currentPage == i}" [routerLink]=button.path
-                    class="flex gap-2 items-center">
+            <button [ngClass]="{'text-primary' : currentPage == i}" [routerLink]=button.path
+                    class="flex gap-2 items-center hover:brightness-90">
                 <fa-icon [icon]="button.icon" size="lg"></fa-icon>
                 <span *ngIf="i != PageType.home">{{button.label}}</span>
             </button>
-            <div *ngIf="i == PageType.home" class="navbar-vertical-divider"></div>
+            <div *ngIf="i == PageType.home" class="border-l-2 border-navbar-divider h-4"></div>
         </ng-container>
     </div>
 
@@ -16,15 +16,16 @@
     <div class="flex items-center gap-4 lg:hidden">
         <!-- toggle hamburger menu -->
         <button (click)="toggleHamburgerMenu()">
-            <fa-icon [icon]="faBars" class="navbar-text" size="lg"></fa-icon>
+            <fa-icon [icon]="faBars" size="lg"></fa-icon>
         </button>
     </div>
 
     <!-- right side (both wide and mobile) -->
-    <div [ngSwitch]="loggedIn()" class="flex items-center gap-4">
+    <div [ngSwitch]="loggedIn()" class="flex items-center gap-4 hover:brightness-90">
         <!-- log in button -->
-        <button (click)="toggleAccountPopUp()" *ngSwitchCase="false" class="flex gap-2 items-center">
-            <fa-icon [icon]="faRightToBracket" class="navbar-text" size="lg"></fa-icon>
+        <button (click)="toggleAccountPopUp()" *ngSwitchCase="false"
+                class="flex gap-2 items-center">
+            <fa-icon [icon]="faRightToBracket" size="lg"></fa-icon>
             <span class="hidden lg:block">Log in</span>
         </button>
 
@@ -45,11 +46,11 @@
 
 <!-- hamburger menu -->
 <div *ngIf="showHamburgerMenu" class="lg:hidden">
-    <div class="absolute left-0 right-0 m-1 navbar-bg navbar-text p-4 rounded-lg grid grid-cols-1 gap-2">
+    <div class="absolute left-0 right-0 m-1 bg-dark-background text-light p-4 rounded-lg grid grid-cols-1 gap-2">
         <ng-container *ngFor="let button of buttons; index as i;">
             <app-navbar-dropdown-button (click)="setHamburgerMenuVisibility(false)" [faIcon]="button.icon"
-                                        [highlighted]="currentPage == i"
                                         [label]="button.label"
+                                        [ngClass]="{'text-primary' : currentPage == i}"
                                         [routerLink]="button.path"></app-navbar-dropdown-button>
             <app-divider *ngIf="i == PageType.home"></app-divider>
         </ng-container>

@@ -3,12 +3,9 @@
 
         <!-- configuration -->
         <div class="flex flex-col gap-4 w-full lg:w-80">
-            <div class="flex gap-2 items-center h-8">
-                <fa-icon [icon]="faWrench" size="xl"></fa-icon>
-                <h2>Configuration</h2>
-            </div>
+            <app-text-with-icon [faIcon]="faWrench" class="h-8" text="Configuration"></app-text-with-icon>
             <!-- toggles -->
-            <div class="border flex flex-col gap-2">
+            <app-border class="flex flex-col gap-2">
                 <div class="flex flex-col gap-2">
                     <!-- PSN authentication -->
                     <div class="flex flex-col gap-1">
@@ -33,17 +30,15 @@
                                             class="w-full"></app-two-way-toggle>
                     </div>
                 </div>
-            </div>
+            </app-border>
         </div>
 
         <!-- ip authentication -->
         <div class="flex flex-col gap-4 w-full">
             <div class="flex items-center justify-between h-8">
                 <!-- left -->
-                <div class="flex gap-2 items-center h-8">
-                    <fa-icon [icon]="faBroadcastTower" size="xl"></fa-icon>
-                    <h2>IP Authentication</h2>
-                </div>
+                <app-text-with-icon [faIcon]="faBroadcastTower" class="h-8"
+                                    text="IP Authentication"></app-text-with-icon>
 
                 <!-- right -->
                 <div>
@@ -52,7 +47,7 @@
                                         label="Refresh"></app-generic-button>
                 </div>
             </div>
-            <div class="border flex flex-col gap-2 h-full">
+            <app-border class="flex flex-col gap-2 h-full">
                 <!-- disabled -->
                 <div *ngIf="!settings?.AllowIpAuthentication"
                      class="w-full h-full flex flex-col justify-center items-center gap-2">
@@ -92,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </app-border>
         </div>
     </div>
 </app-page>

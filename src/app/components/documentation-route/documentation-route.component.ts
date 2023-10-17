@@ -3,8 +3,8 @@ import {ApiRoute} from "../../api/types/api-route";
 import {ParameterType} from "../../api/types/api-parameter-type";
 import {ApiParameter} from "../../api/types/api-parameter";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {faKey, faUserShield} from '@fortawesome/free-solid-svg-icons';
 import {PermissionsType} from "../../api/types/api-permissions-type";
+import {faKey, faUserShield} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-documentation-route',

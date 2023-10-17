@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-loading',

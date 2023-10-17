@@ -1,8 +1,10 @@
 <div class="flex flex-col gap-4">
-    <h1 class="mx-2">{{header}}</h1>
+    <h1 class="mx-2 text-4xl font-bold">{{header}}</h1>
     <app-divider></app-divider>
 
-    <ng-content></ng-content>
+    <div *ngIf="!loading" class="mx-2">
+        <ng-content></ng-content>
+    </div>
 
     <app-loading *ngIf="loading"></app-loading>
 </div>

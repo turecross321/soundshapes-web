@@ -1,9 +1,8 @@
 <!--suppress HtmlUnknownTag -->
 <button [ngClass]="{
-          'navbar-selected-button' : this.highlighted,
           'animate-pulse' : this.loading
         }"
-        class="flex w-full navbar-bg navbar-text gap-2 p-2 rounded justify-between">
+        class="flex w-full bg-dark-background text-light gap-2 py-2 px-3 rounded justify-between hover:bg-darker-background duration-100">
     <div class="flex gap-2">
         <fa-icon [fixedWidth]="true" [icon]="faIcon" [ngClass]="{'!highlighted' : 'navbar-text'}" size="lg"></fa-icon>
         <span class="text-lg">{{label}}</span>
