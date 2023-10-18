@@ -21,6 +21,6 @@ jobs:
         uses: actions/upload-artifact@v3.1.1
         with:
           name: "Sound Shapes Website"
-          path: "dist/soundshapes-website"
+          path: "dist/soundshapes-web"
           if-no-files-found: error
           retention-days: 30
