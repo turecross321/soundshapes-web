@@ -22,7 +22,6 @@ export class ToastComponent {
     }
 
     private async message(message: ToastMessage) {
-        console.log(message.Title, message.Description);
         this.messages.push(message);
         // wait 5 seconds
         await new Promise(f => setTimeout(f, 3000));

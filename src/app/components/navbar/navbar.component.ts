@@ -104,7 +104,7 @@ enum PageType {
     levels = 1,
     albums = 2,
     users = 3,
-    other = 4,
+    other = 4
 }
 
 interface NavbarButton {

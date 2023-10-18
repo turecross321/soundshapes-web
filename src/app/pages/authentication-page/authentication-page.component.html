@@ -3,7 +3,9 @@
 
         <!-- configuration -->
         <div class="flex flex-col gap-4 w-full lg:w-80">
-            <app-text-with-icon [faIcon]="faWrench" class="h-8" text="Configuration"></app-text-with-icon>
+            <div class="h-8 flex items-center">
+                <app-text-with-icon [faIcon]="faWrench" class="w-full" text="Configuration"></app-text-with-icon>
+            </div>
             <!-- toggles -->
             <app-border class="flex flex-col gap-2">
                 <div class="flex flex-col gap-2">
@@ -37,8 +39,8 @@
         <div class="flex flex-col gap-4 w-full">
             <div class="flex items-center justify-between h-8">
                 <!-- left -->
-                <app-text-with-icon [faIcon]="faBroadcastTower" class="h-8"
-                                    text="IP Authentication"></app-text-with-icon>
+                <app-text-with-icon [faIcon]="faBroadcastTower"
+                                    class="h-8" text="IP Authentication"></app-text-with-icon>
 
                 <!-- right -->
                 <div>

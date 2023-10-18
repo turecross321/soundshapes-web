@@ -10,6 +10,7 @@ import {RegisterPageComponent} from "./pages/register-page/register.component";
 import {EulaPageComponent} from "./pages/eula-page/eula-page.component";
 import {PasswordResetPageComponent} from "./pages/password-reset-page/password-reset-page.component";
 import {DocumentationPageComponent} from "./pages/documentation-page/documentation-page.component";
+import {BannedPageComponent} from "./pages/banned-page/banned-page.component";
 
 const routes: Routes = [
     {path: '', component: HomePageComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
     {path: 'eula', component: EulaPageComponent},
     {path: 'resetPassword', component: PasswordResetPageComponent},
     {path: 'documentation', component: DocumentationPageComponent},
+    {path: 'banned', component: BannedPageComponent},
     {path: '**', component: NotFoundPageComponent}
 ];
 
