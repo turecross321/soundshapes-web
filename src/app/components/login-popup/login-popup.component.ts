@@ -4,6 +4,7 @@ import {ApiClientService} from "../../api/api-client.service";
 import {InputType} from "../input-field/input-field.component";
 import {faArrowRightToBracket, faEnvelope, faKey, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {Side} from "../../types/side";
 
 @Component({
     selector: 'app-login-popup',
@@ -11,7 +12,6 @@ import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
     styleUrls: []
 })
 export class LoginPopupComponent {
-    @Output() onClose: EventEmitter<void> = new EventEmitter();
     faEnvelope: IconDefinition = faEnvelope;
     faKey: IconDefinition = faKey;
     faArrowRightToBracket: IconDefinition = faArrowRightToBracket;
@@ -21,14 +21,12 @@ export class LoginPopupComponent {
         password: ''
     });
     loggingIn = false;
+    @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
     protected readonly InputType = InputType;
+    protected readonly Side = Side;
 
     constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService) {
 
-    }
-
-    close(): void {
-        this.onClose.emit();
     }
 
     logIn() {

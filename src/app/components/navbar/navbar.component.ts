@@ -83,12 +83,7 @@ export class NavbarComponent {
     }
 
     toggleAccountPopUp() {
-        if (this.showAccountPopUp || this.showHamburgerMenu) {
-            this.setAccountPopUpVisibility(false);
-            this.showHamburgerMenu = false;
-        } else {
-            this.setAccountPopUpVisibility(true);
-        }
+        this.setAccountPopUpVisibility(!this.showAccountPopUp);
     }
 
     setAccountPopUpVisibility(visibility: boolean) {
@@ -96,12 +91,7 @@ export class NavbarComponent {
     }
 
     toggleHamburgerMenu() {
-        if (this.showAccountPopUp || this.showHamburgerMenu) {
-            this.setAccountPopUpVisibility(false);
-            this.setHamburgerMenuVisibility(false);
-        } else {
-            this.setHamburgerMenuVisibility(true);
-        }
+        this.setHamburgerMenuVisibility(!this.showHamburgerMenu);
     }
 
     setHamburgerMenuVisibility(visibility: boolean) {

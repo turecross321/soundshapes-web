@@ -39,6 +39,8 @@ import {BorderComponent} from './components/border/border.component';
 import {CodeBlockComponent} from './components/code-block/code-block.component';
 import {ToastComponent} from './components/toast/toast.component';
 import {ToastMessageComponent} from './components/toast-message/toast-message.component';
+import {ClickedOutsideDirective} from './directives/clicked-outside.directive';
+import {NavbarPopupComponent} from './components/navbar-popup/navbar-popup.component';
 
 @NgModule({
     declarations: [
@@ -73,6 +75,8 @@ import {ToastMessageComponent} from './components/toast-message/toast-message.co
         CodeBlockComponent,
         ToastComponent,
         ToastMessageComponent,
+        ClickedOutsideDirective,
+        NavbarPopupComponent,
     ],
     imports: [
         BrowserModule,

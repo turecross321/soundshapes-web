@@ -1,4 +1,4 @@
-<div class="bg-dark-background text-light p-4 rounded-lg grid grid-cols-1 gap-2">
+<app-navbar-popup [side]="Side.Right">
     <form (ngSubmit)="logIn()" [formGroup]="loginForm" class="grid grid-cols-1 gap-2 navbar-text-highlight">
         <app-input-field [fGroup]="loginForm" [faIcon]="faEnvelope" [light]="false" class="w-full"
                          fControlName="email"
@@ -10,8 +10,8 @@
                                     label="Log in"></app-navbar-dropdown-button>
     </form>
     <app-divider></app-divider>
-    <app-navbar-dropdown-button (click)="close()" [faIcon]="faKey" label="Reset Password"
-                                routerLink="resetPassword"></app-navbar-dropdown-button>
-    <app-navbar-dropdown-button (click)="close()" [faIcon]="faUserPlus" label="Register"
-                                routerLink="register"></app-navbar-dropdown-button>
-</div>
+    <app-navbar-dropdown-button (click)="onClose.emit()" [faIcon]="faKey"
+                                label="Reset Password" routerLink="resetPassword"></app-navbar-dropdown-button>
+    <app-navbar-dropdown-button (click)="onClose.emit()" [faIcon]="faUserPlus"
+                                label="Register" routerLink="register"></app-navbar-dropdown-button>
+</app-navbar-popup>

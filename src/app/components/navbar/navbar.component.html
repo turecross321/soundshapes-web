@@ -39,14 +39,17 @@
 
 <!-- account popups -->
 <div *ngIf="showAccountPopUp" [ngSwitch]="loggedIn()">
-    <app-login-popup *ngSwitchCase="false" class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-login-popup>
-    <app-my-profile-popup (onClose)="setAccountPopUpVisibility(false)" *ngSwitchCase="true"
-                          class="absolute left-0 right-0 lg:left-auto lg:w-96 m-1"></app-my-profile-popup>
+    <app-login-popup (clickedOutside)="setAccountPopUpVisibility(false)" (onClose)="setAccountPopUpVisibility(false)"
+                     *ngSwitchCase="false"
+                     appClickedOutside></app-login-popup>
+    <app-my-profile-popup (clickedOutside)="setAccountPopUpVisibility(false)"
+                          (onClose)="setAccountPopUpVisibility(false)" *ngSwitchCase="true"
+                          appClickedOutside></app-my-profile-popup>
 </div>
 
 <!-- hamburger menu -->
 <div *ngIf="showHamburgerMenu" class="lg:hidden">
-    <div class="absolute left-0 right-0 m-1 bg-dark-background text-light p-4 rounded-lg grid grid-cols-1 gap-2">
+    <app-navbar-popup (clickedOutside)="setHamburgerMenuVisibility(false)" appClickedOutside>
         <ng-container *ngFor="let button of buttons; index as i;">
             <app-navbar-dropdown-button (click)="setHamburgerMenuVisibility(false)" [faIcon]="button.icon"
                                         [label]="button.label"
@@ -54,5 +57,5 @@
                                         [routerLink]="button.path"></app-navbar-dropdown-button>
             <app-divider *ngIf="i == PageType.home"></app-divider>
         </ng-container>
-    </div>
+    </app-navbar-popup>
 </div>
