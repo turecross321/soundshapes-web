@@ -64,7 +64,7 @@ export class RegisterPageComponent {
         try {
             await this.apiClient.register(code, email, password);
             await this.apiClient.logIn(email, password);
-            await this.router.navigateByUrl("/");
+            await this.router.navigateByUrl("/authentication");
         } catch (e) {
             this.loading = false;
         }
