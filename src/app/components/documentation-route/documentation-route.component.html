@@ -24,7 +24,7 @@
                     <app-text-with-icon [faIcon]="faKey" text=""></app-text-with-icon>
                 </app-tooltip>
 
-                <app-tooltip *ngIf="route.MinimumPermissionsType != PermissionsType.Default"
+                <app-tooltip *ngIf="route.MinimumPermissionsType != null"
                              [text]="minimumPermissionsTooltip()">
                     <app-text-with-icon [faIcon]="faUserShield"
                                         [text]="minimumPermissionsString()"></app-text-with-icon>

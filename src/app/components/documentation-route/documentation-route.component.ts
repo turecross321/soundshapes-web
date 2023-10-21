@@ -26,11 +26,11 @@ export class DocumentationRouteComponent {
         return parameter.Name;
     }
 
-    minimumPermissionsString() {
-        return PermissionsType[this.route.MinimumPermissionsType];
+    minimumPermissionsString() : string {
+        return PermissionsType[this.route.MinimumPermissionsType!];
     }
 
-    minimumPermissionsTooltip() {
-        return "Requires " + PermissionsType[this.route.MinimumPermissionsType] + " permissions or higher";
+    minimumPermissionsTooltip() : string  {
+        return "Requires " + PermissionsType[this.route.MinimumPermissionsType!] + " permissions or higher.";
     }
 }

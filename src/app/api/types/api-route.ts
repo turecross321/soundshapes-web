@@ -7,7 +7,7 @@ export interface ApiRoute {
     RouteUri: string;
     Summary: string;
     AuthenticationRequired: boolean;
-    MinimumPermissionsType: PermissionsType;
+    MinimumPermissionsType: PermissionsType | null;
     Parameters: ApiParameter[];
     PotentialErrors: ApiDocumentationError[];
 }

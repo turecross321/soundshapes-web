@@ -174,7 +174,8 @@ export class ApiClientService {
                 this.toastService.error("???", "Got 403 despite being logged in?");
             } else {
                 const res = e.error as ApiResponse<null>;
-                this.toastService.error(res.Error?.Name ?? "Unknown error", res.Error?.Message ?? "A description was not provided.",);
+                let errorName = e.statusText;
+                this.toastService.error(e.status + " | " + errorName, res.Error?.Message ?? "A description was not provided.");
             }
             throw e;
         }
