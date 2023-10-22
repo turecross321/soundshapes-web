@@ -9,7 +9,7 @@
         </div>
 
         <!-- actions -->
-        <div class="flex gap-1">
+        <div class="flex gap-1 flex-col lg:flex-row">
             <app-generic-button (click)="authorize(false)" *ngIf="!ip.Authorized || ip.OneTimeUse"
                                 [faIcon]="faCheckCircle"
                                 label="Always Allow"></app-generic-button>
