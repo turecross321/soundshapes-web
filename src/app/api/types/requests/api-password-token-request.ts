@@ -1,3 +1,3 @@
 export interface ApiPasswordTokenRequest {
-    Email: string;
+    email: string;
 }

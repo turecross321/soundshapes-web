@@ -1,4 +1,4 @@
 export interface ApiLogInRequest {
-    Email: string,
-    PasswordSha512: string
+    email: string,
+    passwordSha512: string
 }

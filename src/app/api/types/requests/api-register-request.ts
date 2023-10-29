@@ -1,6 +1,6 @@
 export interface ApiRegisterRequest {
-    RegistrationCode: string;
-    Email: string;
-    PasswordSha512: string;
-    AcceptEula: boolean;
+    registrationCode: string;
+    email: string;
+    passwordSha512: string;
+    acceptEula: boolean;
 }

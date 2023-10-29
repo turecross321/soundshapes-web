@@ -1,7 +1,7 @@
 export interface ApiGameIp {
-    IpAddress: string;
-    Authorized: boolean;
-    OneTimeUse: boolean;
-    CreationDate: number;
-    ModificationDate: number;
+    ipAddress: string;
+    authorized: boolean;
+    oneTimeUse: boolean;
+    creationDate: Date;
+    modificationDate: Date;
 }

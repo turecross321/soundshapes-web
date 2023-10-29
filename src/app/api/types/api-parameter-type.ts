@@ -1,4 +1,4 @@
 export enum ParameterType {
-    Route = "Route",
-    Query = "Query"
+    route = "route",
+    query = "query"
 }

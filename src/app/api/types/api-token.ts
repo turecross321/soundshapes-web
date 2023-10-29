@@ -1,5 +1,5 @@
-export interface ApiToken {
-  Id: string;
-  CreationDate: number;
-  ExpiryDate: number;
+ export interface ApiToken {
+  id: string;
+  creationDate: Date;
+  expiryDate: Date;
 }

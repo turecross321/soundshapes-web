@@ -10,7 +10,6 @@ import {ApiRefreshTokenRequest} from "./types/requests/api-refresh-token-request
 import {ApiGameAuthenticationSettings} from "./types/api-game-authentication-settings";
 import {ApiGameIp} from "./types/api-game-ip";
 import {ApiAuthenticateIpRequest} from "./types/requests/api-authenticate-ip-request";
-import {unixToDate} from "../date-convert";
 import {ApiEula} from "./types/api-eula";
 import {ApiRegisterRequest} from "./types/requests/api-register-request";
 import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-request";
@@ -51,12 +50,12 @@ export class ApiClientService {
     }
 
     async logIn(email: string, password: string) {
-        const body: ApiLogInRequest = {Email: email, PasswordSha512: await hash(password)};
+        const body: ApiLogInRequest = {email: email, passwordSha512: await hash(password)};
         const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
-        this.token = response.Data!.AccessToken;
-        this.user = response.Data!.User;
-        this.saveRefreshToken(response.Data!.RefreshToken);
-        this.toastService.success("Welcome!", `Successfully logged in as ${this.user.Username}`,);
+        this.token = response.data!.accessToken;
+        this.user = response.data!.user;
+        this.saveRefreshToken(response.data!.refreshToken);
+        this.toastService.success("Welcome!", `Successfully logged in as ${this.user.username}`,);
     }
 
     async getAuthenticationSettings(): Promise<ApiResponse<ApiGameAuthenticationSettings>> {
@@ -68,11 +67,11 @@ export class ApiClientService {
     }
 
     async removeIp(ip: ApiGameIp): Promise<ApiResponse<null>> {
-        return await this.makeRequest<null>("DELETE", "gameAuth/ip/address/" + ip.IpAddress);
+        return await this.makeRequest<null>("DELETE", "gameAuth/ip/address/" + ip.ipAddress);
     }
 
     async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean): Promise<ApiResponse<null>> {
-        const body: ApiAuthenticateIpRequest = {IpAddress: ip.IpAddress, OneTimeUse: oneTimeUse}
+        const body: ApiAuthenticateIpRequest = {ipAddress: ip.ipAddress, oneTimeUse: oneTimeUse}
         return await this.makeRequest<null>("POST", "gameAuth/ip/authorize", body);
     }
 
@@ -82,22 +81,22 @@ export class ApiClientService {
 
     async register(code: string, email: string, password: string): Promise<ApiResponse<null>> {
         const body: ApiRegisterRequest = {
-            RegistrationCode: code,
-            Email: email,
-            PasswordSha512: await hash(password),
-            AcceptEula: true
+            registrationCode: code,
+            email: email,
+            passwordSha512: await hash(password),
+            acceptEula: true
         };
 
         return await this.makeRequest<null>("POST", "account/register", body);
     }
 
     async sendPasswordToken(email: string) {
-        const body: ApiPasswordTokenRequest = {Email: email};
+        const body: ApiPasswordTokenRequest = {email: email};
         return await this.makeRequest<null>("POST", "account/sendPasswordToken", body);
     }
 
     async setPassword(code: string, newPassword: string) {
-        const body: ApiSetPasswordRequest = {SetPasswordTokenId: code, NewPasswordSha512: await hash(newPassword)};
+        const body: ApiSetPasswordRequest = {setPasswordTokenId: code, newPasswordSha512: await hash(newPassword)};
         return await this.makeRequest<null>("POST", "account/setPassword", body);
     }
 
@@ -111,19 +110,18 @@ export class ApiClientService {
             return;
 
         const refreshToken: ApiToken = JSON.parse(refreshTokenJson);
-        const expiry: Date = unixToDate(refreshToken.ExpiryDate);
 
-        if (new Date() > expiry) {
+        if (new Date() > new Date(refreshToken.expiryDate)) {
             this.deleteRefreshToken();
             this.toastService.info("Welcome back!", "Your refresh token has expired, so you will have to sign in manually in order to log in again.");
         }
 
-        const body: ApiRefreshTokenRequest = {RefreshTokenId: refreshToken.Id};
+        const body: ApiRefreshTokenRequest = {refreshTokenId: refreshToken.id};
         try {
             const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/refreshToken", body);
-            this.token = response.Data!.AccessToken;
-            this.user = response.Data!.User;
-            this.saveRefreshToken(response.Data!.RefreshToken);
+            this.token = response.data!.accessToken;
+            this.user = response.data!.user;
+            this.saveRefreshToken(response.data!.refreshToken);
         } catch (e) {
             if (!(e instanceof HttpErrorResponse)) {
                 throw e;
@@ -159,7 +157,7 @@ export class ApiClientService {
         try {
             return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {
                 body: body,
-                headers: {"Authorization": this.token?.Id ?? ""},
+                headers: {"Authorization": this.token?.id ?? ""},
                 params: params
 
             }));
@@ -175,7 +173,7 @@ export class ApiClientService {
             } else {
                 const res = e.error as ApiResponse<null>;
                 let errorName = e.statusText;
-                this.toastService.error(e.status + " | " + errorName, res.Error?.Message ?? "A description was not provided.");
+                this.toastService.error(e.status + " | " + errorName, res.error?.message ?? "A description was not provided.");
             }
             throw e;
         }

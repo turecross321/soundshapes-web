@@ -1,5 +1,5 @@
 export interface ApiGameAuthenticationSettings {
-    AllowPsnAuthentication: boolean;
-    AllowRpcnAuthentication: boolean;
-    AllowIpAuthentication: boolean;
+    allowPsnAuthentication: boolean;
+    allowRpcnAuthentication: boolean;
+    allowIpAuthentication: boolean;
 }

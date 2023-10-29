@@ -1,4 +1,4 @@
 export interface ApiSetPasswordRequest {
-    SetPasswordTokenId: string;
-    NewPasswordSha512: string;
+    setPasswordTokenId: string;
+    newPasswordSha512: string;
 }

@@ -28,11 +28,11 @@ export class AuthenticationPageComponent {
     }
 
     authorizedIps(): ApiGameIp[] {
-        return this.ips.filter(i => i.Authorized);
+        return this.ips.filter(i => i.authorized);
     }
 
     pendingIps(): ApiGameIp[] {
-        return this.ips.filter(i => !i.Authorized);
+        return this.ips.filter(i => !i.authorized);
     }
 
     showIpAuthentication() {
@@ -44,21 +44,21 @@ export class AuthenticationPageComponent {
         this.loadedConfiguration = false;
         const response: ApiResponse<ApiGameAuthenticationSettings> = await this.apiClient.getAuthenticationSettings();
         this.loadedConfiguration = true;
-        this.settings = response.Data!;
+        this.settings = response.data!;
     }
 
     changePsn(newValue: boolean) {
-        this.settings!.AllowPsnAuthentication = newValue;
+        this.settings!.allowPsnAuthentication = newValue;
         this.uploadSettings();
     }
 
     changeRpcn(newValue: boolean) {
-        this.settings!.AllowRpcnAuthentication = newValue;
+        this.settings!.allowRpcnAuthentication = newValue;
         this.uploadSettings();
     }
 
     changeIp(newValue: boolean) {
-        this.settings!.AllowIpAuthentication = newValue;
+        this.settings!.allowIpAuthentication = newValue;
         this.uploadSettings();
 
         if (newValue) {
@@ -74,7 +74,7 @@ export class AuthenticationPageComponent {
     async fetchIps() {
         this.loadingIps = true;
         const response = await this.apiClient.getGameIps();
-        this.ips = response.Data!;
+        this.ips = response.data!;
         this.loadingIps = false;
     }
 
@@ -85,9 +85,9 @@ export class AuthenticationPageComponent {
     }
 
     async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean) {
-        ip.OneTimeUse = oneTimeUse;
-        ip.Authorized = true;
-        ip.ModificationDate = new Date().getTime() / 1000;
+        ip.oneTimeUse = oneTimeUse;
+        ip.authorized = true;
+        ip.modificationDate = new Date();
         await this.apiClient.authorizeIp(ip, oneTimeUse);
     }
 }

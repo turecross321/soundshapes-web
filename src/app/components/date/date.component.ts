@@ -1,21 +1,23 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {formatDistance} from "date-fns";
-import {unixToDate} from "../../date-convert";
 
 @Component({
     selector: 'app-date',
     templateUrl: './date.component.html',
     styleUrls: []
 })
-export class DateComponent {
-    @Input() unix: number = 0;
+export class DateComponent implements OnInit {
+    @Input() date: Date = null!;
 
-    date(): string {
-        const date = unixToDate(this.unix);
-        return date.toLocaleDateString() + " : " + date.toLocaleTimeString();
+    formattedDate(): string {
+        return this.date.toLocaleDateString() + " : " + this.date.toLocaleTimeString();
     }
 
     moment(): string {
-        return formatDistance(unixToDate(this.unix), new Date(), {addSuffix: true, includeSeconds: false});
+        return formatDistance(this.date, new Date(), {addSuffix: true, includeSeconds: false});
+    }
+
+    ngOnInit(): void {
+        this.date = new Date(this.date);
     }
 }

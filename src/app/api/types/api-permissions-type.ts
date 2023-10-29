@@ -1,6 +1,6 @@
 export enum PermissionsType {
-  Banned = -1,
-  Default = 0,
-  Moderator = 1,
-  Administrator = 2
+  banned = -1,
+  default = 0,
+  moderator = 1,
+  administrator = 2
 }

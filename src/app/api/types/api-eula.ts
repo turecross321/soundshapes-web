@@ -1,5 +1,5 @@
 export interface ApiEula {
-    CustomContent: string;
-    License: string;
-    GitRepo: string;
+    customContent: string;
+    license: string;
+    gitRepo: string;
 }

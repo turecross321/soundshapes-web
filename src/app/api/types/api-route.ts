@@ -3,11 +3,11 @@ import {ApiParameter} from "./api-parameter";
 import {ApiDocumentationError} from "./api-documentation-error";
 
 export interface ApiRoute {
-    Method: string;
-    RouteUri: string;
-    Summary: string;
-    AuthenticationRequired: boolean;
-    MinimumPermissionsType: PermissionsType | null;
-    Parameters: ApiParameter[];
-    PotentialErrors: ApiDocumentationError[];
+    method: string;
+    routeUri: string;
+    summary: string;
+    authenticationRequired: boolean;
+    minimumPermissionsType: PermissionsType | null;
+    parameters: ApiParameter[];
+    potentialErrors: ApiDocumentationError[];
 }

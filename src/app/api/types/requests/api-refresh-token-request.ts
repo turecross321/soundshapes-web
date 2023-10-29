@@ -1,3 +1,3 @@
 export interface ApiRefreshTokenRequest {
-    RefreshTokenId: string;
+    refreshTokenId: string;
 }

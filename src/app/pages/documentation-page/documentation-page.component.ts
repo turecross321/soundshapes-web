@@ -20,7 +20,7 @@ export class DocumentationPageComponent {
     async fetchDocs() {
         this.loading = true;
         const response: ApiResponse<ApiRoute[]> = await this.apiClient.getDocumentation();
-        this.routes = this.routes.concat(response.Data!);
+        this.routes = this.routes.concat(response.data!);
         this.loading = false;
     }
 }

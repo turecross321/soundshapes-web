@@ -18,19 +18,19 @@ export class DocumentationRouteComponent {
     protected readonly PermissionsType = PermissionsType;
 
     paramString(parameter: ApiParameter) {
-        if (parameter.Type == ParameterType.Query)
-            return "?" + parameter.Name;
-        else if (parameter.Type == ParameterType.Route)
-            return "{" + parameter.Name + "}";
+        if (parameter.type == ParameterType.query)
+            return "?" + parameter.name;
+        else if (parameter.type == ParameterType.route)
+            return "{" + parameter.name + "}";
 
-        return parameter.Name;
+        return parameter.name;
     }
 
     minimumPermissionsString() : string {
-        return PermissionsType[this.route.MinimumPermissionsType!];
+        return PermissionsType[this.route.minimumPermissionsType!];
     }
 
     minimumPermissionsTooltip() : string  {
-        return "Requires " + PermissionsType[this.route.MinimumPermissionsType!] + " permissions or higher.";
+        return "Requires " + PermissionsType[this.route.minimumPermissionsType!] + " permissions or higher.";
     }
 }

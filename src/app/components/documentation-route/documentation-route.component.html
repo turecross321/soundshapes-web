@@ -7,24 +7,24 @@
                 <pre
                         [ngClass]="
                         {
-                        'bg-api-retrieve' : route.Method == 'GET',
-                        'bg-api-push' : route.Method == 'POST' ||  route.Method == 'PUT' ||  route.Method == 'PATCH',
-                        'bg-api-remove' : route.Method == 'DELETE'
+                        'bg-api-retrieve' : route.method == 'GET',
+                        'bg-api-push' : route.method == 'POST' ||  route.method == 'PUT' ||  route.method == 'PATCH',
+                        'bg-api-remove' : route.method == 'DELETE'
                         }
 "
-                        class="rounded-lg px-2 py-1 flex text-light text-xl w-fit">{{route.Method}}</pre>
-                    <pre class="text-xl overflow-auto">{{route.RouteUri}}</pre>
+                        class="rounded-lg px-2 py-1 flex text-light text-xl w-fit">{{route.method}}</pre>
+                    <pre class="text-xl overflow-auto">{{route.routeUri}}</pre>
                 </div>
 
             </div>
 
             <!-- permissions-->
             <div>
-                <app-tooltip *ngIf="route.AuthenticationRequired" text="Authentication is required">
+                <app-tooltip *ngIf="route.authenticationRequired" text="Authentication is required">
                     <app-text-with-icon [faIcon]="faKey" text=""></app-text-with-icon>
                 </app-tooltip>
 
-                <app-tooltip *ngIf="route.MinimumPermissionsType != null"
+                <app-tooltip *ngIf="route.minimumPermissionsType != null"
                              [text]="minimumPermissionsTooltip()">
                     <app-text-with-icon [faIcon]="faUserShield"
                                         [text]="minimumPermissionsString()"></app-text-with-icon>
@@ -35,30 +35,30 @@
         <!-- summary -->
         <div>
             <span class="font-bold text-lg">Summary</span>
-            <p>{{route.Summary}}</p>
+            <p>{{route.summary}}</p>
         </div>
 
         <!-- parameters -->
-        <div *ngIf="route.Parameters.length > 0">
+        <div *ngIf="route.parameters.length > 0">
             <span class="font-bold text-lg">Parameters</span>
             <div class="flex flex-col gap-2">
-                <ng-container *ngFor="let param of route.Parameters;">
+                <ng-container *ngFor="let param of route.parameters;">
                     <div class="flex gap-2 items-start flex-col lg:flex-row">
                         <app-code-block [text]="paramString(param)"></app-code-block>
-                        <p>{{param.Summary}}</p>
+                        <p>{{param.summary}}</p>
                     </div>
                 </ng-container>
             </div>
         </div>
 
         <!-- errors -->
-        <div *ngIf="route.PotentialErrors.length > 0">
+        <div *ngIf="route.potentialErrors.length > 0">
             <span class="font-bold text-lg">Potential Errors</span>
             <div class="flex flex-col gap-2">
-                <ng-container *ngFor="let error of route.PotentialErrors;">
+                <ng-container *ngFor="let error of route.potentialErrors;">
                     <div class="flex gap-2 items-start flex-col lg:flex-row">
-                        <app-code-block [text]="error.Name"></app-code-block>
-                        <p>{{error.OccursWhen}}</p>
+                        <app-code-block [text]="error.name"></app-code-block>
+                        <p>{{error.occursWhen}}</p>
                     </div>
                 </ng-container>
             </div>

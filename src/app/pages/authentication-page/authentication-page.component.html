@@ -13,7 +13,7 @@
                     <div class="flex flex-col gap-1">
                         <label>PSN Authentication</label>
                         <app-two-way-toggle (onClick)="changePsn($event)"
-                                            [toggled]="settings?.AllowPsnAuthentication!"
+                                            [toggled]="settings?.allowPsnAuthentication!"
                                             class="w-full"></app-two-way-toggle>
                     </div>
 
@@ -21,14 +21,14 @@
                     <div class="flex flex-col gap-1">
                         <label>RPCN Authentication</label>
                         <app-two-way-toggle (onClick)="changeRpcn($event)"
-                                            [toggled]="settings?.AllowRpcnAuthentication!"
+                                            [toggled]="settings?.allowRpcnAuthentication!"
                                             class="w-full"></app-two-way-toggle>
                     </div>
 
                     <!-- IP authentication -->
                     <div class="flex flex-col gap-1">
                         <label>IP Authentication</label>
-                        <app-two-way-toggle (onClick)="changeIp($event)" [toggled]="settings?.AllowIpAuthentication!"
+                        <app-two-way-toggle (onClick)="changeIp($event)" [toggled]="settings?.allowIpAuthentication!"
                                             class="w-full"></app-two-way-toggle>
                     </div>
                 </div>
@@ -44,21 +44,21 @@
 
                 <!-- right -->
                 <div>
-                    <app-generic-button (click)="fetchIps()" *ngIf="settings?.AllowIpAuthentication && showIps"
+                    <app-generic-button (click)="fetchIps()" *ngIf="settings?.allowIpAuthentication && showIps"
                                         [faIcon]="faRedo"
                                         label="Refresh"></app-generic-button>
                 </div>
             </div>
             <app-border class="flex flex-col gap-2 h-full">
                 <!-- disabled -->
-                <div *ngIf="!settings?.AllowIpAuthentication"
+                <div *ngIf="!settings?.allowIpAuthentication"
                      class="w-full h-full flex flex-col justify-center items-center gap-2">
                     <p>IP Authentication is currently disabled.</p>
                     <app-generic-button (click)="changeIp(true)" [faIcon]="null" label="Enable"></app-generic-button>
                 </div>
 
                 <!-- sensitive -->
-                <div *ngIf="settings?.AllowIpAuthentication && !showIps"
+                <div *ngIf="settings?.allowIpAuthentication && !showIps"
                      class="w-full h-full flex flex-col justify-center items-center gap-2">
                     <p>This contains personal information. Proceed with caution.</p>
                     <app-generic-button (click)="showIpAuthentication()" [faIcon]="null"
@@ -66,7 +66,7 @@
                 </div>
 
                 <!-- actual content -->
-                <div *ngIf="settings?.AllowIpAuthentication && showIps"
+                <div *ngIf="settings?.allowIpAuthentication && showIps"
                      [ngSwitch]="loadingIps" class="w-full h-full flex flex-col justify-center items-center gap-2">
                     <app-loading *ngSwitchCase="true"></app-loading>
                     <div *ngSwitchCase="false" class="w-full h-full flex flex-col gap-4">
