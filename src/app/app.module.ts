@@ -15,7 +15,6 @@ import {InputFieldComponent} from './components/input-field/input-field.componen
 import {NavbarDropdownButtonComponent} from './components/navbar-dropdown-button/navbar-dropdown-button.component';
 import {DividerComponent} from './components/divider/divider.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-//import {ToastrModule} from "ngx-toastr";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {MyProfilePopupComponent} from './components/my-profile-popup/my-profile-popup.component';
 import {NotFoundPageComponent} from './pages/not-found-page/not-found-page.component';
@@ -42,6 +41,7 @@ import {ToastMessageComponent} from './components/toast-message/toast-message.co
 import {ClickedOutsideDirective} from './directives/clicked-outside.directive';
 import {NavbarPopupComponent} from './components/navbar-popup/navbar-popup.component';
 import {BannedPageComponent} from './pages/banned-page/banned-page.component';
+import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
 
 @NgModule({
     declarations: [
@@ -79,6 +79,7 @@ import {BannedPageComponent} from './pages/banned-page/banned-page.component';
         ClickedOutsideDirective,
         NavbarPopupComponent,
         BannedPageComponent,
+        SettingsPageComponent,
     ],
     imports: [
         BrowserModule,

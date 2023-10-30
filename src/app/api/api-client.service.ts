@@ -19,6 +19,7 @@ import {PageData} from "../types/page-data";
 import {hash} from "../sha512";
 import {firstValueFrom} from "rxjs/internal/firstValueFrom";
 import {ToastService} from "../services/toast.service";
+import {Router} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -28,7 +29,7 @@ export class ApiClientService {
 
     hasTriedLoggedInAutomatically = false;
 
-    constructor(private httpClient: HttpClient, private toastService: ToastService) {
+    constructor(private httpClient: HttpClient, private toastService: ToastService, private router : Router) {
         this.logInWithRefreshToken().then(() => {
             this.hasTriedLoggedInAutomatically = true;
         });
@@ -38,7 +39,10 @@ export class ApiClientService {
         return await this.makeRequest<ApiGameIp[]>("GET", "gameAuth/ip");
     }
 
-    loggedIn(): boolean {
+    loggedIn(): boolean | undefined {
+        if (!this.hasTriedLoggedInAutomatically)
+            return undefined;
+
         return this.token != undefined;
     }
 
@@ -47,6 +51,7 @@ export class ApiClientService {
         this.token = undefined;
         this.deleteRefreshToken();
         this.toastService.success("Goodbye!", "You have been logged out.");
+        await this.router.navigateByUrl("/");
     }
 
     async logIn(email: string, password: string) {

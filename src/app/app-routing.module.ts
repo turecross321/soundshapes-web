@@ -11,18 +11,19 @@ import {EulaPageComponent} from "./pages/eula-page/eula-page.component";
 import {PasswordResetPageComponent} from "./pages/password-reset-page/password-reset-page.component";
 import {DocumentationPageComponent} from "./pages/documentation-page/documentation-page.component";
 import {BannedPageComponent} from "./pages/banned-page/banned-page.component";
+import {authGuard} from "./auth/auth.guard";
 
 const routes: Routes = [
     {path: '', component: HomePageComponent},
     {path: 'levels', component: LevelsPageComponent},
     {path: 'albums', component: AlbumsPageComponent},
     {path: 'users', component: UsersPageComponent},
-    {path: 'authentication', component: AuthenticationPageComponent},
-    {path: 'register', component: RegisterPageComponent},
+    {path: 'authentication', component: AuthenticationPageComponent, canActivate: [authGuard]},
+    {path: 'register', component: RegisterPageComponent, canActivate: [!authGuard]},
     {path: 'eula', component: EulaPageComponent},
-    {path: 'resetPassword', component: PasswordResetPageComponent},
-    {path: 'documentation', component: DocumentationPageComponent},
-    {path: 'banned', component: BannedPageComponent},
+    {path: 'resetPassword', component: PasswordResetPageComponent, canActivate: [!authGuard]},
+    {path: 'documentation', component: DocumentationPageComponent, },
+    {path: 'banned', component: BannedPageComponent, canActivate: [authGuard]},
     {path: '**', component: NotFoundPageComponent}
 ];
 

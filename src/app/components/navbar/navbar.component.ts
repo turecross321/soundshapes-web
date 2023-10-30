@@ -74,7 +74,7 @@ export class NavbarComponent {
         });
     }
 
-    loggedIn(): boolean {
+    loggedIn(): boolean | undefined {
         return this.ApiClient.loggedIn();
     }
 
