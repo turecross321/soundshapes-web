@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ApiGameIp} from "../../api/types/api-game-ip";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {faCheckCircle, faStopwatch, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-game-ip',
@@ -15,6 +16,7 @@ export class GameIpComponent {
     faCheckCircle: IconDefinition = faCheckCircle;
     faStopwatch: IconDefinition = faStopwatch;
     faTrashAlt: IconDefinition = faTrashAlt;
+    protected readonly ElementStyle = ElementStyle;
 
     remove() {
         this.onRemove.emit();

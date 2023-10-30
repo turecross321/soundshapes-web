@@ -1,4 +1,5 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-border',
@@ -6,5 +7,6 @@ import {Component} from '@angular/core';
     styleUrls: []
 })
 export class BorderComponent {
-
+    @Input() style: ElementStyle = ElementStyle.primary;
+    protected readonly ElementStyle = ElementStyle;
 }

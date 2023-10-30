@@ -1,0 +1,7 @@
+<div class="flex items-center justify-end">
+    <select (input)="choose($event)" [(ngModel)]="value"
+            class="appearance-none flex justify-between w-full gap-2 py-2 px-3 border-2 border-border rounded-lg bg-tertiary">
+        <option *ngFor="let option of options" [ngValue]="option.value">{{option.name}}</option>
+    </select>
+    <fa-icon [icon]="faChevronDown" class="text-sm leading-none fixed pr-3"></fa-icon>
+</div>

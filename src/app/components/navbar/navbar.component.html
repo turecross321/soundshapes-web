@@ -1,4 +1,4 @@
-<div class="bg-dark-background text-light px-6 py-4 flex justify-between shadow-api-remove">
+<div class="bg-navbar-background text-navbar-foreground px-6 py-4 flex justify-between shadow-api-remove">
 
     <!-- left wide side -->
     <div class="lg:flex items-center gap-4 hidden">
@@ -51,10 +51,10 @@
 <div *ngIf="showHamburgerMenu" class="lg:hidden">
     <app-navbar-popup (clickedOutside)="setHamburgerMenuVisibility(false)" appClickedOutside>
         <ng-container *ngFor="let button of buttons; index as i;">
-            <app-navbar-dropdown-button (click)="setHamburgerMenuVisibility(false)" [faIcon]="button.icon"
-                                        [label]="button.label"
-                                        [ngClass]="{'text-primary' : currentPage == i}"
-                                        [routerLink]="button.path"></app-navbar-dropdown-button>
+            <app-navbar-popup-button (click)="setHamburgerMenuVisibility(false)" [faIcon]="button.icon"
+                                     [label]="button.label"
+                                     [ngClass]="{'text-primary' : currentPage == i}"
+                                     [routerLink]="button.path"></app-navbar-popup-button>
             <app-divider *ngIf="i == PageType.home"></app-divider>
         </ng-container>
     </app-navbar-popup>

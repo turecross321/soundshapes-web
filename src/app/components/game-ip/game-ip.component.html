@@ -1,4 +1,4 @@
-<app-border>
+<app-border [style]="ElementStyle.secondary">
     <div class="flex flex-col gap-2">
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-2">
@@ -10,12 +10,13 @@
 
         <!-- actions -->
         <div class="flex gap-1 flex-col lg:flex-row">
-            <app-generic-button (click)="authorize(false)" *ngIf="!ip.authorized || ip.oneTimeUse"
-                                [faIcon]="faCheckCircle"
-                                label="Always Allow"></app-generic-button>
-            <app-generic-button (click)="authorize(true)" *ngIf="!ip.authorized" [faIcon]="faStopwatch"
-                                label="Allow Once"></app-generic-button>
-            <app-generic-button (click)="remove()" [faIcon]="faTrashAlt" label="Remove"></app-generic-button>
+            <app-button (click)="authorize(false)" *ngIf="!ip.authorized || ip.oneTimeUse"
+                        [faIcon]="faCheckCircle"
+                        label="Always Allow"></app-button>
+            <app-button (click)="authorize(true)" *ngIf="!ip.authorized" [faIcon]="faStopwatch"
+                        label="Allow Once"></app-button>
+            <app-button (click)="remove()" [faIcon]="faTrashAlt" [style]="ElementStyle.dangerous"
+                        label="Remove"></app-button>
         </div>
     </div>
 

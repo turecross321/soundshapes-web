@@ -12,7 +12,7 @@ import {AlbumsPageComponent} from './pages/albums-page/albums-page.component';
 import {UsersPageComponent} from './pages/users-page/users-page.component';
 import {LoginPopupComponent} from './components/login-popup/login-popup.component';
 import {InputFieldComponent} from './components/input-field/input-field.component';
-import {NavbarDropdownButtonComponent} from './components/navbar-dropdown-button/navbar-dropdown-button.component';
+import {NavbarPopupButtonComponent} from './components/navbar-popup-button/navbar-popup-button.component';
 import {DividerComponent} from './components/divider/divider.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -22,7 +22,7 @@ import {AuthenticationPageComponent} from './pages/authentication-page/authentic
 import {TwoWayToggleComponent} from './components/two-way-toggle/two-way-toggle.component';
 import {ToggleButtonComponent} from './components/toggle-button/toggle-button.component';
 import {LoadingComponent} from './components/loading/loading.component';
-import {GenericButtonComponent} from './components/generic-button/generic-button.component';
+import {ButtonComponent} from './components/button/button.component';
 import {GameIpComponent} from './components/game-ip/game-ip.component';
 import {DateComponent} from './components/date/date.component';
 import {RegisterPageComponent} from './pages/register-page/register.component';
@@ -42,6 +42,8 @@ import {ClickedOutsideDirective} from './directives/clicked-outside.directive';
 import {NavbarPopupComponent} from './components/navbar-popup/navbar-popup.component';
 import {BannedPageComponent} from './pages/banned-page/banned-page.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
+import {DropdownComponent} from './components/dropdown/dropdown.component';
+import {ThemeService} from "./services/theme.service";
 
 @NgModule({
     declarations: [
@@ -53,7 +55,7 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
         UsersPageComponent,
         LoginPopupComponent,
         InputFieldComponent,
-        NavbarDropdownButtonComponent,
+        NavbarPopupButtonComponent,
         DividerComponent,
         MyProfilePopupComponent,
         NotFoundPageComponent,
@@ -61,7 +63,7 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
         TwoWayToggleComponent,
         ToggleButtonComponent,
         LoadingComponent,
-        GenericButtonComponent,
+        ButtonComponent,
         GameIpComponent,
         DateComponent,
         RegisterPageComponent,
@@ -80,6 +82,7 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
         NavbarPopupComponent,
         BannedPageComponent,
         SettingsPageComponent,
+        DropdownComponent,
     ],
     imports: [
         BrowserModule,
@@ -95,4 +98,14 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
     bootstrap: [AppComponent]
 })
 export class AppModule {
+    constructor(private themeService: ThemeService) {
+        if (themeService.isThemingSupported()) {
+            const theme: string | null = localStorage.getItem("theme");
+            if (theme) {
+                themeService.setTheme(theme);
+            } else {
+                themeService.setTheme("default");
+            }
+        }
+    }
 }

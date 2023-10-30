@@ -12,14 +12,14 @@ export class ToastService {
     }
 
     error(title: string, description: string) {
-        this.onNewMessage.emit({Type: ToastMessageType.Error, Title: title, Description: description});
+        this.onNewMessage.emit({type: ToastMessageType.error, title: title, description: description});
     }
 
     info(title: string, description: string) {
-        this.onNewMessage.emit({Type: ToastMessageType.Info, Title: title, Description: description});
+        this.onNewMessage.emit({type: ToastMessageType.info, title: title, description: description});
     }
 
     success(title: string, message: string) {
-        this.onNewMessage.emit({Type: ToastMessageType.Success, Title: title, Description: message});
+        this.onNewMessage.emit({type: ToastMessageType.success, title: title, description: message});
     }
 }

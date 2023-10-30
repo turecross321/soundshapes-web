@@ -1,14 +1,21 @@
 <div [formGroup]="fGroup"
-     class="flex justify-between w-full gap-2 py-2 px-3 border-2 border-border rounded-lg">
+     [ngClass]="{'pointer-events-none' : readOnly}"
+     class="flex justify-between w-full gap-2 py-2 px-3 border-2 border-border rounded-lg bg-tertiary">
     <div class="flex gap-2 w-full">
-        <fa-icon [fixedWidth]="true" [icon]="faIcon" [ngClass]="light ? 'text-placeholder' : 'text-lighter'"
+        <fa-icon [fixedWidth]="true" [icon]="faIcon"
+                 [ngClass]="{'text-foreground' : style == InputStyle.primary, 'text-foreground-tertiary' : style == InputStyle.secondary}"
                  size="lg"></fa-icon>
-        <input [formControlName]="fControlName" [id]="id" [ngClass]="light ? 'text-text' : 'text-lighter'"
+        <input [formControlName]="id"
+               [id]="id"
+               [ngClass]="{'text-foreground' : style == InputStyle.primary, 'text-foreground-tertiary' : style == InputStyle.secondary}"
                [placeholder]="placeholder"
+               [readonly]="readOnly"
                [type]="typeString"
+               [value]="startingValue"
                class="w-full bg-transparent focus:outline-none group placeholder-placeholder">
     </div>
     <div (click)="toggleVisibility()" *ngIf="toggleable">
-        <fa-icon [fixedWidth]="true" [icon]="toggleVisibilityIcon"></fa-icon>
+        <fa-icon [fixedWidth]="true" [icon]="faEye" [ngClass]="{'hidden' : !visible}"></fa-icon>
+        <fa-icon [fixedWidth]="true" [icon]="faEyeSlash" [ngClass]="{'hidden' : visible}"></fa-icon>
     </div>
 </div>

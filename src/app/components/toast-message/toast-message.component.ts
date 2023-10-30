@@ -12,12 +12,12 @@ export class ToastMessageComponent {
     @Input() message: ToastMessage = null!;
 
     faIcon() {
-        switch (this.message.Type) {
-            case ToastMessageType.Success:
+        switch (this.message.type) {
+            case ToastMessageType.success:
                 return faCheckCircle;
-            case ToastMessageType.Error:
+            case ToastMessageType.error:
                 return faTimesCircle
-            case ToastMessageType.Info:
+            case ToastMessageType.info:
                 return faInfoCircle;
         }
     }

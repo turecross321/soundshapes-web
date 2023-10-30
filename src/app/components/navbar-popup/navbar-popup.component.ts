@@ -7,6 +7,6 @@ import {Side} from "../../types/side";
     styleUrls: []
 })
 export class NavbarPopupComponent {
-    @Input() side: Side = Side.Left;
+    @Input() side: Side = Side.left;
     protected readonly Side = Side;
 }

@@ -1,11 +1,55 @@
-<app-page header="Settings">
-    <!-- account settings -->
-    <div class="flex flex-col gap-4">
-        <app-text-with-icon [faIcon]="faAddressBook" text="Account"></app-text-with-icon>
-        <app-border class="flex flex-col gap-2">
-            <div>
+<app-page [loading]="apiClient.loggedIn() != true" header="Settings">
+    <div class="flex flex-col lg:flex-row gap-4">
+        <!-- account settings -->
+        <div class="flex flex-col gap-4 w-full">
+            <app-text-with-icon [faIcon]="faAddressBook" text="Account"></app-text-with-icon>
+            <app-border>
+                <div class="flex flex-col gap-2">
+                    <!-- username -->
+                    <div class="flex flex-col gap-1">
+                        <label for="username">Username</label>
+                        <ng-form [formGroup]="usernameForm" class="flex gap-2">
+                            <app-input-field [fGroup]="usernameForm" [faIcon]="faAddressCard"
+                                             [readOnly]=true
+                                             [startingValue]="username()" class="w-full"
+                                             id="username"></app-input-field>
+                            <app-button [faIcon]="faPen" [label]="null"></app-button>
+                        </ng-form>
+                    </div>
 
-            </div>
-        </app-border>
+                    <!-- email -->
+                    <div class="flex flex-col gap-1">
+                        <label for="email">E-mail address</label>
+                        <ng-form [formGroup]="emailForm" class="flex gap-2">
+                            <app-input-field [fGroup]="emailForm" [faIcon]="faAddressCard"
+                                             [readOnly]=true
+                                             class="w-full" id="email" startingValue="******"></app-input-field>
+                            <app-button [faIcon]="faPen" [label]="null"
+                                        routerLink="/settings/setEmail"></app-button>
+                        </ng-form>
+                    </div>
+
+                    <!-- delete account -->
+                    <app-button class="w-full" label="Delete account"
+                                routerLink="/settings/deleteAccount"></app-button>
+                </div>
+            </app-border>
+        </div>
+
+        <!-- website settings -->
+        <div class="flex flex-col gap-4 w-full lg:w-1/3">
+            <app-text-with-icon [faIcon]="faGlobe" text="Website"></app-text-with-icon>
+            <app-border>
+                <div class="flex flex-col gap-2">
+
+                    <!-- theme -->
+                    <div *ngIf="themingSupported()" class="flex flex-col gap-1">
+                        <label for="theme">Theme</label>
+                        <app-dropdown (onChoose)="changeTheme($event)" [options]="themes" [value]="currentTheme()"
+                                      id="theme"></app-dropdown>
+                    </div>
+                </div>
+            </app-border>
+        </div>
     </div>
 </app-page>

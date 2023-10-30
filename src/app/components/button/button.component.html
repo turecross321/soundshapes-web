@@ -1,0 +1,7 @@
+<button [disabled]="disabled"
+        [ngClass]="{'bg-button-disabled-background' : disabled, 'hover:shadow hover:brightness-95' : !disabled,
+        'bg-primary text-foreground-secondary' : style == ElementStyle.primary, 'bg-secondary text-foreground' : style == ElementStyle.secondary, 'bg-dangerous' : style == ElementStyle.dangerous}"
+        class="px-4 py-2.5 rounded-lg bg-button-background flex gap-2 duration-100 w-full lg:w-auto">
+    <fa-icon *ngIf="faIcon != null" [icon]="faIcon!"></fa-icon>
+    <span *ngIf="label">{{label}}</span>
+</button>

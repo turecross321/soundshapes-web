@@ -5,6 +5,7 @@ import {ApiResponse} from "../../api/types/responses/api-response";
 import {ApiGameAuthenticationSettings} from "../../api/types/api-game-authentication-settings";
 import {ApiGameIp} from "../../api/types/api-game-ip";
 import {faBroadcastTower, faRedo, faWrench} from '@fortawesome/free-solid-svg-icons';
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-authentication-page',
@@ -22,6 +23,8 @@ export class AuthenticationPageComponent {
     ips: ApiGameIp[] = [];
     loadingIps: boolean = false;
     showIps: boolean = false;
+    protected readonly Element = Element;
+    protected readonly ElementStyle = ElementStyle;
 
     constructor(private apiClient: ApiClientService) {
         this.fetchConfiguration();

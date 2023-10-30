@@ -15,7 +15,7 @@ import {ApiRegisterRequest} from "./types/requests/api-register-request";
 import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-request";
 import {ApiSetPasswordRequest} from "./types/requests/api-set-password-request";
 import {ApiRoute} from "./types/api-route";
-import {PageData} from "../types/page-data";
+import {PageData} from "./types/responses/page-data";
 import {hash} from "../sha512";
 import {firstValueFrom} from "rxjs/internal/firstValueFrom";
 import {ToastService} from "../services/toast.service";
@@ -153,9 +153,9 @@ export class ApiClientService {
 
         if (pageData) {
             params = {
-                "from": pageData?.From ?? "",
-                "count": pageData?.Count ?? "",
-                "descending": pageData?.Descending ?? ""
+                "from": pageData?.from ?? "",
+                "count": pageData?.count ?? "",
+                "descending": pageData?.descending ?? ""
             }
         }
 

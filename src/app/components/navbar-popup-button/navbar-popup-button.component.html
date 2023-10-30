@@ -2,8 +2,8 @@
 <button [ngClass]="{
           'animate-pulse' : this.loading
         }"
-        class="flex w-full gap-2 py-2 px-3 rounded justify-between hover:bg-darker-background duration-100">
-    <div class="flex gap-2">
+        class="flex w-full gap-2 py-2 px-3 rounded justify-between hover:bg-navbar-popup-button-hover-background duration-100 items-center">
+    <div class="flex gap-2 items-center">
         <fa-icon [fixedWidth]="true" [icon]="faIcon" [ngClass]="{'!highlighted' : 'navbar-text'}" size="lg"></fa-icon>
         <span class="text-lg">{{label}}</span>
     </div>

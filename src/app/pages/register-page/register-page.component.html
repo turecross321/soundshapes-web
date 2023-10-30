@@ -6,25 +6,24 @@
     </div>
     <app-page class="w-full" header="Register">
         <div class="flex flex-col gap-2 w-full lg:w-2/3">
-            <form (ngSubmit)="register()" [formGroup]="registrationForm" class="flex flex-col gap-2 placeholder-icons">
+            <form (ngSubmit)="register()" [formGroup]="registrationForm" class="flex flex-col gap-2">
                 <div class="flex gap-2">
                     <label for="code">Registration code</label>
                     <app-tooltip text="You get this by connecting to the server.">
                         <fa-icon [icon]="faQuestionCircle" style="color: #181515"></fa-icon>
                     </app-tooltip>
                 </div>
-                <app-input-field [fGroup]="registrationForm" [faIcon]="faHashtag" fControlName="code"
+                <app-input-field [fGroup]="registrationForm" [faIcon]="faHashtag"
                                  id="code" placeholder="12345678"></app-input-field>
                 <label for="email">E-mail address</label>
-                <app-input-field [fGroup]="registrationForm" [faIcon]="faEnvelope" fControlName="email"
+                <app-input-field [fGroup]="registrationForm" [faIcon]="faEnvelope"
                                  id="email" placeholder="example@mail.com"></app-input-field>
                 <label for="password">Enter & confirm your password</label>
                 <app-input-field [fGroup]="registrationForm" [faIcon]="faKey" [type]="InputType.Password"
-                                 fControlName="password" id="password"
+                                 id="password"
                                  placeholder="Password"></app-input-field>
                 <app-input-field [fGroup]="registrationForm" [faIcon]="faKey" [type]="InputType.Password"
-                                 fControlName="passwordConfirm"
-                                 placeholder="Password"></app-input-field>
+                                 id="passwordConfirm" placeholder="Password"></app-input-field>
             </form>
             <div>
                 <p>By clicking “Register” you agree to our
@@ -33,9 +32,9 @@
             </div>
             <div class="flex gap-2 items-center">
                 <app-tooltip [text]="validForm().message">
-                    <app-generic-button (click)="register()" [disabled]="!validForm().valid || loading"
-                                        [faIcon]="faUserPlus"
-                                        label="Register"></app-generic-button>
+                    <app-button (click)="register()" [disabled]="!validForm().valid || loading"
+                                [faIcon]="faUserPlus"
+                                label="Register"></app-button>
                 </app-tooltip>
                 <app-loading *ngIf="loading"></app-loading>
             </div>

@@ -1,32 +1,41 @@
 /** @type {import('tailwindcss').Config} */
+
+const {createThemes} = require('tw-colors');
+const {de} = require("date-fns/locale");
+
+const defaultColors = {
+    "background": "#2F2A2A",
+    "navbar-background": "#181515",
+    "navbar-popup-button-hover-background": "#121010",
+    "navbar-foreground": "#FFF0E4",
+    "form-background": "rgba(0,0,0,0)",
+    "container-background": "#FFF0E4",
+    "border": "#EED4BF",
+    "divider": "#61493C",
+
+    "foreground": "#181515",
+    "foreground-secondary": "#FFF0E4",
+    "foreground-tertiary": "#FFDCBF",
+    "placeholder": "#8A7261",
+    "gentle": "#C3C3C3",
+
+    "primary": "#F07167",
+    "secondary": "#F4DECC",
+    "tertiary": "rgba(0,0,0,0)",
+    "dangerous": "#F4DECC",
+
+    "api-retrieve": "#79c501",
+    "api-remove": "#ea574d",
+    "api-push": "#eeb231",
+}
+
 module.exports = {
     content: [
         "./src/**/*.{html,ts}",
     ],
     theme: {
         colors: {
-            "primary": "#F07167",
-            "button-lighter-background": "#ffead6",
-            "button-background": "#F4DECC",
-            "button-darker-background": "#e5d2c3",
-            "text": "#181515",
-            "placeholder": "#8A7261",
-
-            "dark-background": "#181515",
-            "darker-background": "#121010",
-            "light": "#FFF0E4",
-            "lighter": "#FFDCBF",
-            "light-divider": "#FFF0E4",
-
-            "divider": "#61493C",
-            "border": "#EED4BF",
-            "background": "#2F2A2A",
-            "container-background": "#FFF0E4",
-            "transparent": "rgba(0,0,0,0)",
-
-            "api-retrieve": "#79c501",
-            "api-remove": "#ea574d",
-            "api-push": "#eeb231",
+            "transparent": "rgba(0,0,0,0)"
         },
         extend: {
             keyframes: {
@@ -42,6 +51,83 @@ module.exports = {
             }
         },
     },
-    plugins: [],
+    plugins: [createThemes({
+        default: defaultColors,
+        dark: {
+            "background": "#0f0f0f",
+            "navbar-background": "#0a0a0a",
+            "navbar-popup-button-hover-background": "#121010",
+            "navbar-foreground": "#FFFFFF",
+            "form-background": "rgba(0,0,0,0)",
+            "container-background": "#141414",
+            "border": "#1c1c1c",
+            "divider": "#3f3f3f",
+
+            "foreground": "#FFFFFF",
+            "foreground-secondary": "#000000",
+            "foreground-tertiary": "#FFDCBF",
+            "placeholder": "#605a5a",
+            "gentle": "#C3C3C3",
+
+            "primary": "#d9d9d9",
+            "secondary": "#212121",
+            "tertiary": "rgba(0,0,0,0)",
+            "dangerous": "#212121",
+
+            "api-retrieve": "#79c501",
+            "api-remove": "#ea574d",
+            "api-push": "#eeb231",
+        },
+        monochrome: {
+            "background": "#ffffff",
+            "navbar-background": "#f6f5f5",
+            "navbar-popup-button-hover-background": "#cbcbcb",
+            "navbar-foreground": "#000000",
+            "form-background": "rgba(0,0,0,0)",
+            "container-background": "#ffffff",
+            "border": "#000000",
+            "divider": "#000000",
+
+            "foreground": "#000000",
+            "foreground-secondary": "#ffffff",
+            "foreground-tertiary": "#FFDCBF",
+            "placeholder": "#605a5a",
+            "gentle": "#C3C3C3",
+
+            "primary": "#a4a4a4",
+            "secondary": "#e7e7e7",
+            "tertiary": "rgb(255,255,255)",
+            "dangerous": "#e7e7e7",
+
+            "api-retrieve": "#79c501",
+            "api-remove": "#ea574d",
+            "api-push": "#eeb231",
+        },
+        refresh: {
+            "background": "#0F0814",
+            "navbar-background": "#261731",
+            "navbar-popup-button-hover-background": "#1e1226",
+            "navbar-foreground": "#F7F7F7",
+            "form-background": "#2A1936",
+            "container-background": "#1B0F23",
+            "border": "rgba(0,0,0,0)",
+            "divider": "#13071A",
+
+            "foreground": "#F7F7F7",
+            "foreground-secondary": "#F7F7F7",
+            "foreground-tertiary": "#F7F7F7",
+            "placeholder": "#87748A",
+            "gentle": "#C3C3C3",
+
+            "primary": "#A13DE3",
+            "secondary": "#87748A",
+            "tertiary": "#100915",
+            "dangerous": "#E52E2E",
+
+            "api-retrieve": "#52BC24",
+            "api-remove": "#E52E2E",
+            "api-push": "#2D43E5"
+        }
+    })],
 }
 

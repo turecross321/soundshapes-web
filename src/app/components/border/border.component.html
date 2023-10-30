@@ -1,3 +1,4 @@
-<div class="border-2 border-border p-4 rounded-xl w-full h-full">
+<div [ngClass]="{'bg-form-background' : style == ElementStyle.primary, 'bg-container-background' : style == ElementStyle.secondary}"
+     class="border-2 border-border p-4 rounded-xl w-full h-full">
     <ng-content></ng-content>
 </div>

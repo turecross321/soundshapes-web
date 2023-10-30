@@ -1,17 +1,16 @@
-<app-navbar-popup [side]="Side.Right">
+<app-navbar-popup [side]="Side.right">
     <form (ngSubmit)="logIn()" [formGroup]="loginForm" class="grid grid-cols-1 gap-2 navbar-text-highlight">
-        <app-input-field [fGroup]="loginForm" [faIcon]="faEnvelope" [light]="false" class="w-full"
-                         fControlName="email"
-                         id="email" placeholder="Email Address"></app-input-field>
-        <app-input-field [fGroup]="loginForm" [faIcon]="faKey" [light]="false" [type]="InputType.Password"
-                         class="w-full"
-                         fControlName="password" id="password" placeholder="Password"></app-input-field>
-        <app-navbar-dropdown-button [faIcon]="faArrowRightToBracket" [loading]="loggingIn"
-                                    label="Log in"></app-navbar-dropdown-button>
+        <app-input-field [fGroup]="loginForm" [faIcon]="faEnvelope" [style]="InputStyle.secondary"
+                         class="w-full" id="email" placeholder="Email Address"></app-input-field>
+        <app-input-field [fGroup]="loginForm" [faIcon]="faKey" [style]="InputStyle.secondary"
+                         [type]="InputType.Password"
+                         class="w-full" id="password" placeholder="Password"></app-input-field>
+        <app-navbar-popup-button [faIcon]="faArrowRightToBracket" [loading]="loggingIn"
+                                 label="Log in"></app-navbar-popup-button>
     </form>
     <app-divider></app-divider>
-    <app-navbar-dropdown-button (click)="onClose.emit()" [faIcon]="faKey"
-                                label="Reset Password" routerLink="resetPassword"></app-navbar-dropdown-button>
-    <app-navbar-dropdown-button (click)="onClose.emit()" [faIcon]="faUserPlus"
-                                label="Register" routerLink="register"></app-navbar-dropdown-button>
+    <app-navbar-popup-button (click)="onClose.emit()" [faIcon]="faKey"
+                             label="Reset Password" routerLink="resetPassword"></app-navbar-popup-button>
+    <app-navbar-popup-button (click)="onClose.emit()" [faIcon]="faUserPlus"
+                             label="Register" routerLink="register"></app-navbar-popup-button>
 </app-navbar-popup>

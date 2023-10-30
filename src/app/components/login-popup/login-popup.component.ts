@@ -5,6 +5,7 @@ import {InputType} from "../input-field/input-field.component";
 import {faArrowRightToBracket, faEnvelope, faKey, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {Side} from "../../types/side";
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-login-popup',
@@ -24,6 +25,7 @@ export class LoginPopupComponent {
     @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
     protected readonly InputType = InputType;
     protected readonly Side = Side;
+    protected readonly InputStyle = ElementStyle;
 
     constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService) {
 

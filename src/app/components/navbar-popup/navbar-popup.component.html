@@ -1,6 +1,6 @@
-<div [ngClass]="side == Side.Left ? 'left-0' : 'right-0'" class="absolute w-full lg:w-96 p-1">
+<div [ngClass]="side == Side.left ? 'left-0' : 'right-0'" class="absolute w-full lg:w-96 p-1 z-20">
     <div
-            class="bg-dark-background text-light p-4 rounded-lg grid grid-cols-1 gap-2 w-full">
+            class="bg-navbar-background text-navbar-foreground p-4 rounded-lg grid grid-cols-1 gap-2 w-full">
         <ng-content></ng-content>
     </div>
 </div>

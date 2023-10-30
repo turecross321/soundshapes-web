@@ -2,6 +2,7 @@ import {Component, Input} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {FormGroup} from "@angular/forms";
 import {faEye, faEyeSlash, faPoo} from "@fortawesome/free-solid-svg-icons";
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-input-field',
@@ -13,17 +14,21 @@ export class InputFieldComponent {
     @Input() placeholder: string = "No Placeholder Set!";
     @Input() faIcon: IconDefinition = faPoo;
     @Input() type: InputType = InputType.Text;
-    @Input() fControlName: string = "";
     @Input() fGroup!: FormGroup;
-    @Input() light: boolean = true;
+    @Input() style: ElementStyle = ElementStyle.primary;
+    @Input() readOnly: boolean = false;
+    @Input() startingValue: string = "";
 
     typeString: string = "";
-    toggleVisibilityIcon: IconDefinition = faEye;
     visible: boolean = true;
     toggleable: boolean = false;
 
-    ngOnInit() {
+    faEye: IconDefinition = faEye;
+    faEyeSlash: IconDefinition = faEyeSlash;
+    protected readonly Input = Input;
+    protected readonly InputStyle = ElementStyle;
 
+    ngOnInit() {
         switch (this.type) {
             case InputType.Text:
                 this.setVisibility(true);
@@ -34,7 +39,6 @@ export class InputFieldComponent {
                 this.toggleable = true;
                 break;
         }
-
     }
 
     toggleVisibility() {
@@ -44,11 +48,9 @@ export class InputFieldComponent {
     setVisibility(visibility: boolean) {
         if (visibility) {
             this.typeString = "text";
-            this.toggleVisibilityIcon = faEyeSlash;
             this.visible = true;
         } else {
             this.typeString = "password";
-            this.toggleVisibilityIcon = faEye;
             this.visible = false;
         }
     }
