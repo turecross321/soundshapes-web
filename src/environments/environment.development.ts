@@ -1,6 +1,6 @@
 import {IEnvironment} from './environment-interface';
 
 export const environment: IEnvironment = {
-  production: false,
-  apiBaseUrl: 'http://localhost:10061'
+    production: false,
+    apiBaseUrl: 'http://localhost:10061'
 };

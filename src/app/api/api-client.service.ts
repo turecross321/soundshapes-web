@@ -29,7 +29,7 @@ export class ApiClientService {
 
     hasTriedLoggedInAutomatically = false;
 
-    constructor(private httpClient: HttpClient, private toastService: ToastService, private router : Router) {
+    constructor(private httpClient: HttpClient, private toastService: ToastService, private router: Router) {
         this.logInWithRefreshToken().then(() => {
             this.hasTriedLoggedInAutomatically = true;
         });

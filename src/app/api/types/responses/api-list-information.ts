@@ -1,3 +1,3 @@
 export interface ApiListInformation {
-  totalItems: number;
+    totalItems: number;
 }

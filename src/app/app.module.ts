@@ -41,7 +41,7 @@ import {ToastMessageComponent} from './components/toast-message/toast-message.co
 import {ClickedOutsideDirective} from './directives/clicked-outside.directive';
 import {NavbarPopupComponent} from './components/navbar-popup/navbar-popup.component';
 import {BannedPageComponent} from './pages/banned-page/banned-page.component';
-import { SettingsPageComponent } from './pages/settings-page/settings-page.component';
+import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 
 @NgModule({
     declarations: [
