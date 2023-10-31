@@ -5,9 +5,5 @@ import {inject} from "@angular/core";
 export const authGuard: CanActivateFn = () => {
     const apiClient = inject(ApiClientService);
     const router = inject(Router);
-    if (apiClient.loggedIn() === false) {
-        return false;
-    } else {
-        return true;
-    }
+    return apiClient.loggedIn() !== false;
 };

@@ -9,11 +9,11 @@
                     <div class="flex flex-col gap-1">
                         <label for="username">Username</label>
                         <ng-form [formGroup]="usernameForm" class="flex gap-2">
-                            <app-input-field [fGroup]="usernameForm" [faIcon]="faAddressCard"
-                                             [readOnly]=true
-                                             [startingValue]="username()" class="w-full"
-                                             id="username"></app-input-field>
-                            <app-button [faIcon]="faPen" [label]="null"></app-button>
+                            <app-input-field [fGroup]="usernameForm"
+                                             [faIcon]="faAddressCard"
+                                             class="w-full" id="username"
+                                             placeholder="example"></app-input-field>
+                            <app-button [faIcon]="faPen" label="Edit"></app-button>
                         </ng-form>
                     </div>
 
@@ -23,14 +23,15 @@
                         <ng-form [formGroup]="emailForm" class="flex gap-2">
                             <app-input-field [fGroup]="emailForm" [faIcon]="faAddressCard"
                                              [readOnly]=true
-                                             class="w-full" id="email" startingValue="******"></app-input-field>
-                            <app-button [faIcon]="faPen" [label]="null"
+                                             class="w-full" id="email" placeholder="example@mail.com"></app-input-field>
+                            <app-button [faIcon]="faPen" label="Edit"
                                         routerLink="/settings/setEmail"></app-button>
                         </ng-form>
                     </div>
 
                     <!-- delete account -->
-                    <app-button class="w-full" label="Delete account"
+                    <app-button [faIcon]="faTrashAlt" [style]="ElementStyle.dangerous"
+                                class="w-full" label="Delete account"
                                 routerLink="/settings/deleteAccount"></app-button>
                 </div>
             </app-border>

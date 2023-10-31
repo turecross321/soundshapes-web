@@ -1,8 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
 const {createThemes} = require('tw-colors');
-const {de} = require("date-fns/locale");
-
 const defaultColors = {
     "background": "#2F2A2A",
     "navbar-background": "#181515",
@@ -35,7 +33,9 @@ module.exports = {
     ],
     theme: {
         colors: {
-            "transparent": "rgba(0,0,0,0)"
+            "transparent": "rgba(0,0,0,0)",
+            "white": "#FFFFFF",
+            "code-background": "#000000"
         },
         extend: {
             keyframes: {
@@ -80,8 +80,8 @@ module.exports = {
         },
         monochrome: {
             "background": "#ffffff",
-            "navbar-background": "#f6f5f5",
-            "navbar-popup-button-hover-background": "#cbcbcb",
+            "navbar-background": "#ffffff",
+            "navbar-popup-button-hover-background": "#e8e8e8",
             "navbar-foreground": "#000000",
             "form-background": "rgba(0,0,0,0)",
             "container-background": "#ffffff",
@@ -94,7 +94,7 @@ module.exports = {
             "placeholder": "#605a5a",
             "gentle": "#C3C3C3",
 
-            "primary": "#a4a4a4",
+            "primary": "#252525",
             "secondary": "#e7e7e7",
             "tertiary": "rgb(255,255,255)",
             "dangerous": "#e7e7e7",

@@ -1,10 +1,11 @@
 import {Component} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {faAddressBook, faAddressCard, faGlobe, faPen} from '@fortawesome/free-solid-svg-icons';
+import {faAddressBook, faAddressCard, faGlobe, faPen, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import {ApiClientService} from "../../api/api-client.service";
 import {FormBuilder} from "@angular/forms";
 import {ThemeService} from "../../services/theme.service";
 import {DropdownOption} from "../../types/dropdown-option";
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-settings-page',
@@ -22,6 +23,7 @@ export class SettingsPageComponent {
         email: '',
     });
     faGlobe: IconDefinition = faGlobe;
+    faTrashAlt: IconDefinition = faTrashAlt;
     themes: DropdownOption[] = [
         {
             name: "Default",
@@ -40,6 +42,7 @@ export class SettingsPageComponent {
             value: "refresh"
         }
     ]
+    protected readonly ElementStyle = ElementStyle;
 
     constructor(public apiClient: ApiClientService, private formBuilder: FormBuilder, private themeService: ThemeService) {
     }
