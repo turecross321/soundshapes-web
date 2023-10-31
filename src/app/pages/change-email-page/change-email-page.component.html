@@ -1,0 +1,23 @@
+<app-page header="Set E-mail">
+    <div class="flex flex-col gap-2 w-full lg:w-2/3">
+        <p>An e-mail has been sent to your current e-mail address</p>
+        <br>
+        <form [formGroup]="form" class="flex flex-col gap-2">
+            <label for="emailCode">E-mail code</label>
+            <app-input-field [fGroup]="form" [faIcon]="faHashtag"
+                             id="emailCode" placeholder="1234!#%/"></app-input-field>
+            <label for="newEmail">New e-mail address</label>
+            <app-input-field [fGroup]="form" [faIcon]="faEnvelope"
+                             id="newEmail" placeholder="example@mail.com"></app-input-field>
+            <div class="flex gap-2 items-center">
+                <app-tooltip [text]="validForm().message">
+                    <app-button (click)="change()" [disabled]="!validForm().valid"
+                                [faIcon]="faPen" [loading]="changingEmail"
+                                [style]="ElementStyle.dangerous" label="Change"></app-button>
+                </app-tooltip>
+            </div>
+
+        </form>
+
+    </div>
+</app-page>
