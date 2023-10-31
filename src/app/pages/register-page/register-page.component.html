@@ -1,9 +1,5 @@
 <div class="flex justify-between items-start gap-8 flex-col lg:flex-row">
-    <div class="hidden lg:block">
-        <img alt="A collage of Sound Shapes levels" height="1080" ngSrc="assets/register_banner.png" priority="true"
-             rel="preconnect"
-             width="960">
-    </div>
+    <div class="hidden lg:block bg-collage-1 w-2/3 h-128 bg-cover"></div>
     <app-page class="w-full" header="Register">
         <div class="flex flex-col gap-2 w-full lg:w-2/3">
             <form (ngSubmit)="register()" [formGroup]="registrationForm" class="flex flex-col gap-2">
@@ -38,9 +34,4 @@
             </div>
         </div>
     </app-page>
-    <div class="lg:hidden">
-        <img alt="A collage of Sound Shapes levels" height="1080" ngSrc="assets/register_banner.png" priority="true"
-             rel="preconnect"
-             width="960">
-    </div>
 </div>
