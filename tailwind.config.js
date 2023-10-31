@@ -49,10 +49,6 @@ module.exports = {
             animation: {
                 toast: 'toast 5s',
             },
-            backgroundImage: {
-                'collage-1': "url('/assets/collage_1.png')",
-                'collage-2': "url('/assets/collage_2.png')"
-            },
             spacing: {
                 '128': '32rem'
             }
