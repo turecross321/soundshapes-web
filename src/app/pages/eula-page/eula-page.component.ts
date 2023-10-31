@@ -15,7 +15,6 @@ export class EulaPageComponent {
     }
 
     async fetchEula() {
-        const response = await this.apiClient.getEula();
-        this.eula = response.data!;
+        this.eula = await this.apiClient.getEula();
     }
 }

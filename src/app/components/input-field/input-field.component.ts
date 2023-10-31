@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {FormGroup} from "@angular/forms";
 import {faEye, faEyeSlash, faPoo} from "@fortawesome/free-solid-svg-icons";
@@ -9,7 +9,7 @@ import {ElementStyle} from "../../types/element-style";
     templateUrl: './input-field.component.html',
     styleUrls: []
 })
-export class InputFieldComponent {
+export class InputFieldComponent implements OnInit {
     @Input() id: string = "";
     @Input() placeholder: string = "No Placeholder Set!";
     @Input() faIcon: IconDefinition = faPoo;
@@ -17,12 +17,9 @@ export class InputFieldComponent {
     @Input() fGroup!: FormGroup;
     @Input() style: ElementStyle = ElementStyle.primary;
     @Input() readOnly: boolean = false;
-    @Input() startingValue: string = "";
-
     typeString: string = "";
     visible: boolean = true;
     toggleable: boolean = false;
-
     faEye: IconDefinition = faEye;
     faEyeSlash: IconDefinition = faEyeSlash;
     protected readonly Input = Input;

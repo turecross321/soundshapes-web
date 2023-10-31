@@ -1,7 +1,15 @@
-<button [disabled]="disabled"
-        [ngClass]="{'bg-button-disabled-background' : disabled, 'hover:shadow hover:brightness-95 refresh:hover:brightness-75 dark:hover:brightness-90' : !disabled,
-        'bg-primary text-foreground-secondary' : style === ElementStyle.primary, 'bg-secondary text-foreground' : style === ElementStyle.secondary, 'bg-dangerous' : style === ElementStyle.dangerous}"
-        class="px-4 py-2.5 rounded-lg bg-button-background flex gap-2 duration-100 w-full lg:w-auto">
-    <fa-icon *ngIf="faIcon != null" [icon]="faIcon!"></fa-icon>
-    <span *ngIf="label">{{label}}</span>
-</button>
+<div class="w-full flex items-center justify-center">
+    <button [disabled]="isDisabled()"
+            [ngClass]="{'brightness-90' : isDisabled(), 'hover:shadow hover:brightness-95 refresh:hover:brightness-75 dark:hover:brightness-90' : !isDisabled(),
+        'bg-primary text-foreground-secondary' : style === ElementStyle.primary, 'bg-secondary text-foreground' : style === ElementStyle.secondary, 'bg-dangerous text-foreground' : style === ElementStyle.dangerous}"
+            class="px-4 py-2.5 rounded-lg bg-button-background flex gap-2 duration-100 w-full lg:w-auto">
+        <fa-icon *ngIf="faIcon != null" [icon]="faIcon!" [ngClass]="{'text-transparent' : loading}"
+                 class="duration-100 transition-colors"></fa-icon>
+        <span *ngIf="label" [ngClass]="{'text-transparent' : loading}"
+              class="duration-100 transition-colors">{{label}}</span>
+    </button>
+
+    <app-loading *ngIf="loading"
+                 [ngClass]="{'text-foreground-secondary' : style === ElementStyle.primary, 'text-foreground' : style === ElementStyle.secondary, 'bg-dangerous text-foreground' : style === ElementStyle.dangerous}"
+                 class="absolute"></app-loading>
+</div>

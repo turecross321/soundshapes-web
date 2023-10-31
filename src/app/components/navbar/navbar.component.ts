@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {NavigationEnd, Router} from "@angular/router";
 import {ApiClientService} from "../../api/api-client.service";
-import {ApiUser} from "../../api/types/api-user";
 import {
     faBars,
     faCircleUser,
@@ -50,7 +49,7 @@ export class NavbarComponent {
     ]
     protected readonly PageType = PageType;
 
-    constructor(router: Router, private ApiClient: ApiClientService) {
+    constructor(router: Router, public apiClient: ApiClientService) {
         router.events.subscribe((event) => {
             if (event instanceof NavigationEnd) {
                 switch (true) {
@@ -72,14 +71,6 @@ export class NavbarComponent {
                 }
             }
         });
-    }
-
-    loggedIn(): boolean | undefined {
-        return this.ApiClient.loggedIn();
-    }
-
-    user(): ApiUser | undefined {
-        return this.ApiClient.user;
     }
 
     toggleAccountPopUp() {

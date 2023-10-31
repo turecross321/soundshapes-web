@@ -4,6 +4,12 @@ export function validEmail(input: string): boolean {
     return emailRegex.test(input);
 }
 
+const usernameRegex = new RegExp(/^[A-Za-z][A-Za-z0-9-_]{2,15}$/);
+
+export function validUsername(input: string): boolean {
+    return usernameRegex.test(input);
+}
+
 const registrationRegex = new RegExp(/^\d{8}$/);
 
 export function validRegistrationCode(input: string) {

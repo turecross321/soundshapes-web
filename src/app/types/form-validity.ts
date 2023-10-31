@@ -1,4 +1,4 @@
-export interface formValidity {
+export interface FormValidity {
     valid: boolean;
     message: string;
 }

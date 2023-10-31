@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {ApiClientService} from "../../api/api-client.service";
-import {ApiResponse} from "../../api/types/responses/api-response";
 import {ApiGameAuthenticationSettings} from "../../api/types/api-game-authentication-settings";
 import {ApiGameIp} from "../../api/types/api-game-ip";
 import {faBroadcastTower, faRedo, faWrench} from '@fortawesome/free-solid-svg-icons';
@@ -45,9 +44,8 @@ export class AuthenticationPageComponent {
 
     async fetchConfiguration() {
         this.loadedConfiguration = false;
-        const response: ApiResponse<ApiGameAuthenticationSettings> = await this.apiClient.getAuthenticationSettings();
+        this.settings = await this.apiClient.getAuthenticationSettings();
         this.loadedConfiguration = true;
-        this.settings = response.data!;
     }
 
     changePsn(newValue: boolean) {
@@ -76,8 +74,7 @@ export class AuthenticationPageComponent {
 
     async fetchIps() {
         this.loadingIps = true;
-        const response = await this.apiClient.getGameIps();
-        this.ips = response.data!;
+        this.ips = await this.apiClient.getGameIps();
         this.loadingIps = false;
     }
 

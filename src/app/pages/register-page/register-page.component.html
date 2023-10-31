@@ -33,10 +33,9 @@
             <div class="flex gap-2 items-center">
                 <app-tooltip [text]="validForm().message">
                     <app-button (click)="register()" [disabled]="!validForm().valid || loading"
-                                [faIcon]="faUserPlus"
-                                label="Register"></app-button>
+                                [faIcon]="faUserPlus" [loading]="loading"
+                                [style]="ElementStyle.primary" label="Register"></app-button>
                 </app-tooltip>
-                <app-loading *ngIf="loading"></app-loading>
             </div>
         </div>
     </app-page>

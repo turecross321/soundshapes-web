@@ -21,7 +21,7 @@
     </div>
 
     <!-- right side (both wide and mobile) -->
-    <div [ngSwitch]="loggedIn()" class="flex items-center gap-4 hover:brightness-90">
+    <div [ngSwitch]="apiClient.loggedIn()" class="flex items-center gap-4 hover:brightness-90">
         <!-- log in button -->
         <button (click)="toggleAccountPopUp()" *ngSwitchCase="false"
                 class="flex gap-2 items-center">
@@ -32,13 +32,13 @@
         <!-- my profile button -->
         <button (click)="toggleAccountPopUp()" *ngSwitchCase="true" class="flex gap-2 items-center">
             <fa-icon [icon]="faCircleUser" class="navbar-text" size="lg"></fa-icon>
-            <span class="hidden lg:block">{{user()!.username}}</span>
+            <span class="hidden lg:block">{{apiClient.getUser()?.username ?? ""}}</span>
         </button>
     </div>
 </div>
 
 <!-- account popups -->
-<div *ngIf="showAccountPopUp" [ngSwitch]="loggedIn()">
+<div *ngIf="showAccountPopUp" [ngSwitch]="apiClient.loggedIn()">
     <app-login-popup (clickedOutside)="setAccountPopUpVisibility(false)" (onClose)="setAccountPopUpVisibility(false)"
                      *ngSwitchCase="false"
                      appClickedOutside></app-login-popup>

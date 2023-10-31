@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable, Output} from "@angular/core";
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {ApiLogInRequest} from "./types/requests/api-log-in-request";
@@ -20,14 +20,15 @@ import {hash} from "../sha512";
 import {firstValueFrom} from "rxjs/internal/firstValueFrom";
 import {ToastService} from "../services/toast.service";
 import {Router} from "@angular/router";
+import {ApiSetUsernameRequest} from "./types/requests/api-set-username-request";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
-    apiUrl: string = environment.apiBaseUrl + "/api/v1/";
-    token: ApiToken | undefined = undefined;
-    user: ApiUser | undefined = undefined;
-
     hasTriedLoggedInAutomatically = false;
+    @Output() onUserChange = new EventEmitter<ApiUser | null>;
+    private apiUrl: string = environment.apiBaseUrl + "/api/v1/";
+    private token: ApiToken | undefined = undefined;
+    private user: ApiUser | null = null;
 
     constructor(private httpClient: HttpClient, private toastService: ToastService, private router: Router) {
         this.logInWithRefreshToken().then(() => {
@@ -35,7 +36,16 @@ export class ApiClientService {
         });
     }
 
-    async getGameIps(): Promise<ApiResponse<ApiGameIp[]>> {
+    getUser(): ApiUser | null {
+        return this.user;
+    }
+
+    setUser(value: ApiUser | null) {
+        this.user = value;
+        this.onUserChange.emit(value);
+    }
+
+    async getGameIps(): Promise<ApiGameIp[]> {
         return await this.makeRequest<ApiGameIp[]>("GET", "gameAuth/ip");
     }
 
@@ -56,35 +66,35 @@ export class ApiClientService {
 
     async logIn(email: string, password: string) {
         const body: ApiLogInRequest = {email: email, passwordSha512: await hash(password)};
-        const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
-        this.token = response.data!.accessToken;
-        this.user = response.data!.user;
-        this.saveRefreshToken(response.data!.refreshToken);
-        this.toastService.success("Welcome!", `Successfully logged in as ${this.user.username}`,);
+        const response: ApiLoginResponse = await this.makeRequest<ApiLoginResponse>("post", "account/logIn", body);
+        this.token = response.accessToken;
+        this.setUser(response.user);
+        this.saveRefreshToken(response.refreshToken);
+        this.toastService.success("Welcome!", `Successfully logged in as ${this.user!.username}`,);
     }
 
-    async getAuthenticationSettings(): Promise<ApiResponse<ApiGameAuthenticationSettings>> {
+    async getAuthenticationSettings(): Promise<ApiGameAuthenticationSettings> {
         return await this.makeRequest<ApiGameAuthenticationSettings>("GET", "gameAuth/settings");
     }
 
-    async uploadAuthenticationSettings(settings: ApiGameAuthenticationSettings): Promise<ApiResponse<null>> {
+    async uploadAuthenticationSettings(settings: ApiGameAuthenticationSettings): Promise<null> {
         return await this.makeRequest<null>("POST", "gameAuth/settings", settings);
     }
 
-    async removeIp(ip: ApiGameIp): Promise<ApiResponse<null>> {
+    async removeIp(ip: ApiGameIp): Promise<null> {
         return await this.makeRequest<null>("DELETE", "gameAuth/ip/address/" + ip.ipAddress);
     }
 
-    async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean): Promise<ApiResponse<null>> {
+    async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean): Promise<null> {
         const body: ApiAuthenticateIpRequest = {ipAddress: ip.ipAddress, oneTimeUse: oneTimeUse}
         return await this.makeRequest<null>("POST", "gameAuth/ip/authorize", body);
     }
 
-    async getEula(): Promise<ApiResponse<ApiEula>> {
+    async getEula(): Promise<ApiEula> {
         return await this.makeRequest<ApiEula>("GET", "eula");
     }
 
-    async register(code: string, email: string, password: string): Promise<ApiResponse<null>> {
+    async register(code: string, email: string, password: string): Promise<null> {
         const body: ApiRegisterRequest = {
             registrationCode: code,
             email: email,
@@ -100,12 +110,19 @@ export class ApiClientService {
         return await this.makeRequest<null>("POST", "account/sendPasswordToken", body);
     }
 
+    async setUsername(username: string) {
+        const body: ApiSetUsernameRequest = {newUsername: username};
+        const response = await this.makeRequest("POST", "account/setUsername", body);
+        this.user!.username = username;
+        return response;
+    }
+
     async setPassword(code: string, newPassword: string) {
         const body: ApiSetPasswordRequest = {setPasswordTokenId: code, newPasswordSha512: await hash(newPassword)};
         return await this.makeRequest<null>("POST", "account/setPassword", body);
     }
 
-    async getDocumentation(): Promise<ApiResponse<ApiRoute[]>> {
+    async getDocumentation(): Promise<ApiRoute[]> {
         return await this.makeRequest<ApiRoute[]>("GET", "documentation");
     }
 
@@ -123,10 +140,10 @@ export class ApiClientService {
 
         const body: ApiRefreshTokenRequest = {refreshTokenId: refreshToken.id};
         try {
-            const response: ApiResponse<ApiLoginResponse> = await this.makeRequest<ApiLoginResponse>("post", "account/refreshToken", body);
-            this.token = response.data!.accessToken;
-            this.user = response.data!.user;
-            this.saveRefreshToken(response.data!.refreshToken);
+            const response: ApiLoginResponse = await this.makeRequest<ApiLoginResponse>("post", "account/refreshToken", body);
+            this.token = response.accessToken;
+            this.setUser(response.user);
+            this.saveRefreshToken(response.refreshToken);
         } catch (e) {
             if (!(e instanceof HttpErrorResponse)) {
                 throw e;
@@ -144,7 +161,7 @@ export class ApiClientService {
         localStorage.removeItem("refreshToken");
     }
 
-    private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null, pageData: PageData | null = null): Promise<ApiResponse<TData>> {
+    private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null, pageData: PageData | null = null): Promise<TData> {
         while (endpoint != "account/refreshToken" && !this.hasTriedLoggedInAutomatically) {
             await new Promise(f => setTimeout(f, 1000));
         }
@@ -160,12 +177,13 @@ export class ApiClientService {
         }
 
         try {
-            return await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {
+            const response = await firstValueFrom(this.httpClient.request<ApiResponse<TData>>(method, this.apiUrl + endpoint, {
                 body: body,
                 headers: {"Authorization": this.token?.id ?? ""},
                 params: params
 
             }));
+            return response.data!;
         } catch (e: any) {
             if (!(e instanceof HttpErrorResponse)) {
                 throw e;

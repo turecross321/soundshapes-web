@@ -4,9 +4,10 @@ import {ApiClientService} from "../../api/api-client.service";
 import {Router} from "@angular/router";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {validEmail, validPasswordResetCode} from "../../regex";
-import {formValidity} from "../../types/form-validity";
+import {FormValidity} from "../../types/form-validity";
 import {InputType} from "../../components/input-field/input-field.component";
 import {faAngleRight, faEnvelope, faHashtag, faKey} from '@fortawesome/free-solid-svg-icons';
+import {ElementStyle} from "../../types/element-style";
 
 @Component({
     selector: 'app-password-reset-page',
@@ -30,12 +31,13 @@ export class PasswordResetPageComponent {
     email: string = "";
     protected readonly pageType = pageType;
     protected readonly InputType = InputType;
+    protected readonly ElementStyle = ElementStyle;
 
     constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService, private router: Router) {
 
     }
 
-    validEmailForm(): formValidity {
+    validEmailForm(): FormValidity {
         const email = this.emailForm.get("email")?.value ?? "";
         if (!validEmail(email))
             return {valid: false, message: "Invalid e-mail address"};
@@ -43,19 +45,19 @@ export class PasswordResetPageComponent {
         return {valid: true, message: ""};
     }
 
-    validNewPasswordForm(): formValidity {
+    validNewPasswordForm(): FormValidity {
         const passwordCode = this.newPasswordForm.get("passwordCode")?.value ?? "";
         const password = this.newPasswordForm.get("password")?.value ?? "";
         const passwordConfirm = this.newPasswordForm.get("passwordConfirm")?.value ?? "";
 
         if (!validPasswordResetCode(passwordCode))
-            return {valid: false, message: "Invalid password reset code"};
+            return {valid: false, message: "Invalid password reset code."};
 
         if (password.length == 0)
-            return {valid: false, message: "Bad password"};
+            return {valid: false, message: "Bad password."};
 
         if (password != passwordConfirm)
-            return {valid: false, message: "Passwords don't match"}
+            return {valid: false, message: "Passwords don't match."}
 
         return {valid: true, message: ""};
     }

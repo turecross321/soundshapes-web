@@ -13,5 +13,10 @@ export class ButtonComponent {
     @Input() faIcon: IconDefinition | null = faPoo;
     @Input() disabled: boolean = false;
     @Input() style: ElementStyle = ElementStyle.secondary;
+    @Input() loading: boolean = false;
     protected readonly ElementStyle = ElementStyle;
+
+    isDisabled() {
+        return this.disabled || this.loading;
+    }
 }

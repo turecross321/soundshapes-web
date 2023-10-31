@@ -5,8 +5,9 @@ import {InputType} from "../../components/input-field/input-field.component";
 import {ApiClientService} from "../../api/api-client.service";
 import {Router} from "@angular/router";
 import {validEmail, validRegistrationCode} from "../../regex";
-import {formValidity} from "../../types/form-validity";
+import {FormValidity} from "../../types/form-validity";
 import {faEnvelope, faHashtag, faKey, faQuestionCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {ElementStyle} from "../../types/element-style";
 
 
 @Component({
@@ -29,27 +30,28 @@ export class RegisterPageComponent {
 
     loading: boolean = false;
     protected readonly InputType = InputType;
+    protected readonly ElementStyle = ElementStyle;
 
     constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService, private router: Router) {
     }
 
-    validForm(): formValidity {
+    validForm(): FormValidity {
         const code: string = this.registrationForm.get("code")?.value ?? "";
         const email: string = this.registrationForm.get("email")?.value ?? "";
         const password: string = this.registrationForm.get("password")?.value ?? "";
         const passwordConfirm: string = this.registrationForm.get("passwordConfirm")?.value ?? "";
 
         if (!validRegistrationCode(code))
-            return {valid: false, message: "Invalid registration code"}
+            return {valid: false, message: "Invalid registration code."}
 
         if (password.length == 0)
-            return {valid: false, message: "Bad password"};
+            return {valid: false, message: "Bad password."};
 
         if (password != passwordConfirm)
-            return {valid: false, message: "Passwords don't match"}
+            return {valid: false, message: "Passwords don't match."}
 
         if (!validEmail(email))
-            return {valid: false, message: "Invalid e-mail address"}
+            return {valid: false, message: "Invalid e-mail address."}
 
         return {valid: true, message: ""};
     }

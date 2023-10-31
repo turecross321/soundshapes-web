@@ -1,11 +1,13 @@
 import {Component} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {faAddressBook, faAddressCard, faGlobe, faPen, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
+import {faAddressBook, faGlobe, faPen, faTrashAlt} from '@fortawesome/free-solid-svg-icons';
 import {ApiClientService} from "../../api/api-client.service";
 import {FormBuilder} from "@angular/forms";
 import {ThemeService} from "../../services/theme.service";
 import {DropdownOption} from "../../types/dropdown-option";
 import {ElementStyle} from "../../types/element-style";
+import {validUsername} from "../../regex";
+import {FormValidity} from 'src/app/types/form-validity';
 
 @Component({
     selector: 'app-settings-page',
@@ -15,13 +17,12 @@ import {ElementStyle} from "../../types/element-style";
 export class SettingsPageComponent {
     faAddressBook: IconDefinition = faAddressBook;
     faPen: IconDefinition = faPen;
-    faAddressCard: IconDefinition = faAddressCard;
     usernameForm = this.formBuilder.group({
-        username: '',
+        username: this.apiClient.getUser()?.username,
     });
-    emailForm = this.formBuilder.group({
-        email: '',
-    });
+    username: string = "";
+    editingUsername: boolean = false;
+    loadingUsernameChange: boolean = false;
     faGlobe: IconDefinition = faGlobe;
     faTrashAlt: IconDefinition = faTrashAlt;
     themes: DropdownOption[] = [
@@ -45,12 +46,35 @@ export class SettingsPageComponent {
     protected readonly ElementStyle = ElementStyle;
 
     constructor(public apiClient: ApiClientService, private formBuilder: FormBuilder, private themeService: ThemeService) {
+        apiClient.onUserChange.subscribe((user) => {
+            this.usernameForm.setValue({username: user?.username!});
+        });
     }
 
-    username(): string {
-        console.log(this.apiClient.user?.username)
-        // TODO: FIX THIS BULLSHIT
-        return this.apiClient.user?.username ?? "ASFU89ASD0IOPJ";
+    validUsername(): FormValidity {
+        const username = this.usernameForm.value.username!;
+
+        if (!validUsername(username!))
+            return {valid: false, message: "Invalid username."}
+
+        return {valid: true, message: ""};
+    }
+
+    cancelUsernameChange() {
+        this.editingUsername = false;
+        this.usernameForm.setValue({username: this.apiClient.getUser()?.username});
+    }
+
+    async finishUsernameChange() {
+        this.loadingUsernameChange = true;
+        const newUsername: string = this.usernameForm.value.username!;
+        try {
+            await this.apiClient.setUsername(newUsername);
+            this.editingUsername = false;
+        } catch (e) {
+            this.cancelUsernameChange();
+        }
+        this.loadingUsernameChange = false;
     }
 
     changeTheme(value: string) {
