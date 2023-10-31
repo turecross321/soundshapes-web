@@ -10,14 +10,20 @@ export function validUsername(input: string): boolean {
     return usernameRegex.test(input);
 }
 
-const registrationRegex = new RegExp(/^\d{8}$/);
+const registrationCodeRegex = new RegExp(/^\d{8}$/);
 
 export function validRegistrationCode(input: string) {
-    return registrationRegex.test(input);
+    return registrationCodeRegex.test(input);
 }
 
-const passwordRegex = new RegExp(/^[A-Z]{8}$/);
+const passwordCodeRegex = new RegExp(/^[A-Z]{8}$/);
 
 export function validPasswordResetCode(input: string) {
-    return passwordRegex.test(input);
+    return passwordCodeRegex.test(input);
+}
+
+const deletionCodeRegex = new RegExp(/^[a-zA-Z0-9]{8}$/);
+
+export function validDeletionCode(input: string) {
+    return deletionCodeRegex.test(input);
 }

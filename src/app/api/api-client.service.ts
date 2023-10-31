@@ -21,13 +21,14 @@ import {firstValueFrom} from "rxjs/internal/firstValueFrom";
 import {ToastService} from "../services/toast.service";
 import {Router} from "@angular/router";
 import {ApiSetUsernameRequest} from "./types/requests/api-set-username-request";
+import {ApiDeleteAccountRequest} from "./types/requests/api-delete-account-request";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
     hasTriedLoggedInAutomatically = false;
     @Output() onUserChange = new EventEmitter<ApiUser | null>;
     private apiUrl: string = environment.apiBaseUrl + "/api/v1/";
-    private token: ApiToken | undefined = undefined;
+    private token: ApiToken | undefined | null = undefined;
     private user: ApiUser | null = null;
 
     constructor(private httpClient: HttpClient, private toastService: ToastService, private router: Router) {
@@ -53,7 +54,8 @@ export class ApiClientService {
         if (!this.hasTriedLoggedInAutomatically)
             return undefined;
 
-        return this.token != undefined;
+        // this might be the dumbest shit i've ever written
+        return !(!this.token);
     }
 
     async logOut() {
@@ -110,6 +112,14 @@ export class ApiClientService {
         return await this.makeRequest<null>("POST", "account/sendPasswordToken", body);
     }
 
+    async sendEmailToken() {
+        return await this.makeRequest<null>("POST", "account/sendEmailToken");
+    }
+
+    async sendDeletionToken() {
+        return await this.makeRequest<null>("POST", "account/sendDeletionToken");
+    }
+
     async setUsername(username: string) {
         const body: ApiSetUsernameRequest = {newUsername: username};
         const response = await this.makeRequest("POST", "account/setUsername", body);
@@ -120,6 +130,19 @@ export class ApiClientService {
     async setPassword(code: string, newPassword: string) {
         const body: ApiSetPasswordRequest = {setPasswordTokenId: code, newPasswordSha512: await hash(newPassword)};
         return await this.makeRequest<null>("POST", "account/setPassword", body);
+    }
+
+    async deleteAccount(code: string) {
+        const body: ApiDeleteAccountRequest = {accountDeletionTokenId: code};
+        const response = await this.makeRequest<null>("DELETE", "account", body);
+
+        this.token = undefined;
+        this.setUser(null);
+        this.deleteRefreshToken();
+
+        this.toastService.success("o/", "Your account has been successfully deleted.");
+        await this.router.navigateByUrl("/");
+        return response;
     }
 
     async getDocumentation(): Promise<ApiRoute[]> {

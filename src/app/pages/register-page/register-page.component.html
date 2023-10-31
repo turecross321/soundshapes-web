@@ -26,15 +26,14 @@
                                  id="passwordConfirm" placeholder="Password"></app-input-field>
             </form>
             <div>
-                <p>By clicking “Register” you agree to our
+                <p>By clicking 'Register', you agree to our
                     <a class="underline" routerLink="/eula" target=”_blank”>Terms & Conditions</a>
                     .</p>
             </div>
             <div class="flex gap-2 items-center">
                 <app-tooltip [text]="validForm().message">
                     <app-button (click)="register()" [disabled]="!validForm().valid || loading"
-                                [faIcon]="faUserPlus" [loading]="loading"
-                                [style]="ElementStyle.primary" label="Register"></app-button>
+                                [faIcon]="faUserPlus" [loading]="loading" label="Register"></app-button>
                 </app-tooltip>
             </div>
         </div>

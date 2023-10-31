@@ -36,10 +36,10 @@ export class RegisterPageComponent {
     }
 
     validForm(): FormValidity {
-        const code: string = this.registrationForm.get("code")?.value ?? "";
-        const email: string = this.registrationForm.get("email")?.value ?? "";
-        const password: string = this.registrationForm.get("password")?.value ?? "";
-        const passwordConfirm: string = this.registrationForm.get("passwordConfirm")?.value ?? "";
+        const code: string = this.registrationForm.get("code")?.value!;
+        const email: string = this.registrationForm.get("email")?.value!;
+        const password: string = this.registrationForm.get("password")?.value!;
+        const passwordConfirm: string = this.registrationForm.get("passwordConfirm")?.value!;
 
         if (!validRegistrationCode(code))
             return {valid: false, message: "Invalid registration code."}
@@ -59,9 +59,9 @@ export class RegisterPageComponent {
     async register() {
         this.loading = true;
 
-        const code: string = this.registrationForm.get("code")?.value ?? "";
-        const email: string = this.registrationForm.get("email")?.value ?? "";
-        const password: string = this.registrationForm.get("password")?.value ?? "";
+        const code: string = this.registrationForm.get("code")?.value!;
+        const email: string = this.registrationForm.get("email")?.value!;
+        const password: string = this.registrationForm.get("password")?.value!;
 
         try {
             await this.apiClient.register(code, email, password);

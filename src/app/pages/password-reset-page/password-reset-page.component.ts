@@ -38,7 +38,7 @@ export class PasswordResetPageComponent {
     }
 
     validEmailForm(): FormValidity {
-        const email = this.emailForm.get("email")?.value ?? "";
+        const email = this.emailForm.get("email")?.value!;
         if (!validEmail(email))
             return {valid: false, message: "Invalid e-mail address"};
 
@@ -46,9 +46,9 @@ export class PasswordResetPageComponent {
     }
 
     validNewPasswordForm(): FormValidity {
-        const passwordCode = this.newPasswordForm.get("passwordCode")?.value ?? "";
-        const password = this.newPasswordForm.get("password")?.value ?? "";
-        const passwordConfirm = this.newPasswordForm.get("passwordConfirm")?.value ?? "";
+        const passwordCode = this.newPasswordForm.get("passwordCode")?.value!;
+        const password = this.newPasswordForm.get("password")?.value!;
+        const passwordConfirm = this.newPasswordForm.get("passwordConfirm")?.value!;
 
         if (!validPasswordResetCode(passwordCode))
             return {valid: false, message: "Invalid password reset code."};
@@ -64,7 +64,7 @@ export class PasswordResetPageComponent {
 
     async sendEmail() {
         this.loading = true;
-        const email = this.emailForm.get("email")?.value ?? "";
+        const email = this.emailForm.get("email")?.value!;
         try {
             await this.apiClient.sendPasswordToken(email);
             this.currentPage = pageType.newPasswordInput;
@@ -77,8 +77,8 @@ export class PasswordResetPageComponent {
     }
 
     async setPassword() {
-        const passwordCode = this.newPasswordForm.get("passwordCode")?.value ?? "";
-        const password = this.newPasswordForm.get("password")?.value ?? "";
+        const passwordCode = this.newPasswordForm.get("passwordCode")?.value!;
+        const password = this.newPasswordForm.get("password")?.value!;
 
         this.loading = true;
         try {

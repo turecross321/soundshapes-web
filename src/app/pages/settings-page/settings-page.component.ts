@@ -8,6 +8,7 @@ import {DropdownOption} from "../../types/dropdown-option";
 import {ElementStyle} from "../../types/element-style";
 import {validUsername} from "../../regex";
 import {FormValidity} from 'src/app/types/form-validity';
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-settings-page',
@@ -23,6 +24,8 @@ export class SettingsPageComponent {
     username: string = "";
     editingUsername: boolean = false;
     loadingUsernameChange: boolean = false;
+    sendingEmailChangeMail: boolean = false;
+    sendingAccountDeletionMail: boolean = false;
     faGlobe: IconDefinition = faGlobe;
     faTrashAlt: IconDefinition = faTrashAlt;
     themes: DropdownOption[] = [
@@ -45,7 +48,7 @@ export class SettingsPageComponent {
     ]
     protected readonly ElementStyle = ElementStyle;
 
-    constructor(public apiClient: ApiClientService, private formBuilder: FormBuilder, private themeService: ThemeService) {
+    constructor(public apiClient: ApiClientService, private formBuilder: FormBuilder, private themeService: ThemeService, private router: Router) {
         apiClient.onUserChange.subscribe((user) => {
             this.usernameForm.setValue({username: user?.username!});
         });
@@ -75,6 +78,28 @@ export class SettingsPageComponent {
             this.cancelUsernameChange();
         }
         this.loadingUsernameChange = false;
+    }
+
+    async sendEmailChangeMail() {
+        this.sendingEmailChangeMail = true;
+        try {
+            await this.apiClient.sendEmailToken();
+            await this.router.navigateByUrl("/settings/setEmail");
+        } catch (e) {
+
+        }
+        this.sendingEmailChangeMail = false;
+    }
+
+    async sendAccountDeletionMail() {
+        this.sendingAccountDeletionMail = true;
+        try {
+            await this.apiClient.sendDeletionToken();
+            await this.router.navigateByUrl("/settings/deleteAccount");
+        } catch (e) {
+
+        }
+        this.sendingAccountDeletionMail = false;
     }
 
     changeTheme(value: string) {

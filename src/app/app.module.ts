@@ -44,6 +44,7 @@ import {BannedPageComponent} from './pages/banned-page/banned-page.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {ThemeService} from "./services/theme.service";
+import { AccountDeletionPageComponent } from './pages/account-deletion-page/account-deletion-page.component';
 
 @NgModule({
     declarations: [
@@ -83,6 +84,7 @@ import {ThemeService} from "./services/theme.service";
         BannedPageComponent,
         SettingsPageComponent,
         DropdownComponent,
+        AccountDeletionPageComponent,
     ],
     imports: [
         BrowserModule,

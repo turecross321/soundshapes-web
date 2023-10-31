@@ -35,14 +35,15 @@
 
                     <div class="flex gap-1 flex-col lg:flex-row">
                         <!-- change email -->
-                        <app-button [faIcon]="faPen"
-                                    label="Change e-mail"
-                                    routerLink="/settings/setEmail"></app-button>
+                        <app-button (click)="sendEmailChangeMail()"
+                                    [faIcon]="faPen" [loading]="sendingEmailChangeMail"
+                                    label="Change e-mail"></app-button>
 
                         <!-- delete account -->
-                        <app-button [faIcon]="faTrashAlt" [style]="ElementStyle.dangerous"
-                                    label="Delete account"
-                                    routerLink="/settings/deleteAccount"></app-button>
+                        <app-button (click)="sendAccountDeletionMail()" [faIcon]="faTrashAlt"
+                                    [loading]="sendingAccountDeletionMail"
+                                    [style]="ElementStyle.dangerous"
+                                    label="Delete account"></app-button>
                     </div>
                 </div>
             </app-border>
