@@ -19,7 +19,7 @@ export class ToastService {
         this.onNewMessage.emit({type: ToastMessageType.info, title: title, description: description});
     }
 
-    success(title: string, message: string) {
-        this.onNewMessage.emit({type: ToastMessageType.success, title: title, description: message});
+    success(message: string) {
+        this.onNewMessage.emit({type: ToastMessageType.success, title: "Success!", description: message});
     }
 }

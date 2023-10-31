@@ -45,6 +45,7 @@ import {SettingsPageComponent} from './pages/settings-page/settings-page.compone
 import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {ThemeService} from "./services/theme.service";
 import { AccountDeletionPageComponent } from './pages/account-deletion-page/account-deletion-page.component';
+import { ChangeEmailPageComponent } from './pages/change-email-page/change-email-page.component';
 
 @NgModule({
     declarations: [
@@ -85,6 +86,7 @@ import { AccountDeletionPageComponent } from './pages/account-deletion-page/acco
         SettingsPageComponent,
         DropdownComponent,
         AccountDeletionPageComponent,
+        ChangeEmailPageComponent,
     ],
     imports: [
         BrowserModule,

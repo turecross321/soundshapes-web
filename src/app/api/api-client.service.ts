@@ -22,6 +22,7 @@ import {ToastService} from "../services/toast.service";
 import {Router} from "@angular/router";
 import {ApiSetUsernameRequest} from "./types/requests/api-set-username-request";
 import {ApiDeleteAccountRequest} from "./types/requests/api-delete-account-request";
+import {ApiSetEmailRequest} from "./types/requests/api-set-email-request";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -62,7 +63,7 @@ export class ApiClientService {
         await this.makeRequest("post", "account/logOut");
         this.token = undefined;
         this.deleteRefreshToken();
-        this.toastService.success("Goodbye!", "You have been logged out.");
+        this.toastService.success("You have been logged out.");
         await this.router.navigateByUrl("/");
     }
 
@@ -72,7 +73,7 @@ export class ApiClientService {
         this.token = response.accessToken;
         this.setUser(response.user);
         this.saveRefreshToken(response.refreshToken);
-        this.toastService.success("Welcome!", `Successfully logged in as ${this.user!.username}`,);
+        this.toastService.success(`Successfully logged in as ${this.user!.username}`,);
     }
 
     async getAuthenticationSettings(): Promise<ApiGameAuthenticationSettings> {
@@ -132,6 +133,12 @@ export class ApiClientService {
         return await this.makeRequest<null>("POST", "account/setPassword", body);
     }
 
+    async setEmail(code: string, newEmail: string) {
+        const body: ApiSetEmailRequest = {setEmailTokenId: code, newEmail: newEmail};
+        this.toastService.success("Your e-mail address has been changed.");
+        return await this.makeRequest<null>("POST", "account/setEmail", body);
+    }
+
     async deleteAccount(code: string) {
         const body: ApiDeleteAccountRequest = {accountDeletionTokenId: code};
         const response = await this.makeRequest<null>("DELETE", "account", body);
@@ -140,8 +147,7 @@ export class ApiClientService {
         this.setUser(null);
         this.deleteRefreshToken();
 
-        this.toastService.success("o/", "Your account has been successfully deleted.");
-        await this.router.navigateByUrl("/");
+        this.toastService.success("Your account has been successfully deleted.");
         return response;
     }
 

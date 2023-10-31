@@ -27,3 +27,9 @@ const deletionCodeRegex = new RegExp(/^[a-zA-Z0-9]{8}$/);
 export function validDeletionCode(input: string) {
     return deletionCodeRegex.test(input);
 }
+
+const emailCodeRegex = new RegExp(/^[1-9!#¤%&}\/()=?]{8}$/);
+
+export function validEmailCode(input: string) {
+    return emailCodeRegex.test(input);
+}

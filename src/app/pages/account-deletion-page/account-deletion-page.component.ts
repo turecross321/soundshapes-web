@@ -7,6 +7,7 @@ import {FormValidity} from "../../types/form-validity";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {ApiClientService} from "../../api/api-client.service";
 import {validDeletionCode} from "../../regex";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app-account-deletion-page',
@@ -22,13 +23,13 @@ export class AccountDeletionPageComponent {
     protected readonly ElementStyle = ElementStyle;
     protected readonly InputType = InputType;
 
-    constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService) {
+    constructor(private formBuilder: FormBuilder, private apiClient: ApiClientService, private router: Router) {
     }
 
     validNewPasswordForm(): FormValidity {
         const code = this.form.get("deletionCode")?.value!;
         if (!validDeletionCode(code))
-            return {valid: false, message: "Invalid deletion code"};
+            return {valid: false, message: "Invalid deletion code."};
 
         return {valid: true, message: ""};
     }
@@ -50,6 +51,7 @@ export class AccountDeletionPageComponent {
         console.log(code);
         try {
             await this.apiClient.deleteAccount(code);
+            await this.router.navigateByUrl("/");
         } catch (e) {
 
         }

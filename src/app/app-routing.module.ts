@@ -14,6 +14,7 @@ import {BannedPageComponent} from "./pages/banned-page/banned-page.component";
 import {authGuard} from "./auth/auth.guard";
 import {SettingsPageComponent} from "./pages/settings-page/settings-page.component";
 import {AccountDeletionPageComponent} from "./pages/account-deletion-page/account-deletion-page.component";
+import {ChangeEmailPageComponent} from "./pages/change-email-page/change-email-page.component";
 
 const routes: Routes = [
     {path: '', component: HomePageComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
     {path: 'banned', component: BannedPageComponent, canActivate: [authGuard]},
     {path: 'settings', component: SettingsPageComponent, canActivate: [authGuard]},
     {path: 'settings/deleteAccount', component: AccountDeletionPageComponent, canActivate: [authGuard]},
+    {path: 'settings/setEmail', component: ChangeEmailPageComponent, canActivate: [authGuard]},
     {path: '**', component: NotFoundPageComponent}
 ];
 
