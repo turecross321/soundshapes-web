@@ -5,6 +5,7 @@ import {ApiGameAuthenticationSettings} from "../../api/types/api-game-authentica
 import {ApiGameIp} from "../../api/types/api-game-ip";
 import {faBroadcastTower, faRedo, faWrench} from '@fortawesome/free-solid-svg-icons';
 import {ElementStyle} from "../../types/element-style";
+import {ApiList} from "../../api/types/api-list";
 
 @Component({
     selector: 'app-authentication-page',
@@ -19,7 +20,7 @@ export class AuthenticationPageComponent {
     settings: ApiGameAuthenticationSettings | undefined = undefined;
     loadedConfiguration: boolean = false;
 
-    ips: ApiGameIp[] = [];
+    ips: ApiList<ApiGameIp> | null = null;
     loadingIps: boolean = false;
     showIps: boolean = false;
     protected readonly Element = Element;
@@ -30,11 +31,11 @@ export class AuthenticationPageComponent {
     }
 
     authorizedIps(): ApiGameIp[] {
-        return this.ips.filter(i => i.authorized);
+        return this.ips!.items.filter(i => i.authorized);
     }
 
     pendingIps(): ApiGameIp[] {
-        return this.ips.filter(i => !i.authorized);
+        return this.ips!.items.filter(i => !i.authorized);
     }
 
     showIpAuthentication() {
@@ -74,13 +75,14 @@ export class AuthenticationPageComponent {
 
     async fetchIps() {
         this.loadingIps = true;
-        this.ips = await this.apiClient.getGameIps();
+        // todo fix this bullshit
+        this.ips = await this.apiClient.getGameIps({from: 0, count: 100});
         this.loadingIps = false;
     }
 
     async removeIp(ip: ApiGameIp) {
         // remove from local list
-        this.ips = this.ips.filter(i => i != ip);
+        this.ips!.items = this.ips!.items.filter(i => i != ip);
         await this.apiClient.removeIp(ip);
     }
 

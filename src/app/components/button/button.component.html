@@ -1,4 +1,5 @@
-<div class="w-full flex items-center justify-center">
+<div [ngClass]="{'cursor-progress': loading}"
+     class="w-full flex items-center justify-center">
     <button [disabled]="isDisabled()"
             [ngClass]="{'brightness-95 refresh:brightness-75 dark:brightness-90' : isDisabled(), 'hover:shadow hover:brightness-95 refresh:hover:brightness-75 dark:hover:brightness-90' : !isDisabled(),
         'bg-primary text-foreground-secondary' : style === ElementStyle.primary, 'bg-secondary text-foreground' : style === ElementStyle.secondary, 'bg-dangerous text-foreground' : style === ElementStyle.dangerous}"

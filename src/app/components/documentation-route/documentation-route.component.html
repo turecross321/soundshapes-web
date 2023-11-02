@@ -51,6 +51,19 @@
             </div>
         </div>
 
+        <!-- order types -->
+        <div *ngIf="route.orderTypes">
+            <span class="font-bold text-lg">Order Types</span>
+            <div class="flex flex-col gap-2">
+                <ng-container *ngFor="let orderType of route.orderTypes;">
+                    <div class="flex gap-2 items-start flex-col lg:flex-row">
+                        <app-code-block [text]="'orderBy=' + orderType.value"></app-code-block>
+                        <p>{{orderType.summary}}</p>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
         <!-- errors -->
         <div *ngIf="route.potentialErrors.length > 0">
             <span class="font-bold text-lg">Potential Errors</span>

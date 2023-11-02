@@ -1,0 +1,46 @@
+<div [ngSwitch]="notFound">
+    <app-page *ngSwitchCase="true" header="404">
+        <p>News entry with specified ID does not exist.</p>
+    </app-page>
+    <div *ngSwitchCase="false" [ngSwitch]="entry == null">
+        <app-loading *ngSwitchCase="true"></app-loading>
+        <div *ngSwitchCase="false" class="flex flex-col gap-4">
+            <div class="w-full flex items-top gap-6">
+                <img [src]="thumbnailUrl()"
+                     class="rounded-lg hover:cursor-pointer h-full">
+                <div class="flex flex-col w-full">
+                    <!-- metadata -->
+                    <div class="h-full">
+                        <app-h1>{{entry?.title}}</app-h1>
+                        <app-h2>by <a [routerLink]="'/user/' + entry?.author?.username"
+                                      class="font-bold hover:text-foreground-quaternary">{{entry?.author?.username}}</a>
+                        </app-h2>
+                        <p class="text-gentle">{{entry?.summary}}</p>
+                    </div>
+                    <div class="flex justify-between items-end w-full">
+                        <!-- tags -->
+                        <div class="flex gap-1">
+                            <app-tag [faIcon]="faFont" [label]="wordCountString()"></app-tag>
+                            <app-tag [faIcon]="faClock" [label]="readTimeString()"></app-tag>
+                        </div>
+
+                        <!-- dates -->
+                        <div class="flex flex-col text-right">
+                            <app-date [date]="entry?.creationDate!" prefix="published"></app-date>
+                            <app-date *ngIf="entry?.creationDate != entry?.modificationDate"
+                                      [date]="entry?.modificationDate!"
+                                      prefix="last modified"></app-date>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-divider></app-divider>
+
+            <div class="m-2">
+                <app-border>
+                    <p>{{entry?.fullText}}</p>
+                </app-border>
+            </div>
+        </div>
+    </div>
+</div>

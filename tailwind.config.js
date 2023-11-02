@@ -14,8 +14,9 @@ const defaultColors = {
     "foreground": "#181515",
     "foreground-secondary": "#FFF0E4",
     "foreground-tertiary": "#FFDCBF",
+    "foreground-quaternary": "#494444",
     "placeholder": "#8A7261",
-    "gentle": "#C3C3C3",
+    "gentle": "#8A7261",
 
     "primary": "#F07167",
     "secondary": "#F4DECC",
@@ -69,8 +70,9 @@ module.exports = {
             "foreground": "#FFFFFF",
             "foreground-secondary": "#000000",
             "foreground-tertiary": "#FFDCBF",
+            "foreground-quaternary": "#494444",
             "placeholder": "#605a5a",
-            "gentle": "#C3C3C3",
+            "gentle": "#adadad",
 
             "primary": "#d9d9d9",
             "secondary": "#212121",
@@ -94,8 +96,9 @@ module.exports = {
             "foreground": "#000000",
             "foreground-secondary": "#ffffff",
             "foreground-tertiary": "#FFDCBF",
+            "foreground-quaternary": "#494444",
             "placeholder": "#605a5a",
-            "gentle": "#C3C3C3",
+            "gentle": "#707070",
 
             "primary": "#252525",
             "secondary": "#e7e7e7",
@@ -119,6 +122,7 @@ module.exports = {
             "foreground": "#F7F7F7",
             "foreground-secondary": "#F7F7F7",
             "foreground-tertiary": "#F7F7F7",
+            "foreground-quaternary": "#494444",
             "placeholder": "#87748A",
             "gentle": "#C3C3C3",
 

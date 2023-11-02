@@ -1,0 +1,18 @@
+<app-border [routerLink]="entryUrl()" class="hover:cursor-pointer">
+    <div class="flex flex-col gap-3">
+        <img [src]="thumbnailUrl()"
+             class="w-full aspect-video rounded-lg hover:cursor-pointer">
+        <div>
+            <div class="flex justify-between items-center">
+                <a class="truncate">{{entry.title}}</a>
+                <a class="text-sm whitespace-nowrap">by <a [routerLink]="'/user/' + entry.author.username"
+                                                           class="font-bold hover:text-foreground-quaternary">{{entry.author.username}}</a>
+                </a>
+            </div>
+            <div class="flex justify-between items-center">
+                <a class="text-sm text-gentle truncate">{{entry.summary}}</a>
+                <app-date [date]="entry.creationDate" class="whitespace-nowrap"></app-date>
+            </div>
+        </div>
+    </div>
+</app-border>

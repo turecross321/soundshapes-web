@@ -15,6 +15,8 @@ import {authGuard} from "./auth/auth.guard";
 import {SettingsPageComponent} from "./pages/settings-page/settings-page.component";
 import {AccountDeletionPageComponent} from "./pages/account-deletion-page/account-deletion-page.component";
 import {ChangeEmailPageComponent} from "./pages/change-email-page/change-email-page.component";
+import {NewsEntryPageComponent} from "./pages/news-entry-page/news-entry-page.component";
+import {NewsPageComponent} from "./pages/news-page/news-page.component";
 
 const routes: Routes = [
     {path: '', component: HomePageComponent},
@@ -30,11 +32,13 @@ const routes: Routes = [
     {path: 'settings', component: SettingsPageComponent, canActivate: [authGuard]},
     {path: 'settings/deleteAccount', component: AccountDeletionPageComponent, canActivate: [authGuard]},
     {path: 'settings/setEmail', component: ChangeEmailPageComponent, canActivate: [authGuard]},
+    {path: 'news', component: NewsPageComponent},
+    {path: 'news/:id', component: NewsEntryPageComponent},
     {path: '**', component: NotFoundPageComponent}
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: "enabled"})],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

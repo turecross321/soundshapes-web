@@ -7,17 +7,19 @@ import {formatDistance} from "date-fns";
     styleUrls: []
 })
 export class DateComponent implements OnInit {
-    @Input() date: Date = null!;
+    @Input() prefix: string = "";
+    @Input() date: Date | string = null!;
+    _date!: Date;
 
     formattedDate(): string {
-        return this.date.toLocaleDateString() + " : " + this.date.toLocaleTimeString();
+        return this._date.toLocaleDateString() + " : " + this._date.toLocaleTimeString();
     }
 
     moment(): string {
-        return formatDistance(this.date, new Date(), {addSuffix: true, includeSeconds: false});
+        return formatDistance(this._date, new Date(), {addSuffix: true, includeSeconds: false});
     }
 
     ngOnInit(): void {
-        this.date = new Date(this.date);
+        this._date = new Date(this.date);
     }
 }

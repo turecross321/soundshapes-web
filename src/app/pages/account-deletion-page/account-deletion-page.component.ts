@@ -48,7 +48,6 @@ export class AccountDeletionPageComponent {
         }
         this.deletingAccount = true;
         const code = this.form.get("deletionCode")?.value!;
-        console.log(code);
         try {
             await this.apiClient.deleteAccount(code);
             await this.router.navigateByUrl("/");

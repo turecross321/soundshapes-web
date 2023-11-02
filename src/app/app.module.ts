@@ -1,4 +1,4 @@
-import {NgModule, isDevMode} from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpClientModule} from "@angular/common/http";
 
@@ -44,9 +44,16 @@ import {BannedPageComponent} from './pages/banned-page/banned-page.component';
 import {SettingsPageComponent} from './pages/settings-page/settings-page.component';
 import {DropdownComponent} from './components/dropdown/dropdown.component';
 import {ThemeService} from "./services/theme.service";
-import { AccountDeletionPageComponent } from './pages/account-deletion-page/account-deletion-page.component';
-import { ChangeEmailPageComponent } from './pages/change-email-page/change-email-page.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {AccountDeletionPageComponent} from './pages/account-deletion-page/account-deletion-page.component';
+import {ChangeEmailPageComponent} from './pages/change-email-page/change-email-page.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {NewsEntryComponent} from './components/news-entry/news-entry.component';
+import {NewsEntryPageComponent} from './pages/news-entry-page/news-entry-page.component';
+import {H1Component} from './components/h1/h1.component';
+import {H2Component} from './components/h2/h2.component';
+import {TagComponent} from './components/tag/tag.component';
+import {NewsPageComponent} from './pages/news-page/news-page.component';
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 @NgModule({
     declarations: [
@@ -88,6 +95,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         DropdownComponent,
         AccountDeletionPageComponent,
         ChangeEmailPageComponent,
+        NewsEntryComponent,
+        NewsEntryPageComponent,
+        H1Component,
+        H2Component,
+        TagComponent,
+        NewsPageComponent,
     ],
     imports: [
         BrowserModule,
@@ -99,11 +112,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         BrowserAnimationsModule,
         NgOptimizedImage,
         ServiceWorkerModule.register('ngsw-worker.js', {
-          enabled: !isDevMode(),
-          // Register the ServiceWorker as soon as the application is stable
-          // or after 30 seconds (whichever comes first).
-          registrationStrategy: 'registerWhenStable:30000'
+            enabled: !isDevMode(),
+            // Register the ServiceWorker as soon as the application is stable
+            // or after 30 seconds (whichever comes first).
+            registrationStrategy: 'registerWhenStable:30000'
         }),
+        InfiniteScrollModule
     ],
     providers: [],
     bootstrap: [AppComponent]

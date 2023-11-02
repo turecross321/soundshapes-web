@@ -1,0 +1,17 @@
+<app-page header="News">
+    <div class="flex flex-col gap-4">
+        <div class="flex justify-between items-center">
+            <app-button [faIcon]="faSlidersH" label="Filter"></app-button>
+            <app-text-with-icon *ngIf="newsListInformation" [faIcon]="faNewspaper"
+                                [text]="newsListInformation.totalItems.toLocaleString()"></app-text-with-icon>
+        </div>
+        <div
+                (click)="scrolled()" [infiniteScrollDistance]="1" [scrollWindow]="true"
+                class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-2" infiniteScroll
+        >
+            <app-news-entry *ngFor="let entry of entries()" [entry]="entry"></app-news-entry>
+        </div>
+
+        <app-loading *ngIf="loading"></app-loading>
+    </div>
+</app-page>

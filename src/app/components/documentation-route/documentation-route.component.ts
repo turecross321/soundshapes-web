@@ -27,7 +27,10 @@ export class DocumentationRouteComponent {
     }
 
     minimumPermissionsString(): string {
-        return PermissionsType[this.route.minimumPermissionsType!];
+        const roleName = PermissionsType[this.route.minimumPermissionsType!];
+        // capitalize first letter
+        return roleName.charAt(0).toUpperCase()
+            + roleName.slice(1);
     }
 
     minimumPermissionsTooltip(): string {

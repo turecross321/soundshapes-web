@@ -1,6 +1,7 @@
 import {PermissionsType} from "./api-permissions-type";
 import {ApiParameter} from "./api-parameter";
 import {ApiDocumentationError} from "./api-documentation-error";
+import {ApiOrderType} from "./api-order-type";
 
 export interface ApiRoute {
     method: string;
@@ -10,4 +11,5 @@ export interface ApiRoute {
     minimumPermissionsType: PermissionsType | null;
     parameters: ApiParameter[];
     potentialErrors: ApiDocumentationError[];
+    orderTypes: ApiOrderType[] | null;
 }
