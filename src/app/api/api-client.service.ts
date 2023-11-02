@@ -27,6 +27,7 @@ import {ApiNewsEntry} from "./types/api-news-entry";
 import {ApiList} from "./types/api-list";
 import {ApiEvent} from "./types/api-event";
 import {ApiLevel} from "./types/api-level";
+import {ApiDailyLevel} from "./types/api-daily-level";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -175,6 +176,9 @@ export class ApiClientService {
         return await this.getList<ApiEvent>("events", pageData);
     }
 
+    async getDaily(pageData: PageData): Promise<ApiList<ApiDailyLevel>> {
+        return await this.getList<ApiDailyLevel>("daily", pageData);
+    }
 
     getNewsThumbnailUrl(id: string) {
         return `${this.apiUrl}news/id/${id}/thumbnail`;

@@ -7,6 +7,7 @@ import {CacheService} from "../../services/cache.service";
 import {CachedApiList} from "../../types/cached-api-list";
 import {ApiLevel} from "../../api/types/api-level";
 import {loopRange} from "../../helpers/loop-helper";
+import {ApiDailyLevel} from "../../api/types/api-daily-level";
 
 @Component({
     selector: 'app-home-page',
@@ -17,14 +18,14 @@ export class HomePageComponent {
     loadingNews: boolean = false;
     newsCount: number = 1;
     newsPageData: PageData = {from: 0, count: this.newsCount, modifiers: {descending: true}};
-    loadingLevels: boolean = false;
-    levelsCount: number = 3;
-    levelsPageData: PageData = {
+    loadingDaily: boolean = false;
+    dailyCount: number = 3;
+    dailyPageData: PageData = {
         from: 0,
-        count: this.levelsCount,
-        modifiers: {descending: true, filters: {inLatestDaily: true}}
+        count: this.dailyCount,
+        modifiers: {descending: true}
     }
-    dailyLevels: CachedApiList<ApiLevel> | null = null;
+    daily: CachedApiList<ApiDailyLevel> | null = null;
     protected readonly faNewspaper = faNewspaper;
     protected readonly faAngleRight = faAngleRight;
     protected readonly faPersonRunning = faPersonRunning;
@@ -54,17 +55,17 @@ export class HomePageComponent {
     }
 
     async fetchLevels() {
-        if (this.loadingLevels) {
+        if (this.loadingDaily) {
             return;
         }
 
-        this.loadingLevels = true;
-        const response = await this.apiClient.getLevels(this.levelsPageData);
-        this.dailyLevels = this.cache.addToCache(this.dailyLevels, response, this.levelsPageData);
-        this.loadingLevels = false;
+        this.loadingDaily = true;
+        const response = await this.apiClient.getDaily(this.dailyPageData);
+        this.daily = this.cache.addToCache(this.daily, response, this.dailyPageData);
+        this.loadingDaily = false;
     }
 
     levels(): ApiLevel[] | undefined {
-        return this.dailyLevels?.list.items.slice(0, 3);
+        return this.daily?.list.items.slice(0, 3).map(d => d.level);
     }
 }
