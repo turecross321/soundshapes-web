@@ -54,6 +54,7 @@ import {H2Component} from './components/h2/h2.component';
 import {TagComponent} from './components/tag/tag.component';
 import {NewsPageComponent} from './pages/news-page/news-page.component';
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {NewsFiltersComponent} from './components/news-filters/news-filters.component';
 
 @NgModule({
     declarations: [
@@ -101,6 +102,7 @@ import {InfiniteScrollModule} from "ngx-infinite-scroll";
         H2Component,
         TagComponent,
         NewsPageComponent,
+        NewsFiltersComponent,
     ],
     imports: [
         BrowserModule,

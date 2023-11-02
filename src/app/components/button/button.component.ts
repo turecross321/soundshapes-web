@@ -14,6 +14,7 @@ export class ButtonComponent {
     @Input() disabled: boolean = false;
     @Input() style: ElementStyle = ElementStyle.secondary;
     @Input() loading: boolean = false;
+    @Input() upsideDownIcon: boolean = false;
     protected readonly ElementStyle = ElementStyle;
 
     isDisabled() {

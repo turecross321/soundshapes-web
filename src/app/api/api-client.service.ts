@@ -15,7 +15,7 @@ import {ApiRegisterRequest} from "./types/requests/api-register-request";
 import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-request";
 import {ApiSetPasswordRequest} from "./types/requests/api-set-password-request";
 import {ApiRoute} from "./types/api-route";
-import {PageData} from "./types/responses/page-data";
+import {PageData} from "../types/page-data";
 import {hash} from "../sha512";
 import {firstValueFrom} from "rxjs/internal/firstValueFrom";
 import {ToastService} from "../services/toast.service";
@@ -57,7 +57,7 @@ export class ApiClientService {
         if (!this.hasTriedLoggedInAutomatically)
             return undefined;
 
-        // this might be the dumbest shit i've ever written
+        // this might be the dumbest shit I've ever written
         return !(!this.token);
     }
 
@@ -223,7 +223,7 @@ export class ApiClientService {
     }
 
     private async delete<TData>(endpoint: string, body: object | null = null): Promise<TData> {
-        const response = await this.makeRequest<TData>("DELETE", endpoint);
+        const response = await this.makeRequest<TData>("DELETE", endpoint, body);
         return response.data!;
     }
 
@@ -232,13 +232,23 @@ export class ApiClientService {
             await new Promise(f => setTimeout(f, 1000));
         }
 
-        let params = {}
+        let params: any = {}
 
         if (pageData) {
-            params = {
-                "from": pageData?.from ?? "",
-                "count": pageData?.count ?? "",
-                "descending": pageData?.descending ?? ""
+            params.from = pageData.from;
+            params.count = pageData.count;
+
+            if (pageData.modifiers?.descending != undefined)
+                params.descending = pageData.modifiers.descending;
+
+            if (pageData.modifiers?.orderBy != undefined)
+                params.orderBy = pageData.modifiers?.orderBy;
+
+            if (pageData.modifiers?.filters) {
+                for (const key in pageData.modifiers.filters) {
+                    // @ts-ignore
+                    params[key] = pageData.modifiers.filters[key];
+                }
             }
         }
 
@@ -247,7 +257,6 @@ export class ApiClientService {
                 body: body,
                 headers: {"Authorization": this.token?.id ?? ""},
                 params: params
-
             }));
         } catch (e: any) {
             if (!(e instanceof HttpErrorResponse)) {

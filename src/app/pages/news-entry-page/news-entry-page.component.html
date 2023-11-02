@@ -3,21 +3,60 @@
         <p>News entry with specified ID does not exist.</p>
     </app-page>
     <div *ngSwitchCase="false" [ngSwitch]="entry == null">
-        <app-loading *ngSwitchCase="true"></app-loading>
+
+        <!-- loading entry -->
+        <div *ngSwitchCase="true" class="flex flex-col gap-4 animate-pulse">
+            <div class="w-full flex items-top gap-6 lg:flex-row flex-col">
+                <div class="rounded-lg w-full lg:w-96 bg-secondary aspect-video"></div>
+                <div class="flex flex-col w-full gap-2">
+                    <!-- metadata -->
+                    <div class="h-full flex flex-col gap-2">
+                        <div class="w-full lg:w-1/2 bg-secondary h-8 rounded-lg"></div>
+                        <div class="w-2/3 lg:w-1/5 bg-secondary h-6 rounded-lg"></div>
+                        <div class="w-3/4 lg:w-1/4 bg-secondary h-6 rounded-lg"></div>
+                    </div>
+
+                    <div class="flex justify-between lg:items-end w-full h-full flex-col lg:flex-row gap-2">
+                        <!-- tags -->
+                        <div class="flex gap-1 w-full items-end">
+                            <div class="w-1/4 lg:w-1/6 bg-secondary h-10 rounded-lg"></div>
+                            <div class="w-1/4 lg:w-1/6 bg-secondary h-10 rounded-lg"></div>
+                        </div>
+                        <!-- dates -->
+                        <div class="flex text-right w-1/5 bg-secondary h-6 rounded-lg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <app-divider></app-divider>
+
+            <div class="m-2">
+                <app-border>
+                    <div class="flex flex-col gap-1">
+                        <div class="w-full bg-secondary h-6 rounded-lg"></div>
+                        <div class="w-full bg-secondary h-6 rounded-lg"></div>
+                        <div class="w-full bg-secondary h-6 rounded-lg"></div>
+                        <div class="w-full bg-secondary h-6 rounded-lg"></div>
+                    </div>
+                </app-border>
+            </div>
+        </div>
+
+        <!-- real entry -->
         <div *ngSwitchCase="false" class="flex flex-col gap-4">
-            <div class="w-full flex items-top gap-6">
+            <div class="w-full flex items-top gap-6 lg:flex-row flex-col">
                 <img [src]="thumbnailUrl()"
-                     class="rounded-lg hover:cursor-pointer h-full">
-                <div class="flex flex-col w-full">
+                     alt="News thumbnail" class="rounded-lg w-full lg:w-auto">
+                <div class="flex flex-col w-full gap-1">
                     <!-- metadata -->
                     <div class="h-full">
                         <app-h1>{{entry?.title}}</app-h1>
-                        <app-h2>by <a [routerLink]="'/user/' + entry?.author?.username"
-                                      class="font-bold hover:text-foreground-quaternary">{{entry?.author?.username}}</a>
+                        <app-h2 class="text-gentle">by <a [routerLink]="'/user/' + entry?.author?.username"
+                                                          class="font-bold hover:text-foreground-quaternary">{{entry?.author?.username}}</a>
                         </app-h2>
                         <p class="text-gentle">{{entry?.summary}}</p>
                     </div>
-                    <div class="flex justify-between items-end w-full">
+                    <div class="flex justify-between lg:items-end w-full flex-col lg:flex-row gap-2">
                         <!-- tags -->
                         <div class="flex gap-1">
                             <app-tag [faIcon]="faFont" [label]="wordCountString()"></app-tag>
@@ -25,7 +64,7 @@
                         </div>
 
                         <!-- dates -->
-                        <div class="flex flex-col text-right">
+                        <div class="flex flex-col lg:text-right">
                             <app-date [date]="entry?.creationDate!" prefix="published"></app-date>
                             <app-date *ngIf="entry?.creationDate != entry?.modificationDate"
                                       [date]="entry?.modificationDate!"

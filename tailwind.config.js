@@ -45,7 +45,7 @@ module.exports = {
                     '10%': {transform: 'translateX(0%)'},
                     '50%': {transform: 'translateX(0%)'},
                     '90%': {transform: 'translateX(-500%)'},
-                }
+                },
             },
             animation: {
                 toast: 'toast 5s',

@@ -3,5 +3,5 @@
             class="appearance-none flex justify-between w-full gap-2 py-2 px-3 border-2 border-border rounded-lg bg-tertiary focus:outline focus:outline-1 focus:outline-primary">
         <option *ngFor="let option of options" [ngValue]="option.value">{{option.name}}</option>
     </select>
-    <fa-icon [icon]="faChevronDown" class="text-sm leading-none fixed pr-3"></fa-icon>
+    <fa-icon [icon]="faChevronDown" class="text-sm leading-none absolute pr-3"></fa-icon>
 </div>
