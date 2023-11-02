@@ -1,7 +1,13 @@
-<app-page [loading]="loadingNews" header="Home">
-    <div class="flex">
+<app-page header="Home">
+    <div class="gap-8 flex flex-col">
+        <!-- activity -->
+        <div class="flex flex-col gap-4">
+            <app-text-with-icon [faIcon]="faPersonRunning" text="Activity"></app-text-with-icon>
+            <app-events class="h-96"></app-events>
+        </div>
+
         <!-- news -->
-        <div class="w-full lg:w-2/3 flex flex-col gap-2">
+        <div class="flex flex-col gap-4 col-span-2">
             <div class="w-full flex justify-between items-center">
                 <app-text-with-icon [faIcon]="faNewspaper" text="News"></app-text-with-icon>
                 <app-button [faIcon]="faAngleRight" label="More" routerLink="/news"></app-button>
@@ -9,6 +15,7 @@
             <div class="grid lg:grid-cols-3 gap-2 grid-cols-1">
                 <app-news-entry *ngFor="let entry of newsEntries()" [entry]="entry"></app-news-entry>
             </div>
+            <app-loading *ngIf="loadingNews"></app-loading>
         </div>
     </div>
 </app-page>

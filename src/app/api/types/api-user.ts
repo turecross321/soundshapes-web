@@ -1,6 +1,7 @@
 import {PermissionsType} from "./api-permissions-type";
 
 export interface ApiUser {
+    // brief
     id: string;
     username: string;
     permissionsType: PermissionsType;
@@ -8,6 +9,7 @@ export interface ApiUser {
     followingCount: number;
     publishedLevelsCount: number;
 
+    // full
     creationDate: Date | undefined;
     lastGameLogin: Date | undefined;
     lastEventDate: Date | undefined;

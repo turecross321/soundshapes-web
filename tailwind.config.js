@@ -46,9 +46,14 @@ module.exports = {
                     '50%': {transform: 'translateX(0%)'},
                     '90%': {transform: 'translateX(-500%)'},
                 },
+                fade: {
+                    '0%': {opacity: '0%'},
+                    '100%': {opacity: '100%'}
+                }
             },
             animation: {
                 toast: 'toast 5s',
+                fadeIn: 'fade 200ms'
             },
             spacing: {
                 '128': '32rem'

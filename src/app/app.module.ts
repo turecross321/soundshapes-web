@@ -55,6 +55,14 @@ import {TagComponent} from './components/tag/tag.component';
 import {NewsPageComponent} from './pages/news-page/news-page.component';
 import {InfiniteScrollModule} from "ngx-infinite-scroll";
 import {NewsFiltersComponent} from './components/news-filters/news-filters.component';
+import {EventsComponent} from './components/events/events.component';
+import {EventComponent} from './components/event/event.component';
+import {LinkComponent} from './components/link/link.component';
+import {ListTopComponent} from './components/list-top/list-top.component';
+import {EventFiltersComponent} from './components/event-filters/event-filters.component';
+import {FiltersComponent} from './components/filters/filters.component';
+import {FiltersOrderComponent} from './components/filters-order/filters-order.component';
+import {FiltersCategoryComponent} from './components/filters-category/filters-category.component';
 
 @NgModule({
     declarations: [
@@ -103,6 +111,14 @@ import {NewsFiltersComponent} from './components/news-filters/news-filters.compo
         TagComponent,
         NewsPageComponent,
         NewsFiltersComponent,
+        EventsComponent,
+        EventComponent,
+        LinkComponent,
+        ListTopComponent,
+        EventFiltersComponent,
+        FiltersComponent,
+        FiltersOrderComponent,
+        FiltersCategoryComponent,
     ],
     imports: [
         BrowserModule,

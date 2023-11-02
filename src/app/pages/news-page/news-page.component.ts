@@ -1,11 +1,11 @@
 import {Component} from '@angular/core';
 import {faNewspaper, faSlidersH} from "@fortawesome/free-solid-svg-icons";
 import {PageData} from "../../types/page-data";
-import {ApiNewsEntry} from "../../api/types/api-news-entry";
 import {ApiClientService} from "../../api/api-client.service";
-import {ApiListInformation} from "../../api/types/responses/api-list-information";
 import {CacheService} from "../../services/cache.service";
 import {PageModifiers} from "../../types/page-modifiers";
+import {CachedApiList} from "../../types/cached-api-list";
+import {ApiNewsEntry} from "../../api/types/api-news-entry";
 
 @Component({
     selector: 'app-news-page',
@@ -15,7 +15,6 @@ import {PageModifiers} from "../../types/page-modifiers";
 export class NewsPageComponent {
     itemsCount: number = 32;
     loading: boolean = false;
-    newsListInformation: ApiListInformation | null = null;
     modifiers: PageModifiers = this.cache.news?.pageData.modifiers ?? {descending: true};
     showFilters: boolean = false;
 
@@ -27,8 +26,8 @@ export class NewsPageComponent {
             this.fetchLaterNews();
     }
 
-    entries(): ApiNewsEntry[] | undefined {
-        return this.cache.news?.list.items;
+    news(): CachedApiList<ApiNewsEntry> | null {
+        return this.cache.news;
     }
 
     async changeModifiers(modifiers: PageModifiers) {
@@ -56,6 +55,10 @@ export class NewsPageComponent {
     }
 
     private async fetchNews(pageData: PageData): Promise<void> {
+        if (this.loading) {
+            return;
+        }
+        
         this.loading = true;
         const response = await this.apiClient.getNews(pageData);
         this.cache.news = this.cache.addToCache(this.cache.news, response, pageData);

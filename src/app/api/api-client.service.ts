@@ -25,6 +25,7 @@ import {ApiDeleteAccountRequest} from "./types/requests/api-delete-account-reque
 import {ApiSetEmailRequest} from "./types/requests/api-set-email-request";
 import {ApiNewsEntry} from "./types/api-news-entry";
 import {ApiList} from "./types/api-list";
+import {ApiEvent} from "./types/api-event";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -163,6 +164,10 @@ export class ApiClientService {
 
     async getNewsEntry(id: string) {
         return await this.get<ApiNewsEntry>(`news/id/${id}`);
+    }
+
+    async getEvents(pageData: PageData): Promise<ApiList<ApiEvent>> {
+        return await this.getList<ApiEvent>("events", pageData);
     }
 
 

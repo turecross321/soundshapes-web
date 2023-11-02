@@ -58,7 +58,7 @@ export class SettingsPageComponent {
         const username = this.usernameForm.value.username!;
 
         if (!validUsername(username!))
-            return {valid: false, message: "Invalid username."}
+            return {valid: false, message: "Invalid link."}
 
         return {valid: true, message: ""};
     }

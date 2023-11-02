@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {faAngleRight, faNewspaper} from "@fortawesome/free-solid-svg-icons";
+import {faAngleRight, faNewspaper, faPersonRunning} from "@fortawesome/free-solid-svg-icons";
 import {ApiClientService} from "../../api/api-client.service";
 import {PageData} from "../../types/page-data";
 import {ApiNewsEntry} from "../../api/types/api-news-entry";
@@ -16,6 +16,7 @@ export class HomePageComponent {
     newsPageData: PageData = {from: 0, count: this.newsCount, modifiers: {descending: true}};
     protected readonly faNewspaper = faNewspaper;
     protected readonly faAngleRight = faAngleRight;
+    protected readonly faPersonRunning = faPersonRunning;
 
     constructor(private apiClient: ApiClientService, private cache: CacheService) {
         if (!this.cache.areElementsCached(this.cache.news, this.newsPageData))
@@ -23,6 +24,10 @@ export class HomePageComponent {
     }
 
     async fetchNews() {
+        if (this.loadingNews) {
+            return;
+        }
+
         this.loadingNews = true;
         const response = await this.apiClient.getNews(this.newsPageData);
         this.cache.news = this.cache.addToCache(this.cache.news, response, this.newsPageData);

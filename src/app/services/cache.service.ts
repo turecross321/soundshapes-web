@@ -39,6 +39,9 @@ export class CacheService {
         // if the new data doesn't fit anywhere, discard the cache
         else {
             cacheList = {list: list, pageData: pageData};
+            console.log("this sh*t ain't fit anywhere....");
+            console.log(pageData);
+            console.log(cacheList.pageData);
         }
 
         cacheList.list.listInformation = list.listInformation;
@@ -60,9 +63,6 @@ export class CacheService {
         if (cacheList.pageData.from > pageData.from)
             return false;
         // if requested range is bigger than cached range, false
-        if (pageData.from + pageData.count > cacheList.pageData.from + cacheList.pageData.count)
-            return false;
-
-        return true;
+        return pageData.from + pageData.count <= cacheList.pageData.from + cacheList.pageData.count;
     }
 }

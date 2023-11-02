@@ -11,7 +11,7 @@
             [placeholder]="placeholder"
             [readonly]="readOnly"
             [type]="typeString"
-            class="w-full group placeholder-placeholder duration-100 flex justify-between gap-2 py-2 px-10 mr-[-36px] border-2 border-border rounded-lg focus:outline focus:outline-1 focus:outline-primary bg-tertiary">
+            class="w-full group placeholder-placeholder duration-100 flex justify-between gap-2 py-2 px-10 mr-[-36px] border-2 border-border rounded-xl focus:outline focus:outline-1 focus:outline-primary bg-tertiary">
     <div (click)="toggleVisibility()" *ngIf="toggleable" class="flex items-center">
         <div class="absolute">
             <fa-icon [fixedWidth]="true" [icon]="faEye" [ngClass]="{'hidden' : !visible}"></fa-icon>
