@@ -6,7 +6,7 @@ import {FormBuilder} from "@angular/forms";
 import {ThemeService} from "../../services/theme.service";
 import {DropdownOption} from "../../types/dropdown-option";
 import {ElementStyle} from "../../types/element-style";
-import {validUsername} from "../../regex";
+import {validUsername} from "../../helpers/regex-helper";
 import {FormValidity} from 'src/app/types/form-validity';
 import {Router} from "@angular/router";
 

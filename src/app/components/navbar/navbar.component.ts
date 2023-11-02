@@ -88,6 +88,7 @@ export class NavbarComponent {
     setHamburgerMenuVisibility(visibility: boolean) {
         this.showHamburgerMenu = visibility;
     }
+
 }
 
 enum PageType {

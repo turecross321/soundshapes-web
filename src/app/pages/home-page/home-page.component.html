@@ -1,21 +1,34 @@
 <app-page header="Home">
     <div class="gap-8 flex flex-col">
         <!-- activity -->
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 h-128">
             <app-text-with-icon [faIcon]="faPersonRunning" text="Activity"></app-text-with-icon>
-            <app-events class="h-96"></app-events>
+            <app-events class="h-full overflow-auto"></app-events>
         </div>
+        <div class="grid grid-cols-3 gap-8">
+            <!-- news -->
+            <div class="flex flex-col gap-4">
+                <div class="w-full flex justify-between items-center h-8">
+                    <app-text-with-icon [faIcon]="faNewspaper" text="News"></app-text-with-icon>
+                    <app-button [faIcon]="faAngleRight" label="More" routerLink="/news"></app-button>
+                </div>
+                <div class="grid gap-2 grid-cols-1">
+                    <app-news-entry *ngFor="let entry of newsEntries()" [entry]="entry"></app-news-entry>
+                    <app-news-entry
+                            *ngFor="let i of loopRange(newsCount, newsEntries() != undefined)"></app-news-entry>
+                </div>
+            </div>
 
-        <!-- news -->
-        <div class="flex flex-col gap-4 col-span-2">
-            <div class="w-full flex justify-between items-center">
-                <app-text-with-icon [faIcon]="faNewspaper" text="News"></app-text-with-icon>
-                <app-button [faIcon]="faAngleRight" label="More" routerLink="/news"></app-button>
+            <!-- daily levels -->
+            <div class="flex flex-col gap-4 col-span-2">
+                <div class="w-full flex justify-between items-center h-8">
+                    <app-text-with-icon [faIcon]="faCalendarDay" text="Today's Picks"></app-text-with-icon>
+                </div>
+                <div class="grid lg:grid-cols-3 gap-2 grid-cols-1">
+                    <app-level *ngFor="let level of levels()" [level]="level"></app-level>
+                    <app-level *ngFor="let i of loopRange(levelsCount, levels() != undefined)"></app-level>
+                </div>
             </div>
-            <div class="grid lg:grid-cols-3 gap-2 grid-cols-1">
-                <app-news-entry *ngFor="let entry of newsEntries()" [entry]="entry"></app-news-entry>
-            </div>
-            <app-loading *ngIf="loadingNews"></app-loading>
         </div>
     </div>
 </app-page>

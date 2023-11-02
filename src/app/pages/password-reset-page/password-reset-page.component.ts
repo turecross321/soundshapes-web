@@ -3,7 +3,7 @@ import {FormBuilder} from "@angular/forms";
 import {ApiClientService} from "../../api/api-client.service";
 import {Router} from "@angular/router";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
-import {validEmail, validPasswordResetCode} from "../../regex";
+import {validEmail, validPasswordResetCode} from "../../helpers/regex-helper";
 import {FormValidity} from "../../types/form-validity";
 import {InputType} from "../../components/input-field/input-field.component";
 import {faAngleRight, faEnvelope, faHashtag, faKey} from '@fortawesome/free-solid-svg-icons';

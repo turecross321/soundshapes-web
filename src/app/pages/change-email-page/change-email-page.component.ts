@@ -3,7 +3,7 @@ import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {FormBuilder} from "@angular/forms";
 import {ApiClientService} from "../../api/api-client.service";
 import {FormValidity} from "../../types/form-validity";
-import {validEmail, validEmailCode} from "../../regex";
+import {validEmail, validEmailCode} from "../../helpers/regex-helper";
 import {ElementStyle} from 'src/app/types/element-style';
 import {faEnvelope, faHashtag, faPen} from '@fortawesome/free-solid-svg-icons';
 import {Router} from "@angular/router";

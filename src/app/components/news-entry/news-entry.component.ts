@@ -8,16 +8,16 @@ import {ApiClientService} from "../../api/api-client.service";
     styleUrls: []
 })
 export class NewsEntryComponent {
-    @Input() entry!: ApiNewsEntry;
+    @Input() entry: ApiNewsEntry | null = null;
 
     constructor(private apiClient: ApiClientService) {
     }
 
     thumbnailUrl() {
-        return this.apiClient.getNewsThumbnailUrl(this.entry.id);
+        return this.apiClient.getNewsThumbnailUrl(this.entry?.id ?? "");
     }
 
     entryUrl() {
-        return `/news/${this.entry.id}`;
+        return `/news/${this.entry?.id}`;
     }
 }

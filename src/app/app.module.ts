@@ -63,6 +63,8 @@ import {EventFiltersComponent} from './components/event-filters/event-filters.co
 import {FiltersComponent} from './components/filters/filters.component';
 import {FiltersOrderComponent} from './components/filters-order/filters-order.component';
 import {FiltersCategoryComponent} from './components/filters-category/filters-category.component';
+import { LevelComponent } from './components/level/level.component';
+import { CheckboxComponent } from './components/checkbox/checkbox.component';
 
 @NgModule({
     declarations: [
@@ -119,6 +121,8 @@ import {FiltersCategoryComponent} from './components/filters-category/filters-ca
         FiltersComponent,
         FiltersOrderComponent,
         FiltersCategoryComponent,
+        LevelComponent,
+        CheckboxComponent,
     ],
     imports: [
         BrowserModule,

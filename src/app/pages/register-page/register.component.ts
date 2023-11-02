@@ -4,7 +4,7 @@ import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {InputType} from "../../components/input-field/input-field.component";
 import {ApiClientService} from "../../api/api-client.service";
 import {Router} from "@angular/router";
-import {validEmail, validRegistrationCode} from "../../regex";
+import {validEmail, validRegistrationCode} from "../../helpers/regex-helper";
 import {FormValidity} from "../../types/form-validity";
 import {faEnvelope, faHashtag, faKey, faQuestionCircle, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {ElementStyle} from "../../types/element-style";

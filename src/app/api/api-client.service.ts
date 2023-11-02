@@ -16,7 +16,7 @@ import {ApiPasswordTokenRequest} from "./types/requests/api-password-token-reque
 import {ApiSetPasswordRequest} from "./types/requests/api-set-password-request";
 import {ApiRoute} from "./types/api-route";
 import {PageData} from "../types/page-data";
-import {hash} from "../sha512";
+import {hash} from "../helpers/sha512-helper";
 import {firstValueFrom} from "rxjs/internal/firstValueFrom";
 import {ToastService} from "../services/toast.service";
 import {Router} from "@angular/router";
@@ -26,6 +26,7 @@ import {ApiSetEmailRequest} from "./types/requests/api-set-email-request";
 import {ApiNewsEntry} from "./types/api-news-entry";
 import {ApiList} from "./types/api-list";
 import {ApiEvent} from "./types/api-event";
+import {ApiLevel} from "./types/api-level";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -162,6 +163,10 @@ export class ApiClientService {
         return await this.getList("news", pageData);
     }
 
+    async getLevels(pageData: PageData): Promise<ApiList<ApiLevel>> {
+        return await this.getList("levels", pageData);
+    }
+
     async getNewsEntry(id: string) {
         return await this.get<ApiNewsEntry>(`news/id/${id}`);
     }
@@ -173,6 +178,10 @@ export class ApiClientService {
 
     getNewsThumbnailUrl(id: string) {
         return `${this.apiUrl}news/id/${id}/thumbnail`;
+    }
+
+    getLevelThumbnailUrl(id: string) {
+        return `${this.apiUrl}levels/id/${id}/thumbnail`;
     }
 
     private async logInWithRefreshToken() {

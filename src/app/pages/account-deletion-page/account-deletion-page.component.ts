@@ -6,7 +6,7 @@ import {FormBuilder} from "@angular/forms";
 import {FormValidity} from "../../types/form-validity";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {ApiClientService} from "../../api/api-client.service";
-import {validDeletionCode} from "../../regex";
+import {validDeletionCode} from "../../helpers/regex-helper";
 import {Router} from "@angular/router";
 
 @Component({
