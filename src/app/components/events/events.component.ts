@@ -3,11 +3,11 @@ import {PageModifiers} from "../../types/page-modifiers";
 import {CachedApiList} from "../../types/cached-api-list";
 import {ApiEvent} from "../../api/types/api-event";
 import {PageData} from "../../types/page-data";
-import {CacheService} from "../../services/cache.service";
 import {ApiClientService} from "../../api/api-client.service";
 import {faFire} from "@fortawesome/free-solid-svg-icons";
 import {range} from "rxjs";
 import {loopRange} from "../../helpers/loop-helper";
+import {addToCache} from "../../helpers/cache-list-helper";
 
 @Component({
     selector: 'app-events',
@@ -24,7 +24,7 @@ export class EventsComponent {
     protected readonly range = range;
     protected readonly loopRange = loopRange;
 
-    constructor(private apiClient: ApiClientService, private cache: CacheService) {
+    constructor(private apiClient: ApiClientService) {
         this.fetchLaterEvents();
     }
 
@@ -59,7 +59,7 @@ export class EventsComponent {
 
         this.loading = true;
         const response = await this.apiClient.getEvents(pageData);
-        this.events = this.cache.addToCache<ApiEvent>(this.events, response, pageData);
+        this.events = addToCache<ApiEvent>(this.events, response, pageData);
         this.loading = false;
     }
 }

@@ -6,6 +6,7 @@ import {CacheService} from "../../services/cache.service";
 import {PageModifiers} from "../../types/page-modifiers";
 import {CachedApiList} from "../../types/cached-api-list";
 import {ApiNewsEntry} from "../../api/types/api-news-entry";
+import {addToCache} from "../../helpers/cache-list-helper";
 
 @Component({
     selector: 'app-news-page',
@@ -58,10 +59,10 @@ export class NewsPageComponent {
         if (this.loading) {
             return;
         }
-        
+
         this.loading = true;
         const response = await this.apiClient.getNews(pageData);
-        this.cache.news = this.cache.addToCache(this.cache.news, response, pageData);
+        this.cache.news = addToCache(this.cache.news, response, pageData);
         this.loading = false;
     }
 }

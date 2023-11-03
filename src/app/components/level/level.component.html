@@ -1,7 +1,7 @@
 <app-border [ngSwitch]="level == null" [routerLink]="url()" class="hover:cursor-pointer">
 
     <!-- placeholder -->
-    <div *ngSwitchCase="true" class="flex flex-col gap-3">
+    <div *ngSwitchCase="true" class="flex flex-col gap-4 animate-pulse">
         <div class="w-full aspect-video rounded-lg bg-secondary"></div>
         <div class="flex justify-between items-center">
             <div class="basis-1/2 bg-secondary h-4 rounded-lg"></div>
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div *ngSwitchCase="false" class="flex flex-col gap-3">
+    <div *ngSwitchCase="false" class="flex flex-col gap-4">
         <img [src]="thumbnailUrl()" alt="Level thumbnail"
              class="w-full aspect-video rounded-lg hover:cursor-pointer">
         <div>

@@ -67,6 +67,7 @@ import { LevelComponent } from './components/level/level.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { LevelPageComponent } from './pages/level-page/level-page.component';
 import { LevelStatisticsComponent } from './components/level-statistics/level-statistics.component';
+import { LevelHorizontalComponent } from './components/level-horizontal/level-horizontal.component';
 
 @NgModule({
     declarations: [
@@ -127,6 +128,7 @@ import { LevelStatisticsComponent } from './components/level-statistics/level-st
         CheckboxComponent,
         LevelPageComponent,
         LevelStatisticsComponent,
+        LevelHorizontalComponent,
     ],
     imports: [
         BrowserModule,

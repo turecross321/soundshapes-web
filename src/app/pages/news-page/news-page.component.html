@@ -11,7 +11,7 @@
                 (scrolled)="fetchLaterNews()"
                 [infiniteScrollDistance]="1"
                 [scrollWindow]="true"
-                class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-4 gap-2 duration-100"
+                class="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-1 gap-2 duration-100"
                 infiniteScroll
         >
             <app-news-entry *ngFor="let entry of news()?.list?.items" [entry]="entry"></app-news-entry>

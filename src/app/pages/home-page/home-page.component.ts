@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {faAngleRight, faCalendarDay, faNewspaper, faPersonRunning} from "@fortawesome/free-solid-svg-icons";
+import {faAngleRight, faClock, faGem, faNewspaper, faPersonRunning} from "@fortawesome/free-solid-svg-icons";
 import {ApiClientService} from "../../api/api-client.service";
 import {PageData} from "../../types/page-data";
 import {ApiNewsEntry} from "../../api/types/api-news-entry";
@@ -8,6 +8,7 @@ import {CachedApiList} from "../../types/cached-api-list";
 import {ApiLevel} from "../../api/types/api-level";
 import {loopRange} from "../../helpers/loop-helper";
 import {ApiDailyLevel} from "../../api/types/api-daily-level";
+import {addToCache, areElementsCached} from "../../helpers/cache-list-helper";
 
 @Component({
     selector: 'app-home-page',
@@ -19,24 +20,34 @@ export class HomePageComponent {
     newsCount: number = 1;
     newsPageData: PageData = {from: 0, count: this.newsCount, modifiers: {descending: true}};
     loadingDaily: boolean = false;
-    dailyCount: number = 3;
+    dailyCount: number = 1;
     dailyPageData: PageData = {
         from: 0,
         count: this.dailyCount,
         modifiers: {descending: true}
     }
     daily: CachedApiList<ApiDailyLevel> | null = null;
+    loadingNewLevels: boolean = false;
+    newLevelsCount: number = 3;
+    newLevelsPageData: PageData = {
+        from: 0,
+        count: this.newLevelsCount
+    };
     protected readonly faNewspaper = faNewspaper;
     protected readonly faAngleRight = faAngleRight;
     protected readonly faPersonRunning = faPersonRunning;
-    protected readonly faCalendarDay = faCalendarDay;
     protected readonly loopRange = loopRange;
+    protected readonly faClock = faClock;
+    protected readonly faGem = faGem;
 
     constructor(private apiClient: ApiClientService, private cache: CacheService) {
-        if (!this.cache.areElementsCached(this.cache.news, this.newsPageData))
+        if (!areElementsCached(this.cache.news, this.newsPageData))
             this.fetchNews();
 
-        this.fetchLevels();
+        if (!areElementsCached(this.cache.levels, this.newLevelsPageData))
+            this.fetchNewLevels();
+
+        this.fetchDaily();
     }
 
     async fetchNews() {
@@ -46,26 +57,40 @@ export class HomePageComponent {
 
         this.loadingNews = true;
         const response = await this.apiClient.getNews(this.newsPageData);
-        this.cache.news = this.cache.addToCache(this.cache.news, response, this.newsPageData);
+        this.cache.news = addToCache(this.cache.news, response, this.newsPageData);
         this.loadingNews = false;
     }
 
     newsEntries(): ApiNewsEntry[] | undefined {
-        return this.cache.news?.list.items.slice(0, 1);
+        return this.cache.news?.list.items.slice(0, this.newsCount);
     }
 
-    async fetchLevels() {
+    async fetchDaily() {
         if (this.loadingDaily) {
             return;
         }
 
         this.loadingDaily = true;
         const response = await this.apiClient.getDaily(this.dailyPageData);
-        this.daily = this.cache.addToCache(this.daily, response, this.dailyPageData);
+        this.daily = addToCache(this.daily, response, this.dailyPageData);
         this.loadingDaily = false;
     }
 
-    levels(): ApiLevel[] | undefined {
-        return this.daily?.list.items.slice(0, 3).map(d => d.level);
+    dailyLevels(): ApiLevel[] | undefined {
+        return this.daily?.list.items.slice(0, this.dailyCount).map(d => d.level);
+    }
+
+    async fetchNewLevels() {
+        if (this.loadingNewLevels)
+            return;
+
+        this.loadingNewLevels = true;
+        const response = await this.apiClient.getLevels(this.newLevelsPageData);
+        this.cache.levels = addToCache(this.cache.levels, response, this.newLevelsPageData);
+        this.loadingNewLevels = false;
+    }
+
+    newLevels(): ApiLevel[] | undefined {
+        return this.cache.levels?.list.items;
     }
 }
