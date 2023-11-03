@@ -1,0 +1,22 @@
+<div class="flex gap-2">
+    <app-tooltip text="Unique Plays">
+        <div class="flex gap-1">
+            <fa-icon [icon]="faPlay"></fa-icon>
+            <a>{{level!.uniquePlays}}</a>
+        </div>
+    </app-tooltip>
+
+    <app-tooltip text="Likes">
+        <div class="flex gap-1">
+            <fa-icon [icon]="faHeart"></fa-icon>
+            <a>{{level!.likes}}</a>
+        </div>
+    </app-tooltip>
+
+    <app-tooltip text="Difficulty">
+        <div class="flex gap-1">
+            <fa-icon [icon]="faSkull"></fa-icon>
+            <a>{{level!.difficulty.toLocaleString(undefined, {maximumFractionDigits: 1})}}</a>
+        </div>
+    </app-tooltip>
+</div>

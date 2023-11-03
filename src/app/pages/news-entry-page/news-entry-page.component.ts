@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {ApiNewsEntry} from "../../api/types/api-news-entry";
 import {ApiClientService} from "../../api/api-client.service";
 import {ActivatedRoute} from "@angular/router";
-import {faClock, faFont} from "@fortawesome/free-solid-svg-icons";
+import {faClock, faEllipsisVertical, faFont, faPlus} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
     selector: 'app-news-entry-page',
@@ -14,8 +14,10 @@ export class NewsEntryPageComponent {
     notFound: boolean = false;
     protected readonly faFont = faFont;
     protected readonly faClock = faClock;
+    protected readonly faPlus = faPlus;
+    protected readonly faEllipsisVertical = faEllipsisVertical;
 
-    constructor(private route: ActivatedRoute, private apiClient: ApiClientService) {
+    constructor(route: ActivatedRoute, private apiClient: ApiClientService) {
         route.params.subscribe((params) => {
             const id = params["id"];
             if (this.entry?.id != id) {
@@ -36,7 +38,7 @@ export class NewsEntryPageComponent {
     }
 
     thumbnailUrl() {
-        return this.apiClient.getNewsThumbnailUrl(this.entry!.id);
+        return this.apiClient.getNewsThumbnailUrl(this.entry!);
     }
 
     wordCount(): number {

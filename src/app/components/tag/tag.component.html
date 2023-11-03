@@ -1,4 +1,6 @@
-<div class="bg-form-background border-2 border-border p-2 rounded-lg w-full h-full flex gap-1">
-    <fa-icon [fixedWidth]="true" [icon]="faIcon" size="xl"></fa-icon>
-    <a>{{label}}</a>
-</div>
+<app-tooltip [text]="label ?? ''">
+    <div class="bg-form-background border-2 border-border py-2 px-3 rounded-lg w-full h-full flex gap-2">
+        <fa-icon *ngIf="faIcon" [icon]="faIcon" size="xl"></fa-icon>
+        <a>{{value}}</a>
+    </div>
+</app-tooltip>

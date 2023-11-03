@@ -1,0 +1,10 @@
+<app-filters-category class="w-full" label="Order">
+    <label for="orderBy">Order by</label>
+    <div class="flex gap-1">
+        <app-dropdown (onChoose)="changeOrderType.emit($event)" [options]="orderTypes"
+                      [value]="modifiers.orderBy ?? orderTypes[0].value" class="w-full"
+                      id="orderBy"></app-dropdown>
+        <app-button (click)="toggleDescending.emit()" [faIcon]="faArrowDown"
+                    [upsideDownIcon]="!modifiers.descending!" label=""></app-button>
+    </div>
+</app-filters-category>

@@ -1,0 +1,47 @@
+<div *ngIf="!event" class="flex flex-col gap-1">
+    <div class="w-3/4 lg:w-1/4 bg-secondary h-4 rounded-lg"></div>
+    <div class="w-2/3 lg:w-1/5 bg-secondary h-4 rounded-lg"></div>
+</div>
+
+<div *ngIf="event" class="flex flex-col">
+    <a [ngSwitch]="event.eventType">
+        <app-link [user]="event.actor"></app-link>&nbsp;<a *ngSwitchCase="ApiEventType.levelPublish">published
+        <app-link [level]="event.dataLevel!"></app-link>
+    </a><a *ngSwitchCase="ApiEventType.levelLike">liked
+        <app-link [level]="event.dataLevel!"></app-link>
+    </a>
+        <a *ngSwitchCase="ApiEventType.levelQueue">queued
+            <app-link [level]="event.dataLevel!"></app-link>
+        </a>
+
+        <a *ngSwitchCase="ApiEventType.userFollow">followed
+            <app-link [user]="event.dataUser!"></app-link>
+        </a>
+
+        <a *ngSwitchCase="ApiEventType.scoreSubmission">beat
+            <app-link [level]="event.dataLevel!"></app-link>
+            <a *ngIf="event.dataLeaderboardEntry?.playTime != 0">
+                in {{leaderboardTime()}} with {{event.dataLeaderboardEntry!.notes}} notes</a><a
+                    *ngIf="event.dataLeaderboardEntry?.obsolete == false">
+                #{{event.dataLeaderboardEntry!.position + 1}})</a>
+        </a>
+
+        <a *ngSwitchCase="ApiEventType.accountRegistration">logged in for the first time
+        </a>
+
+        <a *ngSwitchCase="ApiEventType.albumCreation">released
+            <app-link [album]="event.dataAlbum!"></app-link>
+        </a>
+
+        <a *ngSwitchCase="ApiEventType.dailyCreation">added
+            <app-link [level]="event.dataLevel!"></app-link>
+            to
+            daily levels
+        </a>
+
+        <a *ngSwitchCase="ApiEventType.newsCreation">wrote
+            <app-link [newsEntry]="event.dataNewsEntry!"></app-link>
+        </a>
+    </a>
+    <app-date [date]="event.creationDate" class="-mt-1.5"></app-date>
+</div>

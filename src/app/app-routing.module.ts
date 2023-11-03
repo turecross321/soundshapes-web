@@ -17,10 +17,12 @@ import {AccountDeletionPageComponent} from "./pages/account-deletion-page/accoun
 import {ChangeEmailPageComponent} from "./pages/change-email-page/change-email-page.component";
 import {NewsEntryPageComponent} from "./pages/news-entry-page/news-entry-page.component";
 import {NewsPageComponent} from "./pages/news-page/news-page.component";
+import {LevelPageComponent} from "./pages/level-page/level-page.component";
 
 const routes: Routes = [
     {path: '', component: HomePageComponent},
     {path: 'levels', component: LevelsPageComponent},
+    {path: 'levels/:id', component: LevelPageComponent},
     {path: 'albums', component: AlbumsPageComponent},
     {path: 'users', component: UsersPageComponent},
     {path: 'authentication', component: AuthenticationPageComponent, canActivate: [authGuard]},

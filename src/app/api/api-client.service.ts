@@ -164,6 +164,10 @@ export class ApiClientService {
         return await this.getList("news", pageData);
     }
 
+    async getLevel(id: string): Promise<ApiLevel> {
+        return await this.get(`levels/id/${id}`);
+    }
+
     async getLevels(pageData: PageData): Promise<ApiList<ApiLevel>> {
         return await this.getList("levels", pageData);
     }
@@ -180,12 +184,12 @@ export class ApiClientService {
         return await this.getList<ApiDailyLevel>("daily", pageData);
     }
 
-    getNewsThumbnailUrl(id: string) {
-        return `${this.apiUrl}news/id/${id}/thumbnail`;
+    getNewsThumbnailUrl(entry: ApiNewsEntry) {
+        return `${this.apiUrl}news/id/${entry.id}/thumbnail`;
     }
 
-    getLevelThumbnailUrl(id: string) {
-        return `${this.apiUrl}levels/id/${id}/thumbnail`;
+    getLevelThumbnailUrl(level: ApiLevel) {
+        return `${this.apiUrl}levels/id/${level.id}/thumbnail`;
     }
 
     private async logInWithRefreshToken() {

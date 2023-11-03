@@ -14,7 +14,7 @@ export class NewsEntryComponent {
     }
 
     thumbnailUrl() {
-        return this.apiClient.getNewsThumbnailUrl(this.entry?.id ?? "");
+        return this.apiClient.getNewsThumbnailUrl(this.entry!);
     }
 
     entryUrl() {

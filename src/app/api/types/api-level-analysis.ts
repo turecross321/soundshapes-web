@@ -1,8 +1,10 @@
+import {ApiLevelScaleType} from "./api-level-scale-type";
+
 export interface ApiLevelAnalysis {
     fileSize: number;
     bpm: number;
     transposeValue: number;
-    scaleIndex: number;
+    scale: ApiLevelScaleType;
     totalScreens: number;
     totalEntities: number;
     hasCar: boolean;

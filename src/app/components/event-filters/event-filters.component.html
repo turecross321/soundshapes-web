@@ -1,0 +1,10 @@
+<app-filters>
+    <app-filters-order (changeOrderType)="changeOrderType($event)" (toggleDescending)="toggleDescending()"
+                       [modifiers]="modifiers"
+                       [orderTypes]="orderTypes" class="w-full"></app-filters-order>
+    <app-filters-category label="Content">
+        <app-checkbox></app-checkbox>
+    </app-filters-category>
+    <app-filters-category label="Type"></app-filters-category>
+    <app-filters-category label="Creation"></app-filters-category>
+</app-filters>

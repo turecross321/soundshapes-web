@@ -66,6 +66,7 @@ import {FiltersCategoryComponent} from './components/filters-category/filters-ca
 import { LevelComponent } from './components/level/level.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { LevelPageComponent } from './pages/level-page/level-page.component';
+import { LevelStatisticsComponent } from './components/level-statistics/level-statistics.component';
 
 @NgModule({
     declarations: [
@@ -125,6 +126,7 @@ import { LevelPageComponent } from './pages/level-page/level-page.component';
         LevelComponent,
         CheckboxComponent,
         LevelPageComponent,
+        LevelStatisticsComponent,
     ],
     imports: [
         BrowserModule,

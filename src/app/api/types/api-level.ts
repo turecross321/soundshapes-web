@@ -27,5 +27,5 @@ export interface ApiLevel {
     totalDeaths: number | undefined;
     totalPlaytime: number | undefined;
     albums: ApiAlbum[] | undefined;
-    dailyLevels: string | undefined;
+    dailyLevelDate: string | undefined;
 }
