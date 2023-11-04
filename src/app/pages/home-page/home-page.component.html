@@ -17,7 +17,8 @@
             <div class="flex flex-col gap-4">
                 <div class="w-full flex justify-between items-center h-8">
                     <app-text-with-icon [faIcon]="faGem" text="Latest Pick"></app-text-with-icon>
-                    <app-button [faIcon]="faAngleRight" label="More" routerLink="/news"></app-button>
+                    <app-button [faIcon]="faAngleRight" [queryParams]="{'inDaily': true}" label="More"
+                                routerLink="levels"></app-button>
                 </div>
                 <div class="grid grid-cols-1">
                     <app-level-horizontal *ngFor="let level of dailyLevels()" [level]="level"></app-level-horizontal>
@@ -30,7 +31,8 @@
             <div class="flex flex-col gap-4">
                 <div class="w-full flex justify-between items-center h-8">
                     <app-text-with-icon [faIcon]="faClock" text="New Levels"></app-text-with-icon>
-                    <app-button [faIcon]="faAngleRight" label="More" routerLink="/levels"></app-button>
+                    <app-button [faIcon]="faAngleRight" [queryParams]="{'orderBy': 'creationDate'}" label="More"
+                                routerLink="/levels"></app-button>
                 </div>
                 <div class="grid grid-cols-1 gap-2">
                     <app-level-horizontal *ngFor="let level of newLevels()" [level]="level"></app-level-horizontal>
