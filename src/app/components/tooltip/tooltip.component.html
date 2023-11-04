@@ -1,9 +1,3 @@
-<div class="group relative inline-block">
-    <div class="top-full invisible group-hover:opacity-100 group-hover:visible absolute z-10 transform transition-opacity duration-300 opacity-0">
-        <span *ngIf="text.length > 0"
-              class="py-2.5 px-5 rounded-lg whitespace-nowrap bg-navbar-background text-navbar-foreground bg-backdrop flex items-center justify-center font-normal text-base"
-              inert
-              role="tooltip">{{text}}</span>
-    </div>
+<div [title]="text">
     <ng-content></ng-content>
 </div>

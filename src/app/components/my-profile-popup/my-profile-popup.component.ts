@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {ApiClientService} from "../../api/api-client.service";
-import {faArrowRightFromBracket, faGear, faKey, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faArrowRightFromBracket, faGear, faKey, faScroll, faUser} from '@fortawesome/free-solid-svg-icons';
 import {Side} from "../../types/side";
 
 @Component({
@@ -17,6 +17,7 @@ export class MyProfilePopupComponent {
     faArrowRightFromBracket: IconDefinition = faArrowRightFromBracket;
     @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
     protected readonly Side = Side;
+    protected readonly faScroll = faScroll;
 
     constructor(private ApiClient: ApiClientService) {
     }
