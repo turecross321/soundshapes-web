@@ -28,6 +28,7 @@ import {ApiList} from "./types/api-list";
 import {ApiEvent} from "./types/api-event";
 import {ApiLevel} from "./types/api-level";
 import {ApiDailyLevel} from "./types/api-daily-level";
+import {ApiAlbum} from "./types/api-album";
 
 @Injectable({providedIn: 'root'})
 export class ApiClientService {
@@ -190,6 +191,10 @@ export class ApiClientService {
 
     getLevelThumbnailUrl(level: ApiLevel) {
         return `${this.apiUrl}levels/id/${level.id}/thumbnail`;
+    }
+
+    getAlbumThumbnailUrl(album: ApiAlbum) {
+        return `${this.apiUrl}albums/id/${album.id}/thumbnail`;
     }
 
     private async logInWithRefreshToken() {

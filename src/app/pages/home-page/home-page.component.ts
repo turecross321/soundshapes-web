@@ -51,6 +51,7 @@ export class HomePageComponent {
     }
 
     async fetchNews() {
+        console.log("KILL.");
         if (this.loadingNews) {
             return;
         }

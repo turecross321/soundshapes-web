@@ -1,5 +1,5 @@
 <app-border [ngSwitch]="entry == null">
-    <div class="h-60">
+    <div class="xl:h-60">
         <!-- placeholder -->
         <div *ngSwitchCase="true" class="flex gap-4 items-start h-full animate-pulse">
             <div
@@ -27,11 +27,11 @@
             </div>
         </div>
 
-        <div *ngSwitchCase="false" class="flex gap-4 items-start h-full">
+        <div *ngSwitchCase="false" class="flex gap-4 items-center h-full flex-col xl:flex-row">
             <img [src]="thumbnailUrl()" alt="News thumbnail"
-                 class="aspect-video rounded-lg hover:cursor-pointer h-full">
+                 class="aspect-video rounded-lg hover:cursor-pointer h-full xl:w-auto w-full">
             <div class="flex flex-col gap-2 h-full w-full m-2">
-                <div class="flex justify-between items-start">
+                <div class="flex justify-between items-start xl:flex-row flex-col">
                     <!-- metadata -->
                     <div>
                         <app-h1 [routerLink]="entryUrl()" class="cursor-pointer">{{entry!.title}}</app-h1>
@@ -45,10 +45,14 @@
                     </div>
                 </div>
 
-                <app-divider></app-divider>
-                <div class="h-full overflow-y-scroll w-full">
-                    <p class="break-all h-full">{{entry!.fullText}}</p>
+                <div class="flex-col gap-2 hidden xl:block h-full">
+                    <app-border [style]="ElementStyle.secondary" class="h-full w-full">
+                        <div class="w-full h-full">
+                            <p class="line-clamp-4">{{entry!.fullText}}</p>
+                        </div>
+                    </app-border>
                 </div>
+
             </div>
         </div>
     </div>

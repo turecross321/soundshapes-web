@@ -1,4 +1,4 @@
-<app-border class="h-full">
+<app-border>
     <div class="flex flex-col gap-3 h-full">
         <app-list-top (clickFilters)="showFilters = !showFilters" [faIcon]="faFire"
                       [totalItems]="events?.list?.listInformation?.totalItems"></app-list-top>
@@ -8,13 +8,12 @@
         <app-event-filters (onChange)="changeModifiers($event)" *ngIf="showFilters"
                            [modifiers]="modifiers"></app-event-filters>
 
-        <div class="h-full overflow-y-scroll">
-            <div (scrolled)="fetchLaterEvents()" [infiniteScrollDistance]="1"
-                 [scrollWindow]="false" class="grid grid-cols-1 gap-2 flex-initial"
-                 infiniteScroll>
-                <app-event *ngFor="let event of events?.list?.items" [event]="event"></app-event>
-                <app-event *ngFor="let i of loopRange(itemsCount, !loading)"></app-event>
-            </div>
+        <div (scrolled)="fetchLaterEvents()" [infiniteScrollDistance]="1" [scrollWindow]="false"
+             class="h-full overflow-x-visible grid grid-cols-1 gap-2 flex-initial overflow-scroll"
+             infiniteScroll>
+
+            <app-event *ngFor="let event of events?.list?.items" [event]="event"></app-event>
+            <app-event *ngFor="let i of loopRange(itemsCount, !loading)"></app-event>
         </div>
 
     </div>

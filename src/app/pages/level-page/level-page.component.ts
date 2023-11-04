@@ -2,7 +2,15 @@ import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {ApiClientService} from "../../api/api-client.service";
 import {ApiLevel} from "../../api/types/api-level";
-import {faEllipsisVertical, faHeartbeat, faPlus, faScaleUnbalanced, faUpDown} from "@fortawesome/free-solid-svg-icons";
+import {
+    faClock,
+    faEllipsisVertical,
+    faFont,
+    faHeartbeat,
+    faPlus,
+    faScaleUnbalanced,
+    faUpDown
+} from "@fortawesome/free-solid-svg-icons";
 import {ApiLevelScaleType} from "../../api/types/api-level-scale-type";
 
 @Component({
@@ -18,6 +26,8 @@ export class LevelPageComponent {
     protected readonly faUpDown = faUpDown;
     protected readonly faPlus = faPlus;
     protected readonly faEllipsisVertical = faEllipsisVertical;
+    protected readonly faFont = faFont;
+    protected readonly faClock = faClock;
 
     constructor(route: ActivatedRoute, private apiClient: ApiClientService) {
         route.params.subscribe((params) => {

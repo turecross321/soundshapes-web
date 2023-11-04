@@ -6,8 +6,8 @@
 
         <!-- loading entry -->
         <div *ngSwitchCase="true" class="flex flex-col gap-4 animate-pulse">
-            <div class="w-full flex items-top gap-6 lg:flex-row flex-col">
-                <div class="rounded-lg w-full lg:w-96 bg-secondary aspect-video"></div>
+            <div class="w-full flex items-center gap-6 lg:flex-row flex-col">
+                <div class="rounded-lg bg-secondary aspect-video w-full lg:w-96"></div>
                 <div class="flex flex-col w-full gap-2">
                     <!-- metadata -->
                     <div class="h-full flex flex-col gap-2">
@@ -46,7 +46,7 @@
         <div *ngSwitchCase="false" class="flex flex-col gap-4">
             <div class="w-full flex items-center gap-6 lg:flex-row flex-col">
                 <img [src]="thumbnailUrl()"
-                     alt="News thumbnail" class="rounded-lg w-full lg:w-auto">
+                     alt="News thumbnail" class="rounded-lg bg-secondary aspect-video w-full lg:w-96">
                 <div class="flex flex-col w-full gap-1">
                     <div class="flex justify-between h-full w-full">
                         <!-- metadata -->
@@ -59,7 +59,6 @@
                         </div>
 
                         <div class="flex gap-1">
-                            <app-button [faIcon]="faPlus" label="Queue"></app-button>
                             <app-button [faIcon]="faEllipsisVertical" label=""></app-button>
                         </div>
                     </div>
@@ -73,8 +72,8 @@
                         </div>
 
                         <!-- dates -->
-                        <div class="flex flex-col lg:text-right">
-                            <app-date [date]="entry!.creationDate" prefix="published"></app-date>
+                        <div class="flex flex-col lg:text-right justify-end">
+                            <app-date [date]="entry!.creationDate" prefix="written"></app-date>
                             <app-date *ngIf="entry!.creationDate != entry!.modificationDate"
                                       [date]="entry!.modificationDate"
                                       prefix="last modified"></app-date>

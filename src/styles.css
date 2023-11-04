@@ -8,3 +8,18 @@
         font-family: Sora, Rubik, system-ui, sans-serif;
     }
 }
+
+/* width */
+::-webkit-scrollbar {
+    @apply w-1;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    @apply rounded-lg;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply bg-foreground-quaternary rounded-lg;
+}

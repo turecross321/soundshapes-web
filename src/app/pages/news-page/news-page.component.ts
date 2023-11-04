@@ -6,7 +6,7 @@ import {CacheService} from "../../services/cache.service";
 import {PageModifiers} from "../../types/page-modifiers";
 import {CachedApiList} from "../../types/cached-api-list";
 import {ApiNewsEntry} from "../../api/types/api-news-entry";
-import {addToCache} from "../../helpers/cache-list-helper";
+import {addToCache, areElementsCached} from "../../helpers/cache-list-helper";
 
 @Component({
     selector: 'app-news-page',
@@ -23,7 +23,7 @@ export class NewsPageComponent {
     protected readonly faSlidersH = faSlidersH;
 
     constructor(private apiClient: ApiClientService, private cache: CacheService) {
-        if ((this.cache.news?.list.items.length ?? 0) < this.itemsCount)
+        if (!areElementsCached(this.cache.news, {from: 0, count: this.itemsCount, modifiers: this.modifiers}))
             this.fetchLaterNews();
     }
 

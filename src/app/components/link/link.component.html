@@ -1,2 +1,7 @@
-<a [routerLink]="link()"
-   class="font-bold hover:text-foreground-quaternary">{{text()}}</a>
+<span [ngClass]="{'border-[1px] px-1 rounded-md border-border bg-tertiary' : border()}"
+      [routerLink]="link()"
+      class="font-bold hover:text-foreground-quaternary inline-flex cursor-pointer items-baseline gap-1"><img
+        *ngIf="imageUrl()"
+        [src]="imageUrl()"
+        alt=""
+        class="self-center h-5 rounded-sm">{{text()}}</span>

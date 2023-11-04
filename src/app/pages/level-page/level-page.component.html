@@ -45,8 +45,9 @@
         <!-- real entry -->
         <div *ngSwitchCase="false" class="flex flex-col gap-4">
             <div class="w-full flex items-center gap-6 lg:flex-row flex-col">
-                <img [src]="thumbnailUrl()"
-                     alt="News thumbnail" class="rounded-lg w-full lg:w-auto aspect-video">
+                <img *ngIf="!level?.campaignLevel"
+                     [src]="thumbnailUrl()" alt="Level thumbnail"
+                     class="rounded-lg w-full lg:w-auto aspect-video">
                 <div class="flex flex-col w-full gap-1">
                     <div class="h-full flex justify-between">
                         <!-- metadata -->
@@ -66,7 +67,7 @@
                     </div>
                     <div class="flex justify-between w-full flex-col lg:flex-row gap-2">
                         <!-- tags -->
-                        <div class="flex gap-1 whitespace-break-spaces">
+                        <div class="flex gap-1">
                             <app-tag [faIcon]="faHeartbeat" [value]="level!.analysis!.bpm + ' BPM'"
                                      label="Beats per minute"></app-tag>
                             <app-tag [faIcon]="faScaleUnbalanced" [value]="scaleText()" label="Scale"></app-tag>
@@ -76,7 +77,7 @@
                         </div>
 
                         <!-- dates -->
-                        <div class="flex flex-col lg:text-right">
+                        <div class="flex flex-col lg:text-right justify-end">
                             <app-date [date]="level!.creationDate!" prefix="published"></app-date>
                             <app-date *ngIf="level!.creationDate != level!.modificationDate"
                                       [date]="level!.modificationDate!"

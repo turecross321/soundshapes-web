@@ -1,7 +1,9 @@
 <div class="group relative inline-block">
+    <div class="top-full invisible group-hover:opacity-100 group-hover:visible absolute z-10 transform transition-opacity duration-300 opacity-0">
+        <span *ngIf="text.length > 0"
+              class="py-2.5 px-5 rounded-lg whitespace-nowrap bg-navbar-background text-navbar-foreground bg-backdrop flex items-center justify-center font-normal text-base"
+              inert
+              role="tooltip">{{text}}</span>
+    </div>
     <ng-content></ng-content>
-    <span *ngIf="text.length > 0"
-          class="invisible group-hover:opacity-100 group-hover:visible whitespace-nowrap absolute z-10 left-1/2 transform -translate-x-1/2 py-2.5 px-5 bg-navbar-background text-navbar-foreground rounded-lg transition-opacity duration-300 opacity-0 bg-backdrop flex items-center justify-center font-normal text-base">
-    {{text}}
-  </span>
 </div>

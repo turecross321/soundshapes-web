@@ -23,7 +23,7 @@
             <a *ngIf="event.dataLeaderboardEntry?.playTime != 0">
                 in {{leaderboardTime()}} with {{event.dataLeaderboardEntry!.notes}} notes</a><a
                     *ngIf="event.dataLeaderboardEntry?.obsolete == false">
-                (#{{event.dataLeaderboardEntry!.position + 1}})</a>
+                and achieved #{{event.dataLeaderboardEntry!.position + 1}}</a>
         </a>
 
         <a *ngSwitchCase="ApiEventType.accountRegistration">logged in for the first time

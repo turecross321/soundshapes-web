@@ -17,6 +17,7 @@ export interface ApiLevel {
     queues: number;
     difficulty: number;
     visibility: ApiLevelVisibility;
+    campaignLevel: boolean;
 
     // full
     analysis: ApiLevelAnalysis | undefined;
