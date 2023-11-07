@@ -41,17 +41,17 @@ export class NewsEntryPageComponent {
         return this.apiClient.getNewsThumbnailUrl(this.entry!);
     }
 
-    wordCount(): number {
+    private wordCount(): number {
         return this.entry!.fullText.split(" ").length;
     }
 
     wordCountString(): string {
-        return `${this.wordCount()} words`;
+        return `${this.wordCount().toLocaleString()} words`;
     }
 
     readTimeString(): string {
         const count: number = this.wordCount();
         const minutes: number = count / 200;
-        return `${Math.ceil(minutes)} minute read`;
+        return `${Math.ceil(minutes).toLocaleString()} minute read`;
     }
 }

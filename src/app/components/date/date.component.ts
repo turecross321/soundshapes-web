@@ -12,7 +12,7 @@ export class DateComponent implements OnInit {
     _date!: Date;
 
     formattedDate(): string {
-        return this._date.toLocaleDateString() + " : " + this._date.toLocaleTimeString();
+        return this._date.toLocaleDateString() + " @ " + this._date.toLocaleTimeString();
     }
 
     moment(): string {

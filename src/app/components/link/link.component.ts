@@ -46,7 +46,7 @@ export class LinkComponent {
     }
 
     imageUrl(): string | null {
-        if (this.level != null && !this.level.campaignLevel)
+        if (this.level != null)
             return this.apiClient.getLevelThumbnailUrl(this.level);
         else if (this.album)
             return this.apiClient.getAlbumThumbnailUrl(this.album);

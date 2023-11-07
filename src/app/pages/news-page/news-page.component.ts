@@ -20,7 +20,6 @@ export class NewsPageComponent {
     showFilters: boolean = false;
 
     protected readonly faNewspaper = faNewspaper;
-    protected readonly faSlidersH = faSlidersH;
 
     constructor(private apiClient: ApiClientService, private cache: CacheService) {
         if (!areElementsCached(this.cache.news, {from: 0, count: this.itemsCount, modifiers: this.modifiers}))

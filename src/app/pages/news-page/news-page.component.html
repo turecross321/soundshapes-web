@@ -1,7 +1,7 @@
 <app-page header="News">
     <div class="flex flex-col gap-4">
         <app-list-top (clickFilters)="showFilters = !showFilters" [faIcon]="faNewspaper"
-                      [totalItems]="news()?.list?.listInformation?.totalItems"></app-list-top>
+                      [totalItems]="news()?.list?.listInformation?.totalItems" [filters]="modifiers.filters"></app-list-top>
 
         <!-- filters -->
         <app-news-filters (onChange)="changeModifiers($event)" *ngIf="showFilters" [modifiers]="modifiers"

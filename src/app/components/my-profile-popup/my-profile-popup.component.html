@@ -1,13 +1,13 @@
 <app-navbar-popup [side]="Side.right">
     <app-navbar-popup-button (click)="onClose.emit()" [faIcon]="faUser" label="My Profile"
                              routerLink="/users/me"></app-navbar-popup-button>
+    <app-navbar-popup-button (click)="logOut()" [faIcon]="faArrowRightFromBracket"
+                             [loading]="loggingOut" label="Log out"></app-navbar-popup-button>
+    <app-divider></app-divider>
     <app-navbar-popup-button (click)="onClose.emit()" [faIcon]="faKey"
                              label="Authentication" routerLink="/authentication"></app-navbar-popup-button>
     <app-navbar-popup-button (click)="onClose.emit()" [faIcon]="faGear"
                              label="Settings" routerLink="/settings"></app-navbar-popup-button>
     <app-navbar-popup-button (click)="onClose.emit()" [faIcon]="faScroll" label="API Documentation"
                              routerLink="/documentation"></app-navbar-popup-button>
-    <app-divider></app-divider>
-    <app-navbar-popup-button (click)="logOut()" [faIcon]="faArrowRightFromBracket"
-                             [loading]="loggingOut" label="Log out"></app-navbar-popup-button>
 </app-navbar-popup>

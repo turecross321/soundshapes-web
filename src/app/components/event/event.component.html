@@ -18,8 +18,12 @@
             <app-link [user]="event.dataUser!"></app-link>
         </a>
 
-        <a *ngSwitchCase="ApiEventType.scoreSubmission">beat
+        <a *ngSwitchCase="ApiEventType.scoreSubmission" [ngSwitch]="event.dataLeaderboardEntry?.completed">
+            <a *ngSwitchCase="true">beat</a>
+            <a *ngSwitchCase="false">played</a>
+
             <app-link [level]="event.dataLevel!"></app-link>
+
             <a *ngIf="event.dataLeaderboardEntry?.playTime != 0">
                 in {{leaderboardTime()}} with {{event.dataLeaderboardEntry!.notes}} notes</a><a
                     *ngIf="event.dataLeaderboardEntry?.obsolete == false">

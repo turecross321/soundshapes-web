@@ -1,16 +1,28 @@
 <div [ngClass]="{'cursor-progress': loading}"
      class="w-full flex items-center justify-center">
+
+    <!-- badge -->
+    <div *ngIf="numberBadge && numberBadge != 0"
+         class="absolute z-10
+         translate-x-full -translate-y-[16px] ml-10
+                    w-5 h-5 p-3 rounded-full
+                    flex justify-center items-center
+                    bg-primary text-foreground-secondary text-sm drop-shadow
+                    pointer-events-none">
+        <a>{{numberBadge}}</a>
+    </div>
+
     <button [disabled]="isDisabled()"
             [ngClass]="{'brightness-95 refresh:brightness-75 dark:brightness-90' : isDisabled(), 'hover:shadow hover:brightness-95 refresh:hover:brightness-75 dark:hover:brightness-90' : !isDisabled(),
         'bg-primary text-foreground-secondary' : style === ElementStyle.primary, 'bg-secondary text-foreground' : style === ElementStyle.secondary, 'bg-dangerous text-foreground' : style === ElementStyle.dangerous}"
             class="px-4 py-2.5 rounded-lg bg-button-background flex gap-2 duration-100 w-full lg:w-auto">
+
         <fa-icon *ngIf="faIcon != null" [icon]="faIcon!"
                  [ngClass]="{'text-transparent' : loading, 'rotate-180' : upsideDownIcon}"
                  class="duration-100 transition-all"></fa-icon>
         <span *ngIf="label" [ngClass]="{'text-transparent' : loading}"
               class="duration-100 transition-colors">{{label}}</span>
     </button>
-
     <app-loading *ngIf="loading"
                  [ngClass]="{'text-foreground-secondary' : style === ElementStyle.primary, 'text-foreground' : style === ElementStyle.secondary || style === ElementStyle.dangerous}"
                  class="absolute"></app-loading>
