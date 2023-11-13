@@ -9,7 +9,7 @@ export interface ApiLeaderboardEntry {
     score: number;
     playTime: number;
     notes: number;
-    completed: boolean;
+    completed: boolean | null;
     creationDate: string;
     platformType: ApiPlatformType;
 }

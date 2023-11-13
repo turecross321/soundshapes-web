@@ -1,11 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {ApiLevel} from "../../api/types/api-level";
 import {ApiClientService} from "../../api/api-client.service";
-import {faHeart, faPlay, faSkull} from "@fortawesome/free-solid-svg-icons";
+import {faHeart, faPlay, faSkull} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-level',
-    templateUrl: './level.component.html'
+    templateUrl: './level.component.html',
+    styleUrls: []
 })
 export class LevelComponent {
     @Input() level: ApiLevel | null = null;

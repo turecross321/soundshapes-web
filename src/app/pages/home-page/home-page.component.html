@@ -1,7 +1,7 @@
 <app-page header="Home">
-    <div class="gap-8 grid grid-cols-2">
+    <div class="gap-8 flex flex-col">
         <!-- news -->
-        <div class="flex flex-col gap-4 col-span-2">
+        <div class="flex flex-col gap-4">
             <div class="w-full flex justify-between items-center h-8">
                 <app-text-with-icon [faIcon]="faNewspaper" text="News"></app-text-with-icon>
                 <app-button [faIcon]="faAngleRight" label="More" routerLink="/news"></app-button>
@@ -12,44 +12,47 @@
                         *ngFor="let i of loopRange(newsCount, !loadingNews)"></app-news-entry>
             </div>
         </div>
-        <div class="flex flex-col gap-8">
-            <!-- daily level -->
-            <div class="flex flex-col gap-4">
-                <div class="w-full flex justify-between items-center h-8">
-                    <app-text-with-icon [faIcon]="faGem" text="Latest Pick"></app-text-with-icon>
-                    <app-button [faIcon]="faAngleRight" [queryParams]="{'inDaily': true}" label="More"
-                                routerLink="levels"></app-button>
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            <div class="flex flex-col gap-8 lg:h-[50rem]">
+                <!-- daily level -->
+                <div class="flex flex-col gap-4">
+                    <div class="w-full flex justify-between items-center h-8">
+                        <app-text-with-icon [faIcon]="faGem" text="Latest Pick"></app-text-with-icon>
+                        <app-button [faIcon]="faAngleRight" [queryParams]="{'inDaily': true}" label="More"
+                                    routerLink="levels"></app-button>
+                    </div>
+                    <div class="grid grid-cols-1">
+                        <app-level *ngFor="let level of dailyLevels()" [level]="level"></app-level>
+                        <app-level
+                                *ngFor="let i of loopRange(dailyCount, !loadingDaily)"></app-level>
+                    </div>
                 </div>
-                <div class="grid grid-cols-1">
-                    <app-level-horizontal *ngFor="let level of dailyLevels()" [level]="level"></app-level-horizontal>
-                    <app-level-horizontal
-                            *ngFor="let i of loopRange(dailyCount, !loadingDaily)"></app-level-horizontal>
+
+                <!-- new levels -->
+                <div class="flex flex-col gap-4">
+                    <div class="w-full flex justify-between items-center h-8">
+                        <app-text-with-icon [faIcon]="faClock" text="New Levels"></app-text-with-icon>
+                        <app-button [faIcon]="faAngleRight" [queryParams]="{'orderBy': 'creationDate'}" label="More"
+                                    routerLink="/levels"></app-button>
+                    </div>
+                    <div class="grid grid-cols-1 gap-2">
+                        <app-level *ngFor="let level of newLevels()" [level]="level"></app-level>
+                        <app-level
+                                *ngFor="let i of loopRange(newLevelsCount, !loadingNewLevels)"></app-level>
+                    </div>
                 </div>
             </div>
 
-            <!-- new levels -->
-            <div class="flex flex-col gap-4">
+
+            <!-- activity -->
+
+            <div class="flex flex-col gap-4 h-[50rem]">
                 <div class="w-full flex justify-between items-center h-8">
-                    <app-text-with-icon [faIcon]="faClock" text="New Levels"></app-text-with-icon>
-                    <app-button [faIcon]="faAngleRight" [queryParams]="{'orderBy': 'creationDate'}" label="More"
-                                routerLink="/levels"></app-button>
+                    <app-text-with-icon [faIcon]="faPersonRunning" class="h-8" text="Activity"></app-text-with-icon>
                 </div>
-                <div class="grid grid-cols-1 gap-2">
-                    <app-level-horizontal *ngFor="let level of newLevels()" [level]="level"></app-level-horizontal>
-                    <app-level-horizontal
-                            *ngFor="let i of loopRange(newLevelsCount, !loadingNewLevels)"></app-level-horizontal>
-                </div>
+                <app-events class="h-[47rem]"></app-events>
             </div>
         </div>
 
-
-        <!-- activity -->
-
-        <div class="flex flex-col gap-4 h-[50rem]">
-            <div class="w-full flex justify-between items-center h-8">
-                <app-text-with-icon [faIcon]="faPersonRunning" class="h-8" text="Activity"></app-text-with-icon>
-            </div>
-            <app-events class="h-[47rem]"></app-events>
-        </div>
     </div>
 </app-page>

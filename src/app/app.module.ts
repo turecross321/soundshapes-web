@@ -63,11 +63,10 @@ import {EventFiltersComponent} from './components/event-filters/event-filters.co
 import {FiltersComponent} from './components/filters/filters.component';
 import {FiltersOrderComponent} from './components/filters-order/filters-order.component';
 import {FiltersCategoryComponent} from './components/filters-category/filters-category.component';
-import { LevelComponent } from './components/level/level.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { LevelPageComponent } from './pages/level-page/level-page.component';
 import { LevelStatisticsComponent } from './components/level-statistics/level-statistics.component';
-import { LevelHorizontalComponent } from './components/level-horizontal/level-horizontal.component';
+import { LevelComponent } from './components/level/level.component';
 
 @NgModule({
     declarations: [
@@ -124,11 +123,10 @@ import { LevelHorizontalComponent } from './components/level-horizontal/level-ho
         FiltersComponent,
         FiltersOrderComponent,
         FiltersCategoryComponent,
-        LevelComponent,
         CheckboxComponent,
         LevelPageComponent,
         LevelStatisticsComponent,
-        LevelHorizontalComponent,
+        LevelComponent,
     ],
     imports: [
         BrowserModule,

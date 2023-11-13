@@ -1,6 +1,5 @@
 <div class="flex justify-between items-center">
-    <p>{{getFiltersCount()}}</p>
-    <app-button (click)="clickFilters.emit()" [faIcon]="faSlidersH" label="Filter"></app-button>
+    <app-button (click)="clickFilters.emit()" [faIcon]="faSlidersH" label="Filter" [numberBadge]="getFiltersCount()"></app-button>
     <app-text-with-icon *ngIf="totalItems" [faIcon]="faIcon"
                         [text]="totalItems.toLocaleString()"></app-text-with-icon>
 </div>
