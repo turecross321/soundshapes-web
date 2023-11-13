@@ -39,22 +39,31 @@ export class ApiClientService {
     private user: ApiUser | null = null;
 
     constructor(private httpClient: HttpClient, private toastService: ToastService, private router: Router) {
-        this.logInWithRefreshToken().then(() => {
+        this.autoLogin().then(() => {
             this.hasTriedLoggedInAutomatically = true;
         });
     }
 
     getUser(): ApiUser | null {
-        return this.user;
+        if (this.user)
+            return this.user;
+
+        const cachedUser: string | null = localStorage.getItem("cachedUser");
+        if (cachedUser)
+            return JSON.parse(cachedUser);
+
+        return null;
     }
 
     setUser(value: ApiUser | null) {
         this.user = value;
         this.onUserChange.emit(value);
+
+        localStorage.setItem("cachedUser", JSON.stringify(this.user));
     }
 
     async getGameIps(pageData: PageData): Promise<ApiList<ApiGameIp>> {
-        return await this.getList<ApiGameIp>("gameAuth/ip", pageData);
+        return await this.getList<ApiGameIp>("gameAuth/ip", pageData, true);
     }
 
     loggedIn(): boolean | undefined {
@@ -62,11 +71,11 @@ export class ApiClientService {
             return undefined;
 
         // this might be the dumbest shit I've ever written
-        return !(!this.token);
+        return this.token != undefined;
     }
 
     async logOut() {
-        await this.post("account/logOut");
+        await this.post("account/logOut", true);
         this.token = undefined;
         this.deleteRefreshToken();
         this.toastService.success("You have been logged out.");
@@ -75,7 +84,7 @@ export class ApiClientService {
 
     async logIn(email: string, password: string) {
         const body: ApiLogInRequest = {email: email, passwordSha512: await hash(password)};
-        const response: ApiLoginResponse = await this.post<ApiLoginResponse>("account/logIn", body);
+        const response: ApiLoginResponse = await this.post<ApiLoginResponse>("account/logIn", true, body);
         this.token = response.accessToken;
         this.setUser(response.user);
         this.saveRefreshToken(response.refreshToken);
@@ -83,11 +92,11 @@ export class ApiClientService {
     }
 
     async getAuthenticationSettings(): Promise<ApiGameAuthenticationSettings> {
-        return await this.get<ApiGameAuthenticationSettings>("gameAuth/settings");
+        return await this.get<ApiGameAuthenticationSettings>("gameAuth/settings", true);
     }
 
     async uploadAuthenticationSettings(settings: ApiGameAuthenticationSettings): Promise<null> {
-        return await this.post("gameAuth/settings", settings);
+        return await this.post("gameAuth/settings", true, settings);
     }
 
     async removeIp(ip: ApiGameIp): Promise<null> {
@@ -96,11 +105,11 @@ export class ApiClientService {
 
     async authorizeIp(ip: ApiGameIp, oneTimeUse: boolean): Promise<null> {
         const body: ApiAuthenticateIpRequest = {ipAddress: ip.ipAddress, oneTimeUse: oneTimeUse}
-        return await this.post("gameAuth/ip/authorize", body);
+        return await this.post("gameAuth/ip/authorize", true, body);
     }
 
     async getEula(): Promise<ApiEula> {
-        return await this.get<ApiEula>("eula");
+        return await this.get<ApiEula>("eula", false);
     }
 
     async register(code: string, email: string, password: string): Promise<null> {
@@ -111,38 +120,38 @@ export class ApiClientService {
             acceptEula: true
         };
 
-        return await this.post("account/register", body);
+        return await this.post("account/register", false, body);
     }
 
     async sendPasswordToken(email: string) {
         const body: ApiPasswordTokenRequest = {email: email};
-        return await this.post("account/sendPasswordToken", body);
+        return await this.post("account/sendPasswordToken", false, body);
     }
 
     async sendEmailToken() {
-        return await this.post("account/sendEmailToken");
+        return await this.post("account/sendEmailToken", true);
     }
 
     async sendDeletionToken() {
-        return await this.post("account/sendDeletionToken");
+        return await this.post("account/sendDeletionToken", true);
     }
 
     async setUsername(username: string) {
         const body: ApiSetUsernameRequest = {newUsername: username};
-        const response = await this.post("account/setUsername", body);
+        const response = await this.post("account/setUsername", true, body);
         this.user!.username = username;
         return response;
     }
 
     async setPassword(code: string, newPassword: string) {
         const body: ApiSetPasswordRequest = {setPasswordTokenId: code, newPasswordSha512: await hash(newPassword)};
-        return await this.post("account/setPassword", body);
+        return await this.post("account/setPassword", false, body);
     }
 
     async setEmail(code: string, newEmail: string) {
         const body: ApiSetEmailRequest = {setEmailTokenId: code, newEmail: newEmail};
         this.toastService.success("Your e-mail address has been changed.");
-        return await this.post("account/setEmail", body);
+        return await this.post("account/setEmail", true, body);
     }
 
     async deleteAccount(code: string) {
@@ -158,31 +167,31 @@ export class ApiClientService {
     }
 
     async getDocumentation(): Promise<ApiRoute[]> {
-        return await this.get<ApiRoute[]>("documentation");
+        return await this.get<ApiRoute[]>("documentation", false);
     }
 
     async getNews(pageData: PageData): Promise<ApiList<ApiNewsEntry>> {
-        return await this.getList("news", pageData);
+        return await this.getList("news", pageData, false);
     }
 
     async getLevel(id: string): Promise<ApiLevel> {
-        return await this.get(`levels/id/${id}`);
+        return await this.get(`levels/id/${id}`, false);
     }
 
     async getLevels(pageData: PageData): Promise<ApiList<ApiLevel>> {
-        return await this.getList("levels", pageData);
+        return await this.getList("levels", pageData, false);
     }
 
     async getNewsEntry(id: string) {
-        return await this.get<ApiNewsEntry>(`news/id/${id}`);
+        return await this.get<ApiNewsEntry>(`news/id/${id}`, false);
     }
 
     async getEvents(pageData: PageData): Promise<ApiList<ApiEvent>> {
-        return await this.getList<ApiEvent>("events", pageData);
+        return await this.getList<ApiEvent>("events", pageData, false);
     }
 
     async getDaily(pageData: PageData): Promise<ApiList<ApiDailyLevel>> {
-        return await this.getList<ApiDailyLevel>("daily", pageData);
+        return await this.getList<ApiDailyLevel>("daily", pageData, false);
     }
 
     getNewsThumbnailUrl(entry: ApiNewsEntry) {
@@ -197,7 +206,7 @@ export class ApiClientService {
         return `${this.apiUrl}albums/id/${album.id}/thumbnail`;
     }
 
-    private async logInWithRefreshToken() {
+    private async autoLogin() {
         const refreshTokenJson = localStorage.getItem("refreshToken");
         if (!refreshTokenJson)
             return;
@@ -213,7 +222,7 @@ export class ApiClientService {
 
         const body: ApiRefreshTokenRequest = {refreshTokenId: refreshToken.id};
         try {
-            const response: ApiLoginResponse = await this.post<ApiLoginResponse>("account/refreshToken", body);
+            const response: ApiLoginResponse = await this.post<ApiLoginResponse>("account/refreshToken", false, body);
             this.token = response.accessToken;
             this.setUser(response.user);
             this.saveRefreshToken(response.refreshToken);
@@ -222,7 +231,6 @@ export class ApiClientService {
                 throw e;
             }
             this.deleteRefreshToken();
-            throw e;
         }
     }
 
@@ -234,28 +242,28 @@ export class ApiClientService {
         localStorage.removeItem("refreshToken");
     }
 
-    private async get<TData>(endpoint: string): Promise<TData> {
-        const response = await this.makeRequest<TData>("GET", endpoint);
+    private async get<TData>(endpoint: string, waitForAuth: boolean): Promise<TData> {
+        const response = await this.makeRequest<TData>("GET", endpoint, waitForAuth);
         return response.data!;
     }
 
-    private async getList<TData>(endpoint: string, pageData: PageData): Promise<ApiList<TData>> {
-        const response = await this.makeRequest<TData[]>("GET", endpoint, null, pageData);
+    private async getList<TData>(endpoint: string, pageData: PageData, waitForAuth: boolean): Promise<ApiList<TData>> {
+        const response = await this.makeRequest<TData[]>("GET", endpoint, waitForAuth, null, pageData);
         return {items: response.data!, listInformation: response.listInformation!};
     }
 
-    private async post<TData>(endpoint: string, body: object | null = null): Promise<TData> {
-        const response = await this.makeRequest<TData>("POST", endpoint, body);
+    private async post<TData>(endpoint: string, waitForAuth: boolean, body: object | null = null): Promise<TData> {
+        const response = await this.makeRequest<TData>("POST", endpoint, waitForAuth, body);
         return response.data!;
     }
 
     private async delete<TData>(endpoint: string, body: object | null = null): Promise<TData> {
-        const response = await this.makeRequest<TData>("DELETE", endpoint, body);
+        const response = await this.makeRequest<TData>("DELETE", endpoint, true, body);
         return response.data!;
     }
 
-    private async makeRequest<TData>(method: string, endpoint: string, body: object | null = null, pageData: PageData | null = null): Promise<ApiResponse<TData>> {
-        while (endpoint != "account/refreshToken" && !this.hasTriedLoggedInAutomatically) {
+    private async makeRequest<TData>(method: string, endpoint: string, waitForAuth: boolean, body: object | null = null, pageData: PageData | null = null): Promise<ApiResponse<TData>> {
+        while (waitForAuth && endpoint != "account/refreshToken" && !this.hasTriedLoggedInAutomatically) {
             await new Promise(f => setTimeout(f, 1000));
         }
 
