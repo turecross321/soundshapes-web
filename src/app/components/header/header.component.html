@@ -1,8 +1,10 @@
 <header class="bg-header px-6 py-4 flex justify-between text-header-text h-[60px]">
-  <nav class="flex items-center h-full gap-1">
+  <nav class="flex items-center h-full gap-4">
     <app-nav-link [countSubUrls]="false" [icon]="faHouse" label="" path="/"></app-nav-link>
     <app-vertical-divider [color]="ColorType.Navbar" class="h-1/2 text-header-text"></app-vertical-divider>
     <app-nav-link [icon]="faMusic" label="Levels" path="/levels"></app-nav-link>
+    <app-nav-link [icon]="faCompactDisc" label="Albums" path="/albums"></app-nav-link>
+    <app-nav-link [icon]="faUsers" label="Users" path="/users"></app-nav-link>
   </nav>
 
   <app-header-me></app-header-me>
