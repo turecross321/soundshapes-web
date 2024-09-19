@@ -18,7 +18,11 @@ module.exports = {
   ],
   theme: {
     colors: defaultColors,
-    extend: {},
+    extend: {
+      height: {
+        'navbar-hamburger-menu': 'calc(100vh - 60px)'
+      }
+    },
   },
   plugins: [],
 }

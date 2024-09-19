@@ -1,11 +1,37 @@
-<header class="bg-header px-6 py-4 flex justify-between text-header-text h-[60px]">
-  <nav class="flex items-center h-full gap-4">
-    <app-nav-link [countSubUrls]="false" [icon]="faHouse" label="" path="/"></app-nav-link>
-    <app-vertical-divider [color]="ColorType.Navbar" class="h-1/2 text-header-text"></app-vertical-divider>
+<header class="bg-header px-6 py-4 flex justify-between text-header-text h-[60px] items-center sticky top-0">
+  <ng-container> <!-- left --->
+
+    <!-- home -->
+    <app-nav-link [countSubUrls]="false" [icon]="faHouse" class="hidden md:block" label="" path="/"></app-nav-link>
+
+    <!-- hamburger menu button -->
+    <app-nav-button (click)="setHamburgerMenu(!showHamburgerMenu)" [icon]="showHamburgerMenu ? faX : faBars"
+                    class="md:hidden"
+                    label=""></app-nav-button>
+
+  </ng-container>
+
+  <nav class="items-center h-full gap-4 hidden md:flex">
+
     <app-nav-link [icon]="faMusic" label="Levels" path="/levels"></app-nav-link>
     <app-nav-link [icon]="faCompactDisc" label="Albums" path="/albums"></app-nav-link>
     <app-nav-link [icon]="faUsers" label="Users" path="/users"></app-nav-link>
+
   </nav>
 
-  <app-header-me></app-header-me>
+  <app-nav-button [icon]="faSignIn" label="Sign in"></app-nav-button>
 </header>
+
+<div class="sticky top-[60px]">
+  <nav
+    (clickOutside)="clickedOutside()"
+    [ngClass]="{'translate-x-[70vw]': showHamburgerMenu}" class="bg-header absolute w-[70vw] px-6 py-4 flex flex-col text-header-text gap-6 h-navbar-hamburger-menu z-10 -left-[70vw]
+    transition-transform duration-250 md:hidden">
+    <app-nav-link (click)="setHamburgerMenu(false)" [countSubUrls]="false" [icon]="faHouse" label="Home"
+                  path="/"></app-nav-link>
+    <app-horizontal-divider></app-horizontal-divider>
+    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faMusic" label="Levels" path="/levels"></app-nav-link>
+    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faCompactDisc" label="Albums" path="/albums"></app-nav-link>
+    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faUsers" label="Users" path="/users"></app-nav-link>
+  </nav>
+</div>

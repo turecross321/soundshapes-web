@@ -15,7 +15,7 @@ import {NgClass} from "@angular/common";
 })
 export class NavLinkComponent {
   @Input() label: string = null!;
-  @Input() path: string = null!;
+  @Input() path: string | null = null;
   @Input() icon: IconDefinition = null!;
   @Input() countSubUrls: boolean = true;
 
@@ -24,12 +24,18 @@ export class NavLinkComponent {
   constructor(router: Router) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (this.countSubUrls) {
-          this.currentlyOnPath = event.url.startsWith(this.path);
-        } else {
-          this.currentlyOnPath = event.url == this.path;
-        }
+        this.setCurrentlyOnPath(event.url);
       }
     })
+  }
+
+  setCurrentlyOnPath(url: string) {
+    if (this.path) {
+      if (this.countSubUrls) {
+        this.currentlyOnPath = url.startsWith(this.path);
+      } else {
+        this.currentlyOnPath = url == this.path;
+      }
+    }
   }
 }
