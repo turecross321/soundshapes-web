@@ -1,8 +1,8 @@
-<header class="bg-header px-6 py-4 flex justify-between text-header-text h-[60px] items-center sticky top-0">
+<header class="bg-header p-2 flex justify-between text-header-text  items-center sticky top-0 z-50 h-[60px]">
   <ng-container> <!-- left --->
 
     <!-- home -->
-    <app-nav-link [countSubUrls]="false" [icon]="faHouse" class="hidden md:block" label="" path="/"></app-nav-link>
+    <app-nav-link [countSubUrls]="false" [icon]="faHouse" class="hidden md:block" label="" urlPath="/"></app-nav-link>
 
     <!-- hamburger menu button -->
     <app-nav-button (click)="setHamburgerMenu(!showHamburgerMenu)" [icon]="showHamburgerMenu ? faX : faBars"
@@ -11,27 +11,31 @@
 
   </ng-container>
 
-  <nav class="items-center h-full gap-4 hidden md:flex">
+  <nav class="items-center h-full hidden md:flex">
 
-    <app-nav-link [icon]="faMusic" label="Levels" path="/levels"></app-nav-link>
-    <app-nav-link [icon]="faCompactDisc" label="Albums" path="/albums"></app-nav-link>
-    <app-nav-link [icon]="faUsers" label="Users" path="/users"></app-nav-link>
+    <app-nav-link [icon]="faMusic" label="Levels" urlPath="/levels"></app-nav-link>
+    <app-nav-link [icon]="faCompactDisc" label="Albums" urlPath="/albums"></app-nav-link>
+    <app-nav-link [icon]="faUsers" label="Users" urlPath="/users"></app-nav-link>
 
   </nav>
 
-  <app-nav-button [icon]="faSignIn" label="Sign in"></app-nav-button>
+  <app-nav-button (click)=setMe(!showMe) [icon]="faSignIn" label="Sign in"></app-nav-button>
 </header>
 
 <div class="sticky top-[60px]">
-  <nav
-    (clickOutside)="clickedOutside()"
-    [ngClass]="{'translate-x-[70vw]': showHamburgerMenu}" class="bg-header absolute w-[70vw] px-6 py-4 flex flex-col text-header-text gap-6 h-navbar-hamburger-menu z-10 -left-[70vw]
-    transition-transform duration-250 md:hidden">
+  <nav (clickOutside)="setHamburgerMenu(false)"
+       *ngIf="showHamburgerMenu" @slideFromLeft class="bg-header absolute w-[70vw] px-6
+    py-4 flex flex-col text-header-text gap-4 h-navbar-hamburger-menu z-50
+    transition-all duration-250">
     <app-nav-link (click)="setHamburgerMenu(false)" [countSubUrls]="false" [icon]="faHouse" label="Home"
-                  path="/"></app-nav-link>
+                  urlPath="/"></app-nav-link>
     <app-horizontal-divider></app-horizontal-divider>
-    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faMusic" label="Levels" path="/levels"></app-nav-link>
-    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faCompactDisc" label="Albums" path="/albums"></app-nav-link>
-    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faUsers" label="Users" path="/users"></app-nav-link>
+    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faMusic" label="Levels" urlPath="/levels"></app-nav-link>
+    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faCompactDisc" label="Albums"
+                  urlPath="/albums"></app-nav-link>
+    <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faUsers" label="Users" urlPath="/users"></app-nav-link>
   </nav>
+
+  <app-header-me (clickLink)="setMe(false)" (clickOutside)="setMe(false)" *ngIf="showMe" @slideFromTop
+                 class="absolute top-0 right-0 left-0 md:left-auto transition-all duration-250 md:w-96 w-full z-50"></app-header-me>
 </div>

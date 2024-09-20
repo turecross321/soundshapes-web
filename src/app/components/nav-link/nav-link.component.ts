@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome";
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {NgClass} from "@angular/common";
@@ -13,15 +13,15 @@ import {NgClass} from "@angular/common";
   ],
   templateUrl: './nav-link.component.html',
 })
-export class NavLinkComponent {
+export class NavLinkComponent implements OnInit {
   @Input() label: string = null!;
-  @Input() path: string | null = null;
   @Input() icon: IconDefinition = null!;
   @Input() countSubUrls: boolean = true;
-
+  @Input() highlightWhenOnPath: boolean = true;
   currentlyOnPath: boolean = false;
+  @Input() public urlPath: string = null!;
 
-  constructor(router: Router) {
+  constructor(private router: Router) {
     router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.setCurrentlyOnPath(event.url);
@@ -30,12 +30,20 @@ export class NavLinkComponent {
   }
 
   setCurrentlyOnPath(url: string) {
-    if (this.path) {
+    if (!url) {
+      return;
+    }
+
+    if (this.highlightWhenOnPath) {
       if (this.countSubUrls) {
-        this.currentlyOnPath = url.startsWith(this.path);
+        this.currentlyOnPath = url.startsWith(this.urlPath);
       } else {
-        this.currentlyOnPath = url == this.path;
+        this.currentlyOnPath = url == this.urlPath;
       }
     }
+  }
+
+  ngOnInit(): void {
+    this.setCurrentlyOnPath(this.router.url);
   }
 }

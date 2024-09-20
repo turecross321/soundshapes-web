@@ -1,4 +1,8 @@
-<button class="gap-2 inline-flex">
-  <fa-icon [icon]="icon" size="lg"></fa-icon>
+<button [ngClass]="{'pointer-events-none': loading}"
+        [type]="type"
+        class="gap-2 inline-flex hover:bg-header-hover px-4 py-2 rounded-lg transition-colors duration-150 w-full">
+  <fa-icon [fixedWidth]=true [icon]="loading ? faSpinner : icon"
+           [ngClass]="{'animate-spin': loading}"
+           size="lg"></fa-icon>
   {{ label }}
 </button>

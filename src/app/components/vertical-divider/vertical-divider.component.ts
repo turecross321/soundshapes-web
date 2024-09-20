@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ColorType} from "../../types/color.type";
+import {ColorType} from "../../types/component-enums/color.type";
 import {NgClass} from "@angular/common";
 
 @Component({

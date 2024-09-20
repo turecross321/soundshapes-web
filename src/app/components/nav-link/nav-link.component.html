@@ -1,3 +1,4 @@
-<a [ngClass]="{'text-accent': this.currentlyOnPath}" [routerLink]="path" class="gap-2 inline-flex">
+<a [ngClass]="{'text-accent': this.currentlyOnPath}" [routerLink]="urlPath"
+   class="gap-2 inline-flex w-full hover:bg-header-hover px-4 py-2 rounded-lg transition-colors duration-150">
   <fa-icon [icon]="icon" size="lg"></fa-icon>
   {{ label }}</a>

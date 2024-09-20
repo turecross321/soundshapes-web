@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {HeaderMeComponent} from "../header-me/header-me.component";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {
   faBars,
@@ -17,12 +16,13 @@ import {VerticalDividerComponent} from "../vertical-divider/vertical-divider.com
 import {NavButtonComponent} from "../nav-button/nav-button.component";
 import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divider.component";
 import {ClickOutsideDirective} from "../../directives/click-outside.directive";
+import {HeaderMeComponent} from "../header-me/header-me.component";
+import {slideFromLeft, slideFromTop} from "../../animations";
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [
-    HeaderMeComponent,
     FaIconComponent,
     NgForOf,
     NavLinkComponent,
@@ -32,13 +32,15 @@ import {ClickOutsideDirective} from "../../directives/click-outside.directive";
     HorizontalDividerComponent,
     NgIf,
     NgClass,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    HeaderMeComponent
   ],
   templateUrl: './header.component.html',
+  animations: [slideFromLeft, slideFromTop],
 })
 export class HeaderComponent {
   showHamburgerMenu: boolean = false;
-  timesClickedOutsideWhileShowHamburgerMenu = 0; // sigh.....
+  showMe: boolean = false;
   protected readonly faHouse = faHouse;
   protected readonly faMusic = faMusic;
   protected readonly faUsers = faUsers;
@@ -49,18 +51,10 @@ export class HeaderComponent {
   protected readonly faX = faX;
 
   setHamburgerMenu(value: boolean) {
-    this.timesClickedOutsideWhileShowHamburgerMenu = 0;
     this.showHamburgerMenu = value;
   }
 
-  clickedOutside() {
-    if (!this.showHamburgerMenu)
-      return;
-
-    if (this.timesClickedOutsideWhileShowHamburgerMenu > 0) {
-      this.setHamburgerMenu(false);
-    }
-
-    this.timesClickedOutsideWhileShowHamburgerMenu++;
+  setMe(value: boolean) {
+    this.showMe = value;
   }
 }

@@ -1,0 +1,53 @@
+<app-generic-page name="Register">
+  <div class="flex w-full  gap-2">
+    <img alt="A collage of Sound Shapes level thumbnails" class="lg:block hidden rounded-lg" height="540"
+         ngSrc="/collage_1.png"
+         priority
+         width="480">
+    <div class="w-full lg:p-4 xl:w-1/3 relative h-[500px]">
+      <form (submit)="fetchToken()" *ngIf="!code" @slideToRight [formGroup]="getCodeForm"
+            [ngClass]="{'pointer-events-none': loadingCode}"
+            class="flex flex-col gap-2 absolute w-full z-0">
+        <app-tiny-gap-container>
+          <label for="registrationCode">Registration Code</label>
+          <app-input [fControl]="getCodeForm.controls.code" [icon]="faHashtag" [type]="InputContentType.Code"
+                     id="registrationCode" placeholder="123456"></app-input>
+        </app-tiny-gap-container>
+
+        <app-button [icon]="faPlay" [loading]="loadingCode"
+                    [type]="ButtonType.Submit" class="lg:w-min"
+                    text="Proceed"></app-button>
+      </form>
+      <form *ngIf="code" @slideToRight class="flex flex-col gap-2 absolute z-0 w-full">
+        <app-tiny-gap-container>
+          <label for="username">Username</label>
+          <app-input [fControl]="registerForm.controls.username" [icon]="faUser"
+                     id="username" placeholder="gamer"></app-input>
+        </app-tiny-gap-container>
+
+        <app-tiny-gap-container>
+          <label for="email">E-mail</label>
+          <app-input [fControl]="registerForm.controls.email" [icon]="faEnvelope" [type]="InputContentType.Email"
+                     id="email" placeholder="example@email.com"></app-input>
+        </app-tiny-gap-container>
+
+        <app-tiny-gap-container>
+          <label for="password">Enter & confirm your password</label>
+          <app-input [fControl]="registerForm.controls.email" [icon]="faKey" [type]="InputContentType.Password"
+                     id="password" placeholder="Password"></app-input>
+        </app-tiny-gap-container>
+
+        <label class="hidden" for="confirmPassword"></label>
+        <app-input [fControl]="registerForm.controls.email" [icon]="faKey" [type]="InputContentType.Password"
+                   id="confirmPassword" placeholder="Password"></app-input>
+
+        <p>By clicking 'Register', you agree to our <a (click)="openEula()" class="underline cursor-pointer">Terms &
+          Conditions</a>.</p>
+
+        <app-button [icon]="faUserPlus" [loading]="loadingCode"
+                    [type]="ButtonType.Submit" class="lg:w-min"
+                    text="Register"></app-button>
+      </form>
+    </div>
+  </div>
+</app-generic-page>

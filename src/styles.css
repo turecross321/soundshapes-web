@@ -8,3 +8,10 @@
     font-family: Sora, Rubik, system-ui, sans-serif;
   }
 }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #494444 transparent;
+  scrollbar-gutter: both-edges;
+  scroll-behavior: smooth;
+}

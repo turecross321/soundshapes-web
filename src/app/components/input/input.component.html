@@ -1,0 +1,23 @@
+<div
+  (click)="focusInput()"
+  [ngClass]="{'text-header-input border-header-input': style == InputStyle.Header,
+  'border-input text-text': style == InputStyle.Normal}"
+  class="w-full h-[44px] flex items-center justify-between outline-transparent outline outline-[2px] focus-within:outline-accent
+    border-2 rounded-xl py-2 px-4 gap-1 transition-all duration-150 cursor-text">
+  <fa-icon [fixedWidth]="true" [icon]="icon" class="pointer-events-none" size="lg"></fa-icon>
+
+  <input
+    #inputField
+    (input)="onInput($event)"
+
+    [formControl]="fControl"
+    [placeholder]="placeholder"
+    [type]="getInputTypeText()"
+    [value]="value"
+    class="bg-transparent placeholder-text-placeholder w-full  focus:outline focus:outline-0">
+  <div>
+
+  </div>
+  <fa-icon (click)="setShowPassword(!showPassword)" *ngIf="type === InputContentType.Password" [fixedWidth]="true"
+           [icon]="showPassword ? faEye : faEyeSlash" class="cursor-default" size="lg"></fa-icon>
+</div>
