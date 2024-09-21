@@ -79,7 +79,7 @@ export class ApiClientService {
 
             this.toaster.error(`${apiError.statusCode}: ${this.addSpaceBetweenCapitalLetters(errorName)}`, apiError.message);
           } catch (newError: any) {
-            this.toaster.error(`${e.status}: ${this.addSpaceBetweenCapitalLetters(e.statusText)}`, "No explanation was given.");
+            this.toaster.error(`${e.status}: ${e.statusText ? this.addSpaceBetweenCapitalLetters(e.statusText) : "Unknown error"}`, "No explanation was given.");
           }
 
 

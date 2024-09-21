@@ -18,9 +18,6 @@ export class ApiMeService {
 
   constructor(@Inject(PLATFORM_ID) platformId: Object, private toast: ToastService, private apiClient: ApiClientService) {
     if (isPlatformBrowser(platformId)) {
-      this.loadFromStorage();
-      this.attemptToLogInWithRefreshToken();
-
       apiClient.onLogin.subscribe((response) => this.onLogin(response));
     }
   }
@@ -36,16 +33,7 @@ export class ApiMeService {
     this.toast.success("Welcome", `Successfully logged in as ${response.user.name}`);
   }
 
-  private attemptToLogInWithRefreshToken() {
-    if (!this.refreshToken) {
-      return;
-    }
-
-    this.apiClient.logInWithRefreshToken({refreshTokenId: this.refreshToken.id}).subscribe(() => {
-    });
-  }
-
-  private loadFromStorage() {
+  public loadFromStorage() {
     try {
       const userJson = localStorage.getItem("user");
       if (userJson) {
