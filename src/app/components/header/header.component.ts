@@ -1,15 +1,6 @@
 import {Component} from '@angular/core';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {
-  faBars,
-  faCompactDisc,
-  faCross,
-  faHouse,
-  faMusic,
-  faSignIn,
-  faUsers,
-  faX
-} from "@fortawesome/free-solid-svg-icons";
+import {faBars, faCompactDisc, faHouse, faMusic, faSignIn, faUsers, faX} from "@fortawesome/free-solid-svg-icons";
 import {NgClass, NgForOf, NgIf, NgSwitch} from "@angular/common";
 import {NavLinkComponent} from "../nav-link/nav-link.component";
 import {VerticalDividerComponent} from "../vertical-divider/vertical-divider.component";
@@ -18,6 +9,7 @@ import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divid
 import {ClickOutsideDirective} from "../../directives/click-outside.directive";
 import {HeaderMeComponent} from "../header-me/header-me.component";
 import {slideFromLeft, slideFromTop} from "../../animations";
+import {ApiMeService} from "../../services/api-me.service";
 
 @Component({
   selector: 'app-header',
@@ -47,8 +39,10 @@ export class HeaderComponent {
   protected readonly faCompactDisc = faCompactDisc;
   protected readonly faSignIn = faSignIn;
   protected readonly faBars = faBars;
-  protected readonly faCross = faCross;
   protected readonly faX = faX;
+
+  constructor(public me: ApiMeService) {
+  }
 
   setHamburgerMenu(value: boolean) {
     this.showHamburgerMenu = value;

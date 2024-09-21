@@ -20,12 +20,9 @@ export class ToastOutletComponent {
 
   constructor(private toastService: ToastService) {
     this.toastService.onNewMessage.subscribe((message) => {
-      this.message(message);
+      this.message(message).then(() => {
+      });
     });
-  }
-
-  activeMessages() {
-    return this.messages;
   }
 
   private async message(message: ToastMessage) {

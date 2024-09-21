@@ -1,4 +1,4 @@
-import {Injectable, isDevMode} from '@angular/core';
+import {EventEmitter, Injectable, isDevMode, Output} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {IApiResponse} from "../types/api/responses/iapi.response";
 import {ApiResponse} from "../types/api/responses/api.response";
@@ -9,11 +9,15 @@ import {IApiRequest} from "../types/api/requests/iapi.request";
 import {RegisterRequest} from "../types/api/requests/register.request";
 import {ApiError} from "../types/api/responses/api.error";
 import {ToastService} from "./toast.service";
+import {LoginRequest} from "../types/api/requests/login.request";
+import {LoginResponse} from "../types/api/responses/login.response";
+import {RefreshTokenRequest} from "../types/api/requests/refresh.token.request";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiClientService {
+  @Output() onLogin = new EventEmitter<LoginResponse>();
 
   private baseUrl: string;
   private apiUrl: string = "/api/v1/";
@@ -24,6 +28,24 @@ export class ApiClientService {
     } else {
       this.baseUrl = "https://sound.ture.fish"
     }
+  }
+
+  public logInWithRefreshToken(body: RefreshTokenRequest) {
+    return this.post<LoginResponse>("refreshToken", body).pipe(
+      map(response => {
+        this.onLogin.emit(response);
+        return response;
+      })
+    );
+  }
+
+  public logIn(body: LoginRequest) {
+    return this.post<LoginResponse>("logIn", body).pipe(
+      map(response => {
+        this.onLogin.emit(response);
+        return response;
+      })
+    );
   }
 
   public register(body: RegisterRequest) {
@@ -51,8 +73,14 @@ export class ApiClientService {
       .request<ApiResponse<TResponseData>>(method, this.baseUrl + this.apiUrl + endpoint, {body: body})
       .pipe(
         catchError((e: any) => {
-          let apiError: ApiError = e.error.error as ApiError;
-          this.toaster.error(`${apiError.statusCode}: ${this.formatErrorName(apiError.name)}`, apiError.message);
+          try {
+            let apiError: ApiError = e.error.error as ApiError;
+            let errorName = this.removeApiErrorPrefixAndSuffix(apiError.name);
+
+            this.toaster.error(`${apiError.statusCode}: ${this.addSpaceBetweenCapitalLetters(errorName)}`, apiError.message);
+          } catch (newError: any) {
+            this.toaster.error(`${e.status}: ${this.addSpaceBetweenCapitalLetters(e.statusText)}`, "No explanation was given.");
+          }
 
 
           return throwError(() => e);
@@ -61,12 +89,12 @@ export class ApiClientService {
       );
   }
 
-  private formatErrorName(input: string): string {
-    // Remove "Api" at the start and "Error" at the end
-    const modifiedString = input.replace(/^Api/, '').replace(/Error$/, '');
+  private removeApiErrorPrefixAndSuffix(input: string): string {
+    return input.replace(/^Api/, '').replace(/Error$/, '');
+  }
 
-    // Add a space before every capital letter except the first one
-    return modifiedString.replace(/([A-Z])/g, ' $1').trim();
+  private addSpaceBetweenCapitalLetters(input: string): string {
+    return input.replace(/([A-Z])/g, ' $1').trim();
   }
 
 

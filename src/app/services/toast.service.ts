@@ -16,11 +16,15 @@ export class ToastService {
     this.onNewMessage.emit({type: ToastMessageType.error, title: title, description: description});
   }
 
+  warn(title: string, description: string) {
+    this.onNewMessage.emit({type: ToastMessageType.warn, title: title, description: description});
+  }
+
   info(title: string, description: string) {
     this.onNewMessage.emit({type: ToastMessageType.info, title: title, description: description});
   }
 
-  success(message: string) {
-    this.onNewMessage.emit({type: ToastMessageType.success, title: "Success!", description: message});
+  success(title: string, message: string) {
+    this.onNewMessage.emit({type: ToastMessageType.success, title: title, description: message});
   }
 }

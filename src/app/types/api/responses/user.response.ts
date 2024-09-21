@@ -4,4 +4,6 @@ export interface UserResponse {
   id: string;
   name: string;
   role: UserRole;
+  verifiedEmail: boolean;
+  finishedRegistration: boolean;
 }

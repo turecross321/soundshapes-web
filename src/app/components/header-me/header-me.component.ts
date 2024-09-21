@@ -10,6 +10,9 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {ButtonType} from "../../types/components/button.type";
 import {InputContentType} from "../../types/components/input-content.type";
 import {InputStyle} from "../../types/components/input.type";
+import {ApiClientService} from "../../services/api-client.service";
+import {catchError, EMPTY} from "rxjs";
+import {sha512} from "js-sha512";
 
 @Component({
   selector: 'app-header-me',
@@ -42,7 +45,7 @@ export class HeaderMeComponent {
   protected readonly faSpinner = faSpinner;
   protected readonly InputStyle = InputStyle;
 
-  constructor() {
+  constructor(private apiClient: ApiClientService) {
   }
 
   emitLinkClick() {
@@ -51,5 +54,17 @@ export class HeaderMeComponent {
 
   logIn() {
     this.loggingIn = true;
+    this.apiClient
+      .logIn({email: this.loginForm.value.email!, passwordSha512: sha512(this.loginForm.value.password!)})
+      .pipe(
+        catchError(() => {
+          this.loggingIn = false;
+
+          return EMPTY;
+        })
+      )
+      .subscribe((() => {
+        this.loggingIn = false;
+      }))
   }
 }

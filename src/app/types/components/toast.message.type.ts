@@ -1,5 +1,6 @@
 export enum ToastMessageType {
-  info = 0,
-  success = 1,
-  error = 2
+  success = 0,
+  info = 1,
+  warn = 2,
+  error = 3
 }
