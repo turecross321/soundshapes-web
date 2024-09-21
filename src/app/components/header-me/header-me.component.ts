@@ -7,9 +7,9 @@ import {InputComponent} from "../input/input.component";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgClass} from "@angular/common";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {ButtonType} from "../../types/component-enums/button.type";
-import {InputContentType} from "../../types/component-enums/input-content.type";
-import {InputStyle} from "../../types/component-enums/input.type";
+import {ButtonType} from "../../types/components/button.type";
+import {InputContentType} from "../../types/components/input-content.type";
+import {InputStyle} from "../../types/components/input.type";
 
 @Component({
   selector: 'app-header-me',

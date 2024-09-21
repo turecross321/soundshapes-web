@@ -1,25 +1,11 @@
-<div class="bg-popup w-full rounded-lg p-4 flex flex-col gap-4 max-w-screen-lg">
-  <!-- top bar -->
-  <div class="w-full flex justify-between">
-    <h1 class="font-bold text-4xl">Eula</h1>
-    <div class="w-min">
-      <app-button (click)="closePopup()" [icon]="faX" text=""></app-button>
-    </div>
+<app-popup (close)="closePopup()" [loading]="eula == null" name="Eula">
+  <div *ngIf="eula">
+    <p>{{ eula.customText }}</p>
+    <br>
+    <p>{{ eula.license }}</p>
+    <br>
+    <p>You can download this server's source code from <a [href]="eula.repositoryUrl"
+                                                          class="underline">{{ eula.repositoryUrl }}</a>
+    </p>
   </div>
-
-  <app-horizontal-divider></app-horizontal-divider>
-
-  <div class=" flex justify-center items-center h-96">
-    <fa-icon *ngIf="!eula" [icon]="faSpinner" class="animate-spin" size="lg"></fa-icon>
-    <div *ngIf="eula" class="w-full h-full p-4 border-border border-2 rounded-xl overflow-y-auto">
-      <p>{{ eula.customText }}</p>
-      <br>
-      <p>{{ eula.license }}</p>
-      <br>
-      <p>You can download this server's source code from <a [href]="eula.repositoryUrl"
-                                                            class="underline">{{ eula.repositoryUrl }}</a>
-      </p>
-    </div>
-  </div>
-
-</div>
+</app-popup>

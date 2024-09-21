@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
 import {ButtonComponent} from "../button/button.component";
-import {faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
 import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divider.component";
 import {ApiClientService} from "../../services/api-client.service";
 import {EulaResponse} from "../../types/api/responses/eula.response";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NgIf} from "@angular/common";
 import {PopupService} from "../../services/popup.service";
+import {PopupComponent} from "../popup/popup.component";
 
 @Component({
   selector: 'app-eula-popup',
@@ -15,15 +15,14 @@ import {PopupService} from "../../services/popup.service";
     ButtonComponent,
     HorizontalDividerComponent,
     FaIconComponent,
-    NgIf
+    NgIf,
+    PopupComponent
   ],
   templateUrl: './eula-popup.component.html',
 })
 export class EulaPopupComponent {
 
   eula: EulaResponse | null = null;
-  protected readonly faX = faX;
-  protected readonly faSpinner = faSpinner;
 
   constructor(private apiClient: ApiClientService, private popupService: PopupService) {
     this.apiClient.getEula().subscribe((eula) => {
@@ -32,6 +31,6 @@ export class EulaPopupComponent {
   }
 
   closePopup() {
-    this.popupService.closePopup();
+    this.popupService.closePopup(EulaPopupComponent);
   }
 }

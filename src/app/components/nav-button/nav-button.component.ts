@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {NgClass, NgIf} from "@angular/common";
 import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {ButtonType} from "../../types/component-enums/button.type";
+import {ButtonType} from "../../types/components/button.type";
 
 @Component({
   selector: 'app-nav-button',

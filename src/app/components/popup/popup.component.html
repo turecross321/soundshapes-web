@@ -1,0 +1,19 @@
+<div (clickOutside)="clickOutside()" @fade class="bg-popup w-full rounded-lg p-4 flex flex-col gap-4 max-w-screen-lg">
+  <!-- top bar -->
+  <div class="w-full flex justify-between">
+    <h1 class="font-bold text-4xl">{{ name }}</h1>
+    <div class="w-min">
+      <app-button (click)="close.emit()" [icon]="faX" text=""></app-button>
+    </div>
+  </div>
+
+  <app-horizontal-divider></app-horizontal-divider>
+
+  <div class=" flex justify-center items-center h-96">
+    <fa-icon *ngIf="loading" [icon]="faSpinner" class="animate-spin" size="lg"></fa-icon>
+    <div *ngIf="!loading" class="w-full h-full p-4 border-border border-2 rounded-xl overflow-y-auto">
+      <ng-content></ng-content>
+    </div>
+  </div>
+
+</div>

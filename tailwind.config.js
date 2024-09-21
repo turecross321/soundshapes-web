@@ -6,7 +6,6 @@ const defaultColors = {
   "button": "#F4DECC",
   "button-hover": "#DCC8B8",
   "input": "#EED4BF",
-  "header-input": "#FFDCBF",
   "accent": "#F07167",
 
   "border": "#EED4BF",
@@ -18,6 +17,7 @@ const defaultColors = {
   "header-hover": "#110f0f",
   "header-menu": "#1c1919",
   "header-text": "#FFF0E4",
+  "header-input": "#FFDCBF",
 }
 
 /** @type {import('tailwindcss').Config} */

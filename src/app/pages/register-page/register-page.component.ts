@@ -9,8 +9,8 @@ import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {faEnvelope, faHashtag, faKey, faPlay, faUser, faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {ButtonComponent} from "../../components/button/button.component";
-import {InputContentType} from "../../types/component-enums/input-content.type";
-import {ButtonType} from "../../types/component-enums/button.type";
+import {InputContentType} from "../../types/components/input-content.type";
+import {ButtonType} from "../../types/components/button.type";
 import {ApiClientService} from "../../services/api-client.service";
 import {CodeResponse} from "../../types/api/responses/code.response";
 import {catchError, EMPTY} from "rxjs";
@@ -18,6 +18,8 @@ import {TinyGapContainerComponent} from "../../components/tiny-gap-container/tin
 import {slideToRight} from "../../animations";
 import {EulaPopupComponent} from "../../components/eula-popup/eula-popup.component";
 import {PopupService} from "../../services/popup.service";
+import {sha512} from "js-sha512";
+import {ToastService} from "../../services/toast.service";
 
 @Component({
   selector: 'app-register-page',
@@ -47,10 +49,12 @@ export class RegisterPageComponent {
 
   registerForm = new FormGroup({
     username: new FormControl({value: '', disabled: true}),
-    email: new FormControl('')
+    email: new FormControl(''),
+    password: new FormControl(''),
+    confirmPassword: new FormControl('')
   });
 
-  loadingCode: boolean = false;
+  loading: boolean = false;
   code: CodeResponse | null = null;
   protected readonly InputContentType = InputContentType;
   protected readonly faHashtag = faHashtag;
@@ -61,27 +65,69 @@ export class RegisterPageComponent {
   protected readonly faKey = faKey;
   protected readonly faUserPlus = faUserPlus;
 
-  constructor(private apiClient: ApiClientService, private popupService: PopupService) {
+  constructor(private apiClient: ApiClientService, private popupService: PopupService, private toast: ToastService) {
   }
 
   fetchToken() {
-    this.loadingCode = true;
+    this.loading = true;
     this.apiClient.getRegistrationCode(this.getCodeForm.value.code!)
       .pipe(
-        catchError((error: any) => {
-          this.loadingCode = false;
+        catchError(() => {
+          this.loading = false;
 
           return EMPTY;
         })
       )
       .subscribe((code) => {
         this.code = code;
-        this.loadingCode = false;
+        this.loading = false;
         this.registerForm.controls.username.setValue(code.user.name);
       });
   }
 
+  register() {
+    this.loading = true;
+
+    if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
+      this.loading = false;
+      this.toast.error("Lock in", "Passwords don't match.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(this.registerForm.value.email ?? "")) {
+      this.loading = false;
+      this.toast.error("That ain't your email", "Invalid email address.");
+      return;
+    }
+
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(this.registerForm.value.password ?? "")) {
+      this.loading = false;
+      this.toast.error("Password doesn't meet requirements", "Password must be at least 8 characters long and include at least one letter and one number.");
+      return;
+    }
+    
+    this.apiClient.register({
+      acceptEula: true,
+      code: this.code?.code!,
+      email: this.registerForm.value.email!,
+      passwordSha512: sha512(this.registerForm.value.password!)
+    })
+      .pipe(
+        catchError(() => {
+          this.loading = false;
+
+          return EMPTY;
+        })
+      )
+      .subscribe((response) => {
+        console.log("GG!");
+      });
+  }
+
   openEula() {
-    this.popupService.openPopup();
+    this.popupService.openPopup(EulaPopupComponent);
   }
 }

@@ -3,8 +3,8 @@ import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome"
 import {faEye, faEyeSlash, faPoo} from "@fortawesome/free-solid-svg-icons";
 import {NgClass, NgIf} from "@angular/common";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
-import {InputContentType} from "../../types/component-enums/input-content.type";
-import {InputStyle} from "../../types/component-enums/input.type";
+import {InputContentType} from "../../types/components/input-content.type";
+import {InputStyle} from "../../types/components/input.type";
 
 @Component({
   selector: 'app-input',

@@ -13,20 +13,30 @@ export const slideFromTop = trigger('slideFromTop', [
 export const slideFromLeft = trigger('slideFromLeft', [
   transition(':enter', [
     style({opacity: 0, transform: 'translateX(-12px)'}),
-    animate('150ms ease-in', style({opacity: 1, transform: 'translateX(0)'})),
+    animate('150ms ease-out', style({opacity: 1, transform: 'translateX(0)'})),
   ]),
   transition(':leave', [
-    animate('150ms ease-out', style({opacity: 0, transform: 'translateX(-12px)'})),
+    animate('150ms ease-in', style({opacity: 0, transform: 'translateX(-12px)'})),
   ]),
 ]);
 
 export const slideToRight = trigger('slideToRight', [
   transition(':enter', [
     style({opacity: 0, transform: 'translateX(-12px)'}),
-    animate('500ms ease-in', style({opacity: 1, transform: 'translateX(0)'})),
+    animate('500ms ease-out', style({opacity: 1, transform: 'translateX(0)'})),
   ]),
   transition(':leave', [
-    animate('500ms ease-out', style({opacity: 0, transform: 'translateX(12px)'})),
+    animate('150ms ease-in', style({opacity: 0, transform: 'translateX(12px)'})),
+  ]),
+]);
+
+export const toast = trigger('toast', [
+  transition(':enter', [
+    style({opacity: 0, transform: 'translateX(100%)'}),
+    animate('300ms ease-out', style({opacity: 1, transform: 'translateX(0)'})),
+  ]),
+  transition(':leave', [
+    animate('300ms ease-in', style({opacity: 0, transform: 'translateX(100%)'})),
   ]),
 ]);
 

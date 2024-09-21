@@ -1,19 +1,21 @@
-import {Injectable} from '@angular/core';
+import {EventEmitter, Injectable, Output, Type} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PopupService {
-  showPopup: boolean = false;
+  @Output() onOpenPopup = new EventEmitter<Type<any>>();
+  @Output() onClosePopup = new EventEmitter<Type<any>>();
+
 
   constructor() {
   }
 
-  openPopup() {
-    this.showPopup = true;
+  openPopup(component: Type<any>) {
+    this.onOpenPopup.emit(component);
   }
 
-  closePopup() {
-    this.showPopup = false;
+  closePopup(component: Type<any>) {
+    this.onClosePopup.emit(component);
   }
 }
