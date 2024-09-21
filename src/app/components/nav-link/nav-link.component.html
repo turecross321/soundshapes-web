@@ -1,4 +1,15 @@
-<a [ngClass]="{'text-accent': this.currentlyOnPath}" [routerLink]="urlPath"
-   class="gap-2 inline-flex w-full hover:bg-header-hover px-4 py-2 rounded-lg transition-colors duration-150">
-  <fa-icon [icon]="icon" size="lg"></fa-icon>
-  {{ label }}</a>
+<ng-container *ngIf="localUrl; else externalLink">
+  <a [ngClass]="{'text-accent': this.currentlyOnPath}" [routerLink]="urlPath"
+     class="gap-2 inline-flex w-full hover:bg-header-hover px-4 py-2 rounded-lg transition-colors duration-150">
+    <fa-icon [icon]="icon" size="lg"></fa-icon>
+    {{ label }}
+  </a>
+</ng-container>
+
+<ng-template #externalLink>
+  <a [href]="urlPath"
+     class="gap-2 inline-flex w-full hover:bg-header-hover px-4 py-2 rounded-lg transition-colors duration-150">
+    <fa-icon [icon]="icon" size="lg"></fa-icon>
+    {{ label }}
+  </a>
+</ng-template>

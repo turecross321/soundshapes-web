@@ -13,6 +13,9 @@ const defaultColors = {
   "container": "#FFF0E4",
   "popup": "#FFF0E4",
 
+  "footer": "#181515",
+  "footer-text": "#FFF0E4",
+
   "header": "#181515",
   "header-hover": "#110f0f",
   "header-menu": "#1c1919",

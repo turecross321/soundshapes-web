@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome";
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
-import {NgClass} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-nav-link',
@@ -9,7 +9,8 @@ import {NgClass} from "@angular/common";
   imports: [
     FaIconComponent,
     RouterLink,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './nav-link.component.html',
 })
@@ -20,6 +21,7 @@ export class NavLinkComponent implements OnInit {
   @Input() highlightWhenOnPath: boolean = true;
   currentlyOnPath: boolean = false;
   @Input() public urlPath: string = null!;
+  @Input() localUrl: boolean = true;
 
   constructor(private router: Router) {
     router.events.subscribe((event) => {

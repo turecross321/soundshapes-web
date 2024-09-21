@@ -12,6 +12,7 @@ import {ToastService} from "./toast.service";
 import {LoginRequest} from "../types/api/requests/login.request";
 import {LoginResponse} from "../types/api/responses/login.response";
 import {RefreshTokenRequest} from "../types/api/requests/refresh.token.request";
+import {WebsiteConfig} from "../../../website.config";
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +25,9 @@ export class ApiClientService {
 
   constructor(private http: HttpClient, public toaster: ToastService) {
     if (isDevMode()) {
-      this.baseUrl = "http://localhost:10061";
+      this.baseUrl = WebsiteConfig.devApiUrl;
     } else {
-      this.baseUrl = "https://sound.ture.fish"
+      this.baseUrl = WebsiteConfig.remoteApiUrl;
     }
   }
 

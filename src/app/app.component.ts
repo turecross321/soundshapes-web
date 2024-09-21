@@ -7,11 +7,12 @@ import {fade} from "./animations";
 import {ClickOutsideDirective} from "./directives/click-outside.directive";
 import {ToastOutletComponent} from "./components/toast-outlet/toast-outlet.component";
 import {PopupOutletComponent} from "./components/popup-outlet/popup-outlet.component";
+import {FooterComponent} from "./components/footer/footer.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, EulaPopupComponent, NgIf, ClickOutsideDirective, ToastOutletComponent, PopupOutletComponent],
+  imports: [RouterOutlet, HeaderComponent, EulaPopupComponent, NgIf, ClickOutsideDirective, ToastOutletComponent, PopupOutletComponent, FooterComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   animations: [fade]

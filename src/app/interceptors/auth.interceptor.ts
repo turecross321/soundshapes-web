@@ -4,11 +4,11 @@ import {ApiMeService} from '../services/api-me.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const meService = inject(ApiMeService);
-  const authToken = meService?.accessToken?.id;
+  const accessToken = meService?.getAccessToken();
 
-  if (authToken) {
+  if (accessToken) {
     const authReq = req.clone({
-      headers: req.headers.set('Authorization', authToken)
+      headers: req.headers.set('Authorization', accessToken.id)
     })
     return next(authReq);
   }

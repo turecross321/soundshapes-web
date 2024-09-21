@@ -1,6 +1,15 @@
 import {Component} from '@angular/core';
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faBars, faCompactDisc, faHouse, faMusic, faSignIn, faUsers, faX} from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faCircleUser,
+  faCompactDisc,
+  faHouse,
+  faMusic,
+  faSignIn,
+  faUsers,
+  faX
+} from "@fortawesome/free-solid-svg-icons";
 import {NgClass, NgForOf, NgIf, NgSwitch} from "@angular/common";
 import {NavLinkComponent} from "../nav-link/nav-link.component";
 import {VerticalDividerComponent} from "../vertical-divider/vertical-divider.component";
@@ -40,6 +49,7 @@ export class HeaderComponent {
   protected readonly faSignIn = faSignIn;
   protected readonly faBars = faBars;
   protected readonly faX = faX;
+  protected readonly faCircleUser = faCircleUser;
 
   constructor(public me: ApiMeService) {
   }

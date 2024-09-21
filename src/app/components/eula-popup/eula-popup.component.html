@@ -4,8 +4,12 @@
     <br>
     <p>{{ eula.license }}</p>
     <br>
-    <p>You can download this server's source code from <a [href]="eula.repositoryUrl"
-                                                          class="underline">{{ eula.repositoryUrl }}</a>
+    <p>This server's source code is available at <a [href]="eula.repositoryUrl"
+                                                    class="underline">{{ eula.repositoryUrl }}</a>.
+    </p>
+
+    <p>This website's source code is available at <a [href]="WebsiteConfig.repositoryUrl"
+                                                     class="underline">{{ WebsiteConfig.repositoryUrl }}</a>.
     </p>
   </div>
 </app-popup>

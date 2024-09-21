@@ -19,7 +19,8 @@
 
   </nav>
 
-  <app-nav-button (click)=setMe(!showMe) [icon]="faSignIn" label="Sign in"></app-nav-button>
+  <app-nav-button (click)=setMe(!showMe) [icon]="me.getUser() ? faCircleUser : faSignIn"
+                  [label]="me.loggedIn() ? me.getUser()?.name! : 'Sign in'"></app-nav-button>
 </header>
 
 <div class="sticky top-[60px]">

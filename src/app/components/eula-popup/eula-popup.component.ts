@@ -7,6 +7,7 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {NgIf} from "@angular/common";
 import {PopupService} from "../../services/popup.service";
 import {PopupComponent} from "../popup/popup.component";
+import {WebsiteConfig} from "../../../../website.config";
 
 @Component({
   selector: 'app-eula-popup',
@@ -23,6 +24,7 @@ import {PopupComponent} from "../popup/popup.component";
 export class EulaPopupComponent {
 
   eula: EulaResponse | null = null;
+  protected readonly WebsiteConfig = WebsiteConfig;
 
   constructor(private apiClient: ApiClientService, private popupService: PopupService) {
     this.apiClient.getEula().subscribe((eula) => {
