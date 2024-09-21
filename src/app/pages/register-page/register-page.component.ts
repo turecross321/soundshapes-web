@@ -20,6 +20,7 @@ import {EulaPopupComponent} from "../../components/eula-popup/eula-popup.compone
 import {PopupService} from "../../services/popup.service";
 import {sha512} from "js-sha512";
 import {ToastService} from "../../services/toast.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-register-page',
@@ -65,7 +66,8 @@ export class RegisterPageComponent {
   protected readonly faKey = faKey;
   protected readonly faUserPlus = faUserPlus;
 
-  constructor(private apiClient: ApiClientService, private popupService: PopupService, private toast: ToastService) {
+  constructor(private apiClient: ApiClientService, private popupService: PopupService,
+              private toast: ToastService, private router: Router) {
   }
 
   fetchToken() {
@@ -108,12 +110,14 @@ export class RegisterPageComponent {
       this.toast.error("Password doesn't meet requirements", "Password must be at least 8 characters long and include at least one letter and one number.");
       return;
     }
-    
+
+    const hashedPassword = sha512(this.registerForm.value.password!);
+
     this.apiClient.register({
       acceptEula: true,
       code: this.code?.code!,
       email: this.registerForm.value.email!,
-      passwordSha512: sha512(this.registerForm.value.password!)
+      passwordSha512: hashedPassword
     })
       .pipe(
         catchError(() => {
@@ -122,8 +126,26 @@ export class RegisterPageComponent {
           return EMPTY;
         })
       )
-      .subscribe((response) => {
-        console.log("GG!");
+      .subscribe(() => {
+        this.logIn();
+      });
+  }
+
+  logIn() {
+    const hashedPassword = sha512(this.registerForm.value.password!);
+
+    this.apiClient.logIn({email: this.registerForm.value.email!, passwordSha512: hashedPassword})
+      .pipe(
+        catchError(() => {
+          this.loading = false;
+
+          return EMPTY;
+        })
+      )
+      .subscribe(() => {
+        this.router.navigateByUrl("gameAuth").then(() => {
+        });
+        this.loading = false;
       });
   }
 
