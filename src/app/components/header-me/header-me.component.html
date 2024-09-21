@@ -31,7 +31,8 @@
     <app-nav-link (click)="emitLinkClick()" [icon]="faCloud" label="Cloud Saves"
                   urlPath="/cloudSaves"></app-nav-link>
     <app-horizontal-divider></app-horizontal-divider>
-    <app-nav-button [icon]="faArrowRightFromBracket" [loading]="loggingIn" label="Log out"></app-nav-button>
+    <app-nav-button (click)="logOut()" [icon]="faArrowRightFromBracket" [loading]="loggingOut"
+                    label="Log out"></app-nav-button>
   </ng-template>
 
 </div>

@@ -7,7 +7,6 @@ import {
   faCog,
   faEnvelope,
   faKey,
-  faSpinner,
   faUser,
   faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
@@ -48,13 +47,13 @@ export class HeaderMeComponent {
     password: new FormControl('')
   });
   loggingIn: boolean = false;
+  loggingOut: boolean = false;
   protected readonly faUserPlus = faUserPlus;
   protected readonly faKey = faKey;
   protected readonly faArrowRightToBracket = faArrowRightToBracket;
   protected readonly InputContentType = InputContentType;
   protected readonly faEnvelope = faEnvelope;
   protected readonly ButtonType = ButtonType;
-  protected readonly faSpinner = faSpinner;
   protected readonly InputStyle = InputStyle;
   protected readonly faArrowRightFromBracket = faArrowRightFromBracket;
   protected readonly faUser = faUser;
@@ -82,5 +81,15 @@ export class HeaderMeComponent {
       .subscribe((() => {
         this.loggingIn = false;
       }))
+  }
+
+  logOut() {
+    this.loggingOut = true;
+    this.apiClient.logOut().pipe(catchError(() => {
+      this.loggingOut = false;
+      return EMPTY;
+    })).subscribe(() => {
+      this.loggingOut = false;
+    })
   }
 }

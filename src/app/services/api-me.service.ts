@@ -19,6 +19,7 @@ export class ApiMeService {
   constructor(@Inject(PLATFORM_ID) platformId: Object, private toast: ToastService, private apiClient: ApiClientService) {
     if (isPlatformBrowser(platformId)) {
       apiClient.onLogin.subscribe((response) => this.onLogin(response));
+      apiClient.onLogout.subscribe(() => this.onLogout());
     }
   }
 
@@ -62,18 +63,6 @@ export class ApiMeService {
     return this.refreshToken;
   }
 
-  public onLogin(response: LoginResponse) {
-    this.user = response.user;
-    this.accessToken = response.accessToken;
-    this.refreshToken = response.refreshToken;
-
-    localStorage.setItem("user", JSON.stringify(response.user));
-    localStorage.setItem("refreshToken", JSON.stringify(response.refreshToken));
-    localStorage.setItem("accessToken", JSON.stringify(response.accessToken));
-
-    this.toast.success("Welcome", `Successfully logged in as ${response.user.name}`);
-  }
-
   public loadFromStorage() {
     try {
       const userJson = localStorage.getItem("user");
@@ -94,5 +83,27 @@ export class ApiMeService {
       this.toast.warn("Bad cache data", "Unable to parse user data from local storage. Clearing cache...")
       localStorage.clear();
     }
+  }
+
+  private onLogin(response: LoginResponse) {
+    this.user = response.user;
+    this.accessToken = response.accessToken;
+    this.refreshToken = response.refreshToken;
+
+    localStorage.setItem("user", JSON.stringify(response.user));
+    localStorage.setItem("refreshToken", JSON.stringify(response.refreshToken));
+    localStorage.setItem("accessToken", JSON.stringify(response.accessToken));
+
+    this.toast.success("Welcome", `Successfully logged in as ${response.user.name}.`);
+  }
+
+  private onLogout() {
+    this.user = null;
+    this.accessToken = null;
+    this.refreshToken = null;
+
+    localStorage.clear();
+
+    this.toast.success("Success", "Successfully logged out.");
   }
 }
