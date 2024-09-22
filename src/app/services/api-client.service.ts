@@ -118,7 +118,11 @@ export class ApiClientService {
 
             this.toaster.error(`${apiError.statusCode}: ${this.addSpaceBetweenCapitalLetters(errorName)}`, apiError.message);
           } catch (newError: any) {
-            this.toaster.error(`${e.status}: ${e.statusText ? this.addSpaceBetweenCapitalLetters(e.statusText) : "Unknown error"}`, "No explanation was given.");
+            if (e.status == 0) {
+              this.toaster.error("Unable to reach server", "The server is currently unreachable. Please try again later.");
+            } else {
+              this.toaster.error(`${e.status}: ${e.statusText ? this.addSpaceBetweenCapitalLetters(e.statusText) : "Unknown error"}`, "No explanation was given.");
+            }
           }
 
 
