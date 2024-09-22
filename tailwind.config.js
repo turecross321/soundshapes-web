@@ -7,6 +7,9 @@ const defaultColors = {
   "button-hover": "#DCC8B8",
   "input": "#EED4BF",
   "accent": "#F07167",
+  "accent-hover": "#d8665d",
+  "accent-text": "#FFF0E4", /* text that should be used when bg is accent  */
+
 
   "border": "#EED4BF",
   "divider": "#61493C",

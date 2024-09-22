@@ -1,0 +1,9 @@
+<button
+  [attr.aria-label]="ariaLabel"
+  [attr.aria-pressed]="value"
+  [ngClass]="value ? 'bg-accent text-accent-text hover:bg-accent-hover' : 'bg-button text-text hover:bg-button-hover'"
+  class="w-full px-4 py-2 rounded-lg transition-colors duration-150"
+  role="button"
+>
+  <fa-icon [icon]="icon"></fa-icon>
+</button>

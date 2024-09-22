@@ -1,0 +1,30 @@
+<div aria-label="Toggle between True, False, and Optional" class="flex w-full gap-1" role="group">
+  <app-toggle-button
+    (click)="setState(false)"
+    [icon]="faX"
+    [value]="value === false"
+    ariaLabel="False"
+    class="w-full"
+  >
+  </app-toggle-button>
+
+  @if (nullable) {
+    <app-toggle-button
+      [icon]="faMinus"
+      [value]="value === null"
+      class="w-full"
+      ariaLabel="Doesn't matter"
+      (click)="setState(null)"
+    >
+    </app-toggle-button>
+  }
+
+  <app-toggle-button
+    (click)="setState(true)"
+    [icon]="faCheck"
+    [value]="value === true"
+    ariaLabel="True"
+    class="w-full"
+  >
+  </app-toggle-button>
+</div>

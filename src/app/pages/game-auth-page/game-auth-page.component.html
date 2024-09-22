@@ -1,0 +1,28 @@
+<app-generic-page name="Authorization">
+  <div class="grid md:grid-cols-[1fr_3fr] gap-4">
+    <app-border [loading]="settings == null" class="h-64">
+      @if (settings) {
+        <div class="flex flex-col gap-2">
+          <app-tiny-gap-container>
+            <label for="rpcn">RPCN Authorization</label>
+            <app-toggle (change)="setRpcn($event!)" [value]="settings.rpcnAuthorization" class="w-full"
+                        id="rpcn"></app-toggle>
+          </app-tiny-gap-container>
+          <app-tiny-gap-container>
+            <label for="psn">PSN Authorization</label>
+            <app-toggle (change)="setPsn($event!)" [value]="settings.psnAuthorization" class="w-full"
+                        id="psn"></app-toggle>
+          </app-tiny-gap-container>
+          <app-tiny-gap-container>
+            <label for="ip">IP Authorization</label>
+            <app-toggle (change)="setIp($event!)" [value]="settings.ipAuthorization" class="w-full"
+                        id="ip"></app-toggle>
+          </app-tiny-gap-container>
+        </div>
+      }
+    </app-border>
+    <app-border>
+      <p>Yup</p>
+    </app-border>
+  </div>
+</app-generic-page>

@@ -20,6 +20,11 @@ export class ApiMeService {
     if (isPlatformBrowser(platformId)) {
       apiClient.onLogin.subscribe((response) => this.onLogin(response));
       apiClient.onLogout.subscribe((success: boolean) => this.onLogout(success));
+      apiClient.onUnsuccessfulRefreshLogin.subscribe(() => {
+        this.toast.error("Unexpected login result",
+          "The server responded with an unexpected result when attempting to log in with your refresh token. You have been logged out.");
+        this.clearData();
+      })
     }
   }
 
@@ -97,12 +102,16 @@ export class ApiMeService {
     this.toast.success("Welcome", `Successfully logged in as ${response.user.name}.`);
   }
 
-  private onLogout(success: boolean) {
+  private clearData() {
     this.user = null;
     this.accessToken = null;
     this.refreshToken = null;
 
     localStorage.clear();
+  }
+
+  private onLogout(success: boolean) {
+    this.clearData();
 
     if (success) {
       this.toast.success("Success", "Successfully logged out.");

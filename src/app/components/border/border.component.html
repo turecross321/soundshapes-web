@@ -1,0 +1,9 @@
+<div class="border-2 border-border p-4 rounded-lg h-full">
+  @if (loading) {
+    <div class="h-full w-full flex items-center justify-center">
+      <fa-icon [icon]="faSpinner" class="animate-spin"></fa-icon>
+    </div>
+  } @else if (!loading) {
+    <ng-content></ng-content>
+  }
+</div>

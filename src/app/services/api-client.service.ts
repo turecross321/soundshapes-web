@@ -13,12 +13,14 @@ import {LoginRequest} from "../types/api/requests/login.request";
 import {LoginResponse} from "../types/api/responses/login.response";
 import {RefreshTokenRequest} from "../types/api/requests/refresh.token.request";
 import {WebsiteConfig} from "../../../website.config";
+import {AuthorizationSettings} from "../types/api/authorizationSettings";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiClientService {
   @Output() onLogin = new EventEmitter<LoginResponse>();
+  @Output() onUnsuccessfulRefreshLogin = new EventEmitter<void>();
   // boolean represents if it was a success or not
   @Output() onLogout = new EventEmitter<boolean>();
 
@@ -31,6 +33,14 @@ export class ApiClientService {
     } else {
       this.baseUrl = WebsiteConfig.remoteApiUrl;
     }
+  }
+
+  public putAuthorizationSettings(body: AuthorizationSettings) {
+    return this.put<AuthorizationSettings>("gameAuth", body);
+  }
+
+  public getAuthorizationSettings() {
+    return this.get<AuthorizationSettings>("gameAuth");
   }
 
   public logOut() {
@@ -55,6 +65,11 @@ export class ApiClientService {
         map(response => {
           this.onLogin.emit(response);
           return response;
+        }),
+        catchError((e) => {
+          this.onUnsuccessfulRefreshLogin.emit();
+
+          throw e;
         })
       );
   }
@@ -78,6 +93,10 @@ export class ApiClientService {
 
   public getRegistrationCode(code: string): Observable<CodeResponse> {
     return this.get<CodeResponse>(`register/code/${code}`);
+  }
+
+  private put<TResponseData extends IApiResponse>(endpoint: string, body: IApiRequest): Observable<TResponseData> {
+    return this.makeRequest<TResponseData>("PUT", endpoint, body);
   }
 
   private post<TResponseData extends IApiResponse>(endpoint: string, body: IApiRequest): Observable<TResponseData> {
