@@ -2,7 +2,7 @@ import {TokenType} from "../enums/token.type";
 
 export interface TokenResponse {
   id: string;
-  creationDate: Date;
-  expiryDate: Date;
+  creationDate: string;
+  expiryDate: string;
   tokenType: TokenType;
 }

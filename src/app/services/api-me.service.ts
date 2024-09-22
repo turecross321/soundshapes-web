@@ -19,7 +19,7 @@ export class ApiMeService {
   constructor(@Inject(PLATFORM_ID) platformId: Object, private toast: ToastService, private apiClient: ApiClientService) {
     if (isPlatformBrowser(platformId)) {
       apiClient.onLogin.subscribe((response) => this.onLogin(response));
-      apiClient.onLogout.subscribe(() => this.onLogout());
+      apiClient.onLogout.subscribe((success: boolean) => this.onLogout(success));
     }
   }
 
@@ -32,8 +32,8 @@ export class ApiMeService {
   }
 
   public getAccessToken(): TokenResponse | null {
-    // if we have an access token but its expired
-    if (this.accessToken && this.accessToken?.expiryDate < new Date()) {
+    // if we dont have an access token or if its expired
+    if (!this.accessToken || new Date(this.accessToken.expiryDate) < new Date()) {
       const refreshToken: RefreshTokenResponse | null = this.getRefreshToken();
 
       // if we still have a refresh token, attempt to get a new access token
@@ -55,7 +55,7 @@ export class ApiMeService {
 
   public getRefreshToken(): RefreshTokenResponse | null {
     // if it's expired, remove it
-    if (this.refreshToken && this.refreshToken.expiryDate < new Date()) {
+    if (!this.refreshToken || new Date(this.refreshToken.expiryDate) < new Date()) {
       this.refreshToken = null;
       return null;
     }
@@ -97,13 +97,18 @@ export class ApiMeService {
     this.toast.success("Welcome", `Successfully logged in as ${response.user.name}.`);
   }
 
-  private onLogout() {
+  private onLogout(success: boolean) {
     this.user = null;
     this.accessToken = null;
     this.refreshToken = null;
 
     localStorage.clear();
 
-    this.toast.success("Success", "Successfully logged out.");
+    if (success) {
+      this.toast.success("Success", "Successfully logged out.");
+    } else {
+      this.toast.warn("Failed to revoke token",
+        "Failed to revoke your refresh token. Please report this to an administrator.");
+    }
   }
 }

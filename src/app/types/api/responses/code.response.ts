@@ -5,7 +5,7 @@ import {IApiResponse} from "./iapi.response";
 export interface CodeResponse extends IApiResponse {
   code: string;
   user: UserResponse;
-  creationDate: Date;
-  expiryDate: Date;
+  creationDate: string;
+  expiryDate: string;
   codeType: CodeType
 }

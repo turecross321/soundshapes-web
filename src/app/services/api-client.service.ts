@@ -19,7 +19,8 @@ import {WebsiteConfig} from "../../../website.config";
 })
 export class ApiClientService {
   @Output() onLogin = new EventEmitter<LoginResponse>();
-  @Output() onLogout = new EventEmitter<void>();
+  // boolean represents if it was a success or not
+  @Output() onLogout = new EventEmitter<boolean>();
 
   private baseUrl: string;
   private apiUrl: string = "/api/v1/";
@@ -36,10 +37,16 @@ export class ApiClientService {
     return this.post<IApiRequest>("revokeToken", {})
       .pipe(
         map(response => {
-            this.onLogout.emit();
+            this.onLogout.emit(true);
             return response;
           }
-        ));
+        ),
+        catchError((e) => {
+          this.onLogout.emit(false);
+
+          throw e;
+        })
+      );
   }
 
   public logInWithRefreshToken(body: RefreshTokenRequest) {
