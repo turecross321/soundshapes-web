@@ -1,11 +1,12 @@
 <app-toast-outlet></app-toast-outlet>
 <app-popup-outlet class="z-[99999]"></app-popup-outlet>
-<div class="flex flex-col justify-between min-h-full">
-  <div>
-    <app-header class="sticky top-0 drop-shadow-lg z-[9999]"></app-header>
-    <router-outlet #o="outlet"></router-outlet>
-  </div>
-  <div class="flex flex-col justify-end h-full pt-8">
+<div class="h-screen">
+  <app-header class="z-[9999]"></app-header>
+  <div class="flex flex-col justify-between h-[calc(100%-60px)] gap-8 overflow-y-auto">
+    <div>
+      <router-outlet #o="outlet"></router-outlet>
+    </div>
     <app-footer></app-footer>
   </div>
+
 </div>
