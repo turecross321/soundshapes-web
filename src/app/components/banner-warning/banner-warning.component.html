@@ -1,0 +1,31 @@
+@if (activeWarning()) {
+  <div class="bg-accent text-accent-text py-4 px-6 flex justify-between items-center gap-8 lg:flex-row flex-col"
+       role="alert">
+    <div class="flex gap-4 items-center">
+      <fa-icon [icon]="faWarning" size="xl"></fa-icon>
+      @if (warning === BannerWarningType.Registration) {
+        <p>
+          Your account is not verified. Check your email and click the link to complete registration. You cannot use the
+          site
+          or
+          access the game until this is done.
+          <br>If you do not finish registration, <span
+          class="font-bold">your account will be removed in {{ accountExpiryRemaining() }}.</span>.</p>
+      } @else if (warning === BannerWarningType.EmailVerification) {
+        <p>
+          Your email is not verified. Check your email and click the link to complete verification. You cannot use the
+          site
+          or
+          access the game until this is done.</p>
+      }
+
+    </div>
+
+    @if (warning === BannerWarningType.EmailVerification || warning === BannerWarningType.Registration) {
+      <app-button [color]="ColorType.Accent" class="lg:w-auto whitespace-nowrap w-full"
+                  text="Resend email" (click)="resendEmail()" [loading]="resendingEmail"
+                  [icon]="faRotateRight"></app-button>
+    }
+  </div>
+
+}
