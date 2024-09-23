@@ -1,6 +1,7 @@
 import {UserRole} from "../enums/user.role";
+import {IApiResponse} from "./iapi.response";
 
-export interface UserResponse {
+export interface UserResponse extends IApiResponse {
   id: string;
   name: string;
   role: UserRole;

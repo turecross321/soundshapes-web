@@ -2,6 +2,7 @@ import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
 import {ApiMeService} from "./api-me.service";
 import {isPlatformBrowser} from "@angular/common";
 import {ApiClientService} from "./api-client.service";
+import {UserResponse} from "../types/api/responses/user.response";
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,9 @@ export class StartupService {
     return new Promise((resolve) => {
 
       if (isPlatformBrowser(this.platformId)) {
-        this.me.loadFromStorage();
-        if (this.me.loggedIn()) {
-          this.apiClient.getMe().subscribe((user) => {
+        const hasRefreshToken = this.me.loadFromStorage();
+        if (hasRefreshToken) {
+          this.apiClient.getMe().subscribe((user: UserResponse) => {
             this.me.setUser(user);
           })
         }

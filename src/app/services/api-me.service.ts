@@ -30,6 +30,7 @@ export class ApiMeService {
 
   public setUser(value: UserResponse) {
     this.user = value;
+    localStorage.setItem("user", JSON.stringify(value));
   }
 
   public getUser(): UserResponse | null {
@@ -37,7 +38,7 @@ export class ApiMeService {
   }
 
   public loggedIn(): boolean {
-    return (this.user != null) && (this.accessToken != null);
+    return this.user != null && this.refreshToken != null;
   }
 
   public getAccessToken(): TokenResponse | null {
@@ -77,7 +78,7 @@ export class ApiMeService {
     return this.refreshToken;
   }
 
-  public loadFromStorage() {
+  public loadFromStorage(): boolean {
     try {
       const userJson = localStorage.getItem("user");
       if (userJson) {
@@ -93,10 +94,18 @@ export class ApiMeService {
       if (accessJson) {
         this.accessToken = JSON.parse(accessJson);
       }
+
+      if (this.getRefreshToken()) {
+        return true;
+      }
+
     } catch (e) {
       this.toast.warn("Bad cache data", "Unable to parse user data from local storage. Clearing cache...")
       localStorage.clear();
+      return false;
     }
+
+    return false;
   }
 
   private onLogin(response: LoginResponse) {
