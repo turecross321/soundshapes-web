@@ -1,5 +1,5 @@
 <app-popup (close)="closePopup()" [loading]="eula == null" name="Eula">
-  <div *ngIf="eula">
+  <div *ngIf="eula" @fadeIn>
     <p>{{ eula.customText }}</p>
     <br>
     <p>{{ eula.license }}</p>

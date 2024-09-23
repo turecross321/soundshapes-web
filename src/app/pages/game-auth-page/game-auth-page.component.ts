@@ -5,6 +5,8 @@ import {ToggleComponent} from "../../components/toggle/toggle.component";
 import {TinyGapContainerComponent} from "../../components/tiny-gap-container/tiny-gap-container.component";
 import {AuthorizationSettings} from "../../types/api/authorizationSettings";
 import {ApiClientService} from "../../services/api-client.service";
+import {faKey} from "@fortawesome/free-solid-svg-icons";
+import {fadeIn} from "../../animations";
 
 @Component({
   selector: 'app-game-auth-page',
@@ -16,10 +18,12 @@ import {ApiClientService} from "../../services/api-client.service";
     TinyGapContainerComponent
   ],
   templateUrl: './game-auth-page.component.html',
+  animations: [fadeIn]
 })
 export class GameAuthPageComponent {
 
   settings: AuthorizationSettings | null = null;
+  protected readonly faKey = faKey;
 
   constructor(private apiClient: ApiClientService) {
     this.fetchSettings();

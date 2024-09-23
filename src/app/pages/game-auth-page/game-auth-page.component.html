@@ -2,7 +2,7 @@
   <div class="grid md:grid-cols-[1fr_3fr] gap-4">
     <app-border [loading]="settings == null" class="h-64">
       @if (settings) {
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-2" @fadeIn>
           <app-tiny-gap-container>
             <label for="rpcn">RPCN Authorization</label>
             <app-toggle (change)="setRpcn($event!)" [value]="settings.rpcnAuthorization" class="w-full"

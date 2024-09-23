@@ -3,6 +3,7 @@ import {NotFoundPageComponent} from "./pages/not-found-page/not-found-page.compo
 import {HomePageComponent} from "./pages/home-page/home-page.component";
 import {RegisterPageComponent} from "./pages/register-page/register-page.component";
 import {GameAuthPageComponent} from "./pages/game-auth-page/game-auth-page.component";
+import {ApiDocumentationPageComponent} from "./pages/api-documentation-page/api-documentation-page.component";
 
 export const routes: Routes = [
   {
@@ -16,6 +17,10 @@ export const routes: Routes = [
   {
     path: 'gameAuth',
     component: GameAuthPageComponent
+  },
+  {
+    path: 'apiDocs',
+    component: ApiDocumentationPageComponent
   },
   {
     path: '**',

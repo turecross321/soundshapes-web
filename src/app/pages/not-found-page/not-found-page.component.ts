@@ -4,6 +4,7 @@ import {PageComponent} from "../../components/page/page.component";
 import {PageHeaderComponent} from "../../components/page-header/page-header.component";
 import {PageContentComponent} from "../../components/page-content/page-content.component";
 import {GenericPageComponent} from "../../components/generic-page/generic-page.component";
+import {faGhost} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-not-found-page',
@@ -19,4 +20,5 @@ import {GenericPageComponent} from "../../components/generic-page/generic-page.c
 })
 export class NotFoundPageComponent {
 
+  protected readonly faGhost = faGhost;
 }

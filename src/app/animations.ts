@@ -49,3 +49,10 @@ export const fade = trigger('fade', [
     animate('150ms ease-out', style({opacity: 0})),
   ]),
 ])
+
+export const fadeIn = trigger('fadeIn', [
+  transition(':enter', [
+    style({opacity: 0}),
+    animate('150ms ease-in', style({opacity: 1})),
+  ]),
+])

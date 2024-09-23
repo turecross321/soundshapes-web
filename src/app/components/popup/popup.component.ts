@@ -5,7 +5,7 @@ import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divid
 import {NgIf} from "@angular/common";
 import {faSpinner, faX} from "@fortawesome/free-solid-svg-icons";
 import {ClickOutsideDirective} from "../../directives/click-outside.directive";
-import {fade} from "../../animations";
+import {fade, fadeIn} from "../../animations";
 
 @Component({
   selector: 'app-popup',
@@ -18,7 +18,7 @@ import {fade} from "../../animations";
     ClickOutsideDirective
   ],
   templateUrl: './popup.component.html',
-  animations: [fade]
+  animations: [fade, fadeIn]
 })
 export class PopupComponent {
   @Output() close = new EventEmitter<void>();

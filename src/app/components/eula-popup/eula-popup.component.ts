@@ -8,6 +8,7 @@ import {NgIf} from "@angular/common";
 import {PopupService} from "../../services/popup.service";
 import {PopupComponent} from "../popup/popup.component";
 import {WebsiteConfig} from "../../../../website.config";
+import {fadeIn} from "../../animations";
 
 @Component({
   selector: 'app-eula-popup',
@@ -20,6 +21,7 @@ import {WebsiteConfig} from "../../../../website.config";
     PopupComponent
   ],
   templateUrl: './eula-popup.component.html',
+  animations: [fadeIn]
 })
 export class EulaPopupComponent {
 

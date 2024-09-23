@@ -1,16 +1,14 @@
 import {Component} from '@angular/core';
 import {GenericPageComponent} from "../../components/generic-page/generic-page.component";
-import {faHouse} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
-  selector: 'app-home-page',
+  selector: 'app-api-documentation-page',
   standalone: true,
   imports: [
     GenericPageComponent
   ],
-  templateUrl: './home-page.component.html',
+  templateUrl: './api-documentation-page.component.html',
 })
-export class HomePageComponent {
+export class ApiDocumentationPageComponent {
 
-  protected readonly faHouse = faHouse;
 }

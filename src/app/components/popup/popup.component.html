@@ -1,4 +1,4 @@
-<div (clickOutside)="clickOutside()" @fade class="bg-popup w-full rounded-lg p-5 flex flex-col gap-4 max-w-screen-lg">
+<div (clickOutside)="clickOutside()" @fade class="bg-popup rounded-lg p-5 flex flex-col gap-4 lg:w-[70vw] w-[90vw]">
   <!-- top bar -->
   <div class="w-full flex justify-between px-2">
     <h1 class="font-bold text-4xl">{{ name }}</h1>
@@ -9,11 +9,14 @@
 
   <app-horizontal-divider></app-horizontal-divider>
 
-  <div class=" flex justify-center items-center h-96 px-2">
-    <fa-icon *ngIf="loading" [icon]="faSpinner" class="animate-spin" size="lg"></fa-icon>
-    <div *ngIf="!loading" class="w-full h-full overflow-y-auto">
-      <ng-content></ng-content>
-    </div>
+  <div class="flex justify-center items-center h-96 px-2">
+    @if (loading) {
+      <fa-icon [icon]="faSpinner" class="animate-spin" size="lg"></fa-icon>
+    } @else if (!loading) {
+      <div class="w-full h-full overflow-y-auto" @fadeIn>
+        <ng-content></ng-content>
+      </div>
+    }
   </div>
 
 </div>
