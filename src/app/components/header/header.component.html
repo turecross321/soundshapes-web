@@ -22,7 +22,7 @@
   </nav>
 
   <app-button (click)=setMe(!showMe) [color]="ColorType.Header"
-              [icon]="me.getUser() ? faCircleUser : faSignIn"
+              [icon]="me.loggedIn() ? faCircleUser : faSignIn"
               [text]="me.loggedIn() ? me.getUser()?.name! : 'Sign in'"></app-button>
 </header>
 

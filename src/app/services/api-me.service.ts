@@ -28,6 +28,10 @@ export class ApiMeService {
     }
   }
 
+  public setUser(value: UserResponse) {
+    this.user = value;
+  }
+
   public getUser(): UserResponse | null {
     return this.user;
   }

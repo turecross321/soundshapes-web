@@ -14,6 +14,7 @@ import {LoginResponse} from "../types/api/responses/login.response";
 import {RefreshTokenRequest} from "../types/api/requests/refresh.token.request";
 import {WebsiteConfig} from "../../../website.config";
 import {AuthorizationSettings} from "../types/api/authorizationSettings";
+import {UserResponse} from "../types/api/responses/user.response";
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +94,10 @@ export class ApiClientService {
 
   public getEula() {
     return this.get<EulaResponse>("eula");
+  }
+
+  public getMe(): Observable<UserResponse> {
+    return this.get<UserResponse>("users/me");
   }
 
   public getRegistrationCode(code: string): Observable<CodeResponse> {

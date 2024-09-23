@@ -16,7 +16,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const endpoint = new URL(req.url).pathname;
   if (endpoint == "/api/v1/logIn" || endpoint == "/api/v1/refreshToken") {
     return next(req);
-
   }
 
   const meService = inject(ApiMeService);

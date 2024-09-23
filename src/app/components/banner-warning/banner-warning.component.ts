@@ -33,12 +33,14 @@ export class BannerWarningComponent {
   }
 
   activeWarning(): boolean {
-    const user = this.me.getUser();
-
-    if (!user) {
+    if (!this.me.loggedIn()) {
       return false;
     }
 
+    const user = this.me.getUser();
+    if (!user) {
+      return false;
+    }
 
     if (!user.finishedRegistration) {
       this.warning = BannerWarningType.Registration;
