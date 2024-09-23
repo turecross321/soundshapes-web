@@ -18,6 +18,8 @@
   <div>
 
   </div>
-  <fa-icon (click)="setShowPassword(!showPassword)" *ngIf="type === InputContentType.Password" [fixedWidth]="true"
-           [icon]="showPassword ? faEye : faEyeSlash" class="cursor-default" size="lg"></fa-icon>
+  @if (type === InputContentType.Password) {
+    <fa-icon (click)="setShowPassword(!showPassword)" [fixedWidth]="true"
+             [icon]="showPassword ? faEye : faEyeSlash" class="cursor-default" size="lg"></fa-icon>
+  }
 </div>

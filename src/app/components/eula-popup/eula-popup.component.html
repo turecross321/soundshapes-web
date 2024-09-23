@@ -1,15 +1,17 @@
 <app-popup (close)="closePopup()" [loading]="eula == null" name="Eula">
-  <div *ngIf="eula" @fadeIn>
-    <p>{{ eula.customText }}</p>
-    <br>
-    <p>{{ eula.license }}</p>
-    <br>
-    <p>This server's source code is available at <a [href]="eula.repositoryUrl"
-                                                    class="underline">{{ eula.repositoryUrl }}</a>.
-    </p>
+  @if (eula) {
+    <div @fadeIn>
+      <p>{{ eula.customText }}</p>
+      <br>
+      <p>{{ eula.license }}</p>
+      <br>
+      <p>This server's source code is available at <a [href]="eula.repositoryUrl"
+                                                      class="underline">{{ eula.repositoryUrl }}</a>.
+      </p>
 
-    <p>This website's source code is available at <a [href]="WebsiteConfig.repositoryUrl"
-                                                     class="underline">{{ WebsiteConfig.repositoryUrl }}</a>.
-    </p>
-  </div>
+      <p>This website's source code is available at <a [href]="WebsiteConfig.repositoryUrl"
+                                                       class="underline">{{ WebsiteConfig.repositoryUrl }}</a>.
+      </p>
+    </div>
+  }
 </app-popup>

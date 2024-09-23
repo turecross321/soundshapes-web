@@ -3,7 +3,7 @@
     <div class="h-full w-full flex items-center justify-center">
       <fa-icon [icon]="faSpinner" class="animate-spin"></fa-icon>
     </div>
-  } @else if (!loading) {
+  } @else {
     <ng-content></ng-content>
   }
 </div>

@@ -10,5 +10,5 @@ import {FaIconComponent} from "@fortawesome/angular-fontawesome";
   templateUrl: './page-header.component.html',
 })
 export class PageHeaderComponent {
-  @Input() name: string = "Title"; // todo: replace the *ngIf bullshit with the Kleen @if ()
+  @Input() name: string = "Title";
 }

@@ -12,7 +12,7 @@
   <div class="flex justify-center items-center h-96 px-2">
     @if (loading) {
       <fa-icon [icon]="faSpinner" class="animate-spin" size="lg"></fa-icon>
-    } @else if (!loading) {
+    } @else {
       <div class="w-full h-full overflow-y-auto" @fadeIn>
         <ng-content></ng-content>
       </div>
