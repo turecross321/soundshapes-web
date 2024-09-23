@@ -58,6 +58,11 @@ export class ApiMeService {
     return this.accessToken;
   }
 
+  public invalidateAccessToken() {
+    this.accessToken = null;
+    localStorage.removeItem("accessToken");
+  }
+
   public getRefreshToken(): RefreshTokenResponse | null {
     // if it's expired, remove it
     if (!this.refreshToken || new Date(this.refreshToken.expiryDate) < new Date()) {
