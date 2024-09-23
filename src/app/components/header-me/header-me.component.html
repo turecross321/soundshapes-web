@@ -1,38 +1,34 @@
 <div class="bg-header-menu rounded-b-lg md:rounded-br-none w-full text-header-text p-4 flex flex-col gap-2">
 
-  @if (me.loggedIn()) {
-    <ng-template>
-      <app-nav-link (click)="emitLinkClick()" [icon]="faUser" [urlPath]="'/users/' + me.getUser()!.name"
-                    label="My Profile"></app-nav-link>
-      <app-nav-link (click)="emitLinkClick()" [icon]="faCog" label="Settings"
-                    urlPath="/settings"></app-nav-link>
-      <app-nav-link (click)="emitLinkClick()" [icon]="faKey" label="Authorization"
-                    urlPath="/gameAuth"></app-nav-link>
-      <app-nav-link (click)="emitLinkClick()" [icon]="faCloud" label="Cloud Saves"
-                    urlPath="/cloudSaves"></app-nav-link>
-      <app-horizontal-divider></app-horizontal-divider>
-      <app-nav-button (click)="logOut()" [icon]="faArrowRightFromBracket" [loading]="loggingOut"
-                      label="Log out"></app-nav-button>
-    </ng-template>
+  @if (true) {
+    <app-nav-link (click)="emitLinkClick()" [icon]="faUser" [urlPath]="'/users/' + me.getUser()!.name"
+                  label="My Profile"></app-nav-link>
+    <app-nav-link (click)="emitLinkClick()" [icon]="faCog" label="Settings"
+                  urlPath="/settings"></app-nav-link>
+    <app-nav-link (click)="emitLinkClick()" [icon]="faKey" label="Authorization"
+                  urlPath="/gameAuth"></app-nav-link>
+    <app-nav-link (click)="emitLinkClick()" [icon]="faCloud" label="Cloud Saves"
+                  urlPath="/cloudSaves"></app-nav-link>
+    <app-horizontal-divider></app-horizontal-divider>
+    <app-nav-button (click)="logOut()" [icon]="faArrowRightFromBracket" [loading]="loggingOut"
+                    label="Log out"></app-nav-button>
   } @else {
-    <ng-container>
-      <form (ngSubmit)="logIn()" [formGroup]="loginForm" [ngClass]="{'pointer-events-none': loggingIn}"
-            class="flex flex-col gap-2">
-        <app-input [fControl]="loginForm.controls.email" [icon]="faEnvelope" [style]="InputStyle.Header"
-                   [type]="InputContentType.Email"
-                   placeholder="E-mail"></app-input>
-        <app-input [fControl]="loginForm.controls.password" [icon]="faKey"
-                   [style]="InputStyle.Header" [type]="InputContentType.Password"
-                   placeholder="Password"></app-input>
-        <app-nav-button [icon]="faArrowRightToBracket" [loading]="loggingIn"
-                        [type]="ButtonType.Submit" label="Log in"></app-nav-button>
-      </form>
-      <app-horizontal-divider></app-horizontal-divider>
-      <app-nav-link (click)="emitLinkClick()" [icon]="faUserPlus" label="Register"
-                    urlPath="/register"></app-nav-link>
-      <app-nav-link (click)="emitLinkClick()" [icon]="faKey" label="Forgot Password"
-                    urlPath="/forgotPassword"></app-nav-link>
-    </ng-container>
+    <form (ngSubmit)="logIn()" [formGroup]="loginForm" [ngClass]="{'pointer-events-none': loggingIn}"
+          class="flex flex-col gap-2">
+      <app-input [fControl]="loginForm.controls.email" [icon]="faEnvelope" [style]="InputStyle.Header"
+                 [type]="InputContentType.Email"
+                 placeholder="E-mail"></app-input>
+      <app-input [fControl]="loginForm.controls.password" [icon]="faKey"
+                 [style]="InputStyle.Header" [type]="InputContentType.Password"
+                 placeholder="Password"></app-input>
+      <app-nav-button [icon]="faArrowRightToBracket" [loading]="loggingIn"
+                      [type]="ButtonType.Submit" label="Log in"></app-nav-button>
+    </form>
+    <app-horizontal-divider></app-horizontal-divider>
+    <app-nav-link (click)="emitLinkClick()" [icon]="faUserPlus" label="Register"
+                  urlPath="/register"></app-nav-link>
+    <app-nav-link (click)="emitLinkClick()" [icon]="faKey" label="Forgot Password"
+                  urlPath="/forgotPassword"></app-nav-link>
   }
 
 </div>
