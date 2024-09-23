@@ -1,6 +1,6 @@
 <footer class="bg-footer flex gap-2 px-8 py-4 text-footer-text items-center h-[60px] justify-center">
-  <app-nav-button (click)="openEula()" [icon]="faHandshake" label="EULA"></app-nav-button>
+  <app-button (click)="openEula()" [color]="ColorType.Footer" [icon]="faHandshake" text="EULA"></app-button>
 
-  <app-nav-link [icon]="faBook" label="API Documentation"
-                urlPath="/apiDocs"></app-nav-link>
+  <app-link [color]="ColorType.Footer" [icon]="faBook"
+            text="API Documentation" urlPath="/apiDocs"></app-link>
 </footer>

@@ -2,9 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome";
 import {NavigationEnd, Router, RouterLink} from "@angular/router";
 import {NgClass, NgIf} from "@angular/common";
+import {ColorType} from "../../types/components/color.type";
 
 @Component({
-  selector: 'app-nav-link',
+  selector: 'app-link',
   standalone: true,
   imports: [
     FaIconComponent,
@@ -12,13 +13,14 @@ import {NgClass, NgIf} from "@angular/common";
     NgClass,
     NgIf
   ],
-  templateUrl: './nav-link.component.html',
+  templateUrl: './link.component.html',
 })
-export class NavLinkComponent implements OnInit {
-  @Input() label: string = null!;
+export class LinkComponent implements OnInit {
+  @Input() text: string = null!;
   @Input() icon: IconDefinition = null!;
   @Input() countSubUrls: boolean = true;
   @Input() highlightWhenOnPath: boolean = true;
+  @Input() color: ColorType = ColorType.Content;
   currentlyOnPath: boolean = false;
   @Input() public urlPath: string = null!;
   @Input() localUrl: boolean = true;

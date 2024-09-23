@@ -35,6 +35,10 @@ export class ApiClientService {
     }
   }
 
+  public resendEmail() {
+    return this.post<IApiResponse>("verifyEmail/resend", null);
+  }
+
   public putAuthorizationSettings(body: AuthorizationSettings) {
     return this.put<AuthorizationSettings>("gameAuth", body);
   }
@@ -95,11 +99,11 @@ export class ApiClientService {
     return this.get<CodeResponse>(`register/code/${code}`);
   }
 
-  private put<TResponseData extends IApiResponse>(endpoint: string, body: IApiRequest): Observable<TResponseData> {
+  private put<TResponseData extends IApiResponse>(endpoint: string, body: IApiRequest | null): Observable<TResponseData> {
     return this.makeRequest<TResponseData>("PUT", endpoint, body);
   }
 
-  private post<TResponseData extends IApiResponse>(endpoint: string, body: IApiRequest): Observable<TResponseData> {
+  private post<TResponseData extends IApiResponse>(endpoint: string, body: IApiRequest | null): Observable<TResponseData> {
     return this.makeRequest<TResponseData>("POST", endpoint, body);
   }
 

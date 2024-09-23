@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {NavLinkComponent} from "../nav-link/nav-link.component";
+import {LinkComponent} from "../link/link.component";
 import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
@@ -10,7 +10,6 @@ import {
   faUser,
   faUserPlus
 } from "@fortawesome/free-solid-svg-icons";
-import {NavButtonComponent} from "../nav-button/nav-button.component";
 import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divider.component";
 import {InputComponent} from "../input/input.component";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -23,20 +22,22 @@ import {ApiClientService} from "../../services/api-client.service";
 import {catchError, EMPTY} from "rxjs";
 import {sha512} from "js-sha512";
 import {ApiMeService} from "../../services/api-me.service";
+import {ButtonComponent} from "../button/button.component";
+import {ColorType} from "../../types/components/color.type";
 
 @Component({
   selector: 'app-header-me',
   standalone: true,
   imports: [
-    NavLinkComponent,
-    NavButtonComponent,
+    LinkComponent,
     HorizontalDividerComponent,
     InputComponent,
     FormsModule,
     ReactiveFormsModule,
     NgClass,
     FaIconComponent,
-    NgIf
+    NgIf,
+    ButtonComponent
   ],
   templateUrl: './header-me.component.html',
 })
@@ -59,6 +60,7 @@ export class HeaderMeComponent {
   protected readonly faUser = faUser;
   protected readonly faCog = faCog;
   protected readonly faCloud = faCloud;
+  protected readonly ColorType = ColorType;
 
   constructor(private apiClient: ApiClientService, public me: ApiMeService) {
   }

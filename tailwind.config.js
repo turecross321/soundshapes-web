@@ -9,6 +9,9 @@ const defaultColors = {
   "accent": "#F07167",
   "accent-hover": "#d8665d",
   "accent-text": "#FFF0E4", /* text that should be used when bg is accent  */
+  "accent-button": "#FFF0E4", /* button that should be used bg is accent */
+  "accent-button-text": "#181515",
+  "accent-button-hover": "#e5d8cd",
 
 
   "border": "#EED4BF",
@@ -17,6 +20,7 @@ const defaultColors = {
   "popup": "#FFF0E4",
 
   "footer": "#181515",
+  "footer-hover": "#110f0f",
   "footer-text": "#FFF0E4",
 
   "header": "#181515",

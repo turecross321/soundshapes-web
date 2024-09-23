@@ -3,6 +3,7 @@ import {FaIconComponent, IconDefinition} from "@fortawesome/angular-fontawesome"
 import {faPoo, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import {NgClass, NgIf} from "@angular/common";
 import {ButtonType} from "../../types/components/button.type";
+import {ColorType} from "../../types/components/color.type";
 
 @Component({
   selector: 'app-button',
@@ -19,5 +20,7 @@ export class ButtonComponent {
   @Input() icon: IconDefinition = faPoo;
   @Input() loading: boolean = false;
   @Input() type: ButtonType = ButtonType.Button;
+  @Input() color: ColorType = ColorType.Content;
   protected readonly faSpinner = faSpinner;
+  protected readonly ColorType = ColorType;
 }

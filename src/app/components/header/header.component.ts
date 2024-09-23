@@ -11,14 +11,15 @@ import {
   faX
 } from "@fortawesome/free-solid-svg-icons";
 import {NgClass, NgForOf, NgIf, NgSwitch} from "@angular/common";
-import {NavLinkComponent} from "../nav-link/nav-link.component";
+import {LinkComponent} from "../link/link.component";
 import {VerticalDividerComponent} from "../vertical-divider/vertical-divider.component";
-import {NavButtonComponent} from "../nav-button/nav-button.component";
 import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divider.component";
 import {ClickOutsideDirective} from "../../directives/click-outside.directive";
 import {HeaderMeComponent} from "../header-me/header-me.component";
 import {slideFromLeft, slideFromTop} from "../../animations";
 import {ApiMeService} from "../../services/api-me.service";
+import {ButtonComponent} from "../button/button.component";
+import {ColorType} from "../../types/components/color.type";
 
 @Component({
   selector: 'app-header',
@@ -26,15 +27,15 @@ import {ApiMeService} from "../../services/api-me.service";
   imports: [
     FaIconComponent,
     NgForOf,
-    NavLinkComponent,
+    LinkComponent,
     VerticalDividerComponent,
-    NavButtonComponent,
     NgSwitch,
     HorizontalDividerComponent,
     NgIf,
     NgClass,
     ClickOutsideDirective,
-    HeaderMeComponent
+    HeaderMeComponent,
+    ButtonComponent
   ],
   templateUrl: './header.component.html',
   animations: [slideFromLeft, slideFromTop],
@@ -50,6 +51,7 @@ export class HeaderComponent {
   protected readonly faBars = faBars;
   protected readonly faX = faX;
   protected readonly faCircleUser = faCircleUser;
+  protected readonly ColorType = ColorType;
 
   constructor(public me: ApiMeService) {
   }

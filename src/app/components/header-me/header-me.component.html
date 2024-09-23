@@ -1,17 +1,17 @@
 <div class="bg-header-menu rounded-b-lg md:rounded-br-none w-full text-header-text p-4 flex flex-col gap-2">
 
-  @if (true) {
-    <app-nav-link (click)="emitLinkClick()" [icon]="faUser" [urlPath]="'/users/' + me.getUser()!.name"
-                  label="My Profile"></app-nav-link>
-    <app-nav-link (click)="emitLinkClick()" [icon]="faCog" label="Settings"
-                  urlPath="/settings"></app-nav-link>
-    <app-nav-link (click)="emitLinkClick()" [icon]="faKey" label="Authorization"
-                  urlPath="/gameAuth"></app-nav-link>
-    <app-nav-link (click)="emitLinkClick()" [icon]="faCloud" label="Cloud Saves"
-                  urlPath="/cloudSaves"></app-nav-link>
+  @if (me.loggedIn()) {
+    <app-link (click)="emitLinkClick()" [icon]="faUser" [urlPath]="'/users/' + me.getUser()!.name"
+              [color]="ColorType.Header" text="My Profile"></app-link>
+    <app-link (click)="emitLinkClick()" [icon]="faCog" [color]="ColorType.Header" text="Settings"
+              urlPath="/settings"></app-link>
+    <app-link (click)="emitLinkClick()" [icon]="faKey" [color]="ColorType.Header" text="Authorization"
+              urlPath="/gameAuth"></app-link>
+    <app-link (click)="emitLinkClick()" [icon]="faCloud" [color]="ColorType.Header" text="Cloud Saves"
+              urlPath="/cloudSaves"></app-link>
     <app-horizontal-divider></app-horizontal-divider>
-    <app-nav-button (click)="logOut()" [icon]="faArrowRightFromBracket" [loading]="loggingOut"
-                    label="Log out"></app-nav-button>
+    <app-button (click)="logOut()" [icon]="faArrowRightFromBracket" [loading]="loggingOut"
+                text="Log out" [color]="ColorType.Header"></app-button>
   } @else {
     <form (ngSubmit)="logIn()" [formGroup]="loginForm" [ngClass]="{'pointer-events-none': loggingIn}"
           class="flex flex-col gap-2">
@@ -21,14 +21,14 @@
       <app-input [fControl]="loginForm.controls.password" [icon]="faKey"
                  [style]="InputStyle.Header" [type]="InputContentType.Password"
                  placeholder="Password"></app-input>
-      <app-nav-button [icon]="faArrowRightToBracket" [loading]="loggingIn"
-                      [type]="ButtonType.Submit" label="Log in"></app-nav-button>
+      <app-button [icon]="faArrowRightToBracket" [loading]="loggingIn" [color]="ColorType.Header"
+                  [type]="ButtonType.Submit" text="Log in"></app-button>
     </form>
     <app-horizontal-divider></app-horizontal-divider>
-    <app-nav-link (click)="emitLinkClick()" [icon]="faUserPlus" label="Register"
-                  urlPath="/register"></app-nav-link>
-    <app-nav-link (click)="emitLinkClick()" [icon]="faKey" label="Forgot Password"
-                  urlPath="/forgotPassword"></app-nav-link>
+    <app-link (click)="emitLinkClick()" [icon]="faUserPlus" [color]="ColorType.Header" text="Register"
+              urlPath="/register"></app-link>
+    <app-link (click)="emitLinkClick()" [icon]="faKey" [color]="ColorType.Header" text="Forgot Password"
+              urlPath="/forgotPassword"></app-link>
   }
 
 </div>

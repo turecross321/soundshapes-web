@@ -2,25 +2,28 @@
   <ng-container> <!-- left --->
 
     <!-- home -->
-    <app-nav-link [countSubUrls]="false" [icon]="faHouse" class="hidden md:block" label="" urlPath="/"></app-nav-link>
+    <app-link [color]="ColorType.Header" [countSubUrls]="false" [icon]="faHouse" class="hidden md:block" text=""
+              urlPath="/"></app-link>
 
     <!-- hamburger menu button -->
-    <app-nav-button (click)="setHamburgerMenu(!showHamburgerMenu)" [icon]="showHamburgerMenu ? faX : faBars"
-                    class="md:hidden"
-                    label=""></app-nav-button>
+    <app-button (click)="setHamburgerMenu(!showHamburgerMenu)" [color]="ColorType.Header"
+                [icon]="showHamburgerMenu ? faX : faBars"
+                class="md:hidden"
+                text=""></app-button>
 
   </ng-container>
 
   <nav class="items-center h-full hidden md:flex">
 
-    <app-nav-link [icon]="faMusic" label="Levels" urlPath="/levels"></app-nav-link>
-    <app-nav-link [icon]="faCompactDisc" label="Albums" urlPath="/albums"></app-nav-link>
-    <app-nav-link [icon]="faUsers" label="Users" urlPath="/users"></app-nav-link>
+    <app-link [color]="ColorType.Header" [icon]="faMusic" text="Levels" urlPath="/levels"></app-link>
+    <app-link [color]="ColorType.Header" [icon]="faCompactDisc" text="Albums" urlPath="/albums"></app-link>
+    <app-link [color]="ColorType.Header" [icon]="faUsers" text="Users" urlPath="/users"></app-link>
 
   </nav>
 
-  <app-nav-button (click)=setMe(!showMe) [icon]="me.getUser() ? faCircleUser : faSignIn"
-                  [label]="me.loggedIn() ? me.getUser()?.name! : 'Sign in'"></app-nav-button>
+  <app-button (click)=setMe(!showMe) [color]="ColorType.Header"
+              [icon]="me.getUser() ? faCircleUser : faSignIn"
+              [text]="me.loggedIn() ? me.getUser()?.name! : 'Sign in'"></app-button>
 </header>
 
 
@@ -30,13 +33,16 @@
          @slideFromLeft class="bg-header absolute w-[70vw] px-6
     py-4 flex flex-col text-header-text gap-4 h-navbar-hamburger-menu z-50
     transition-all duration-250">
-      <app-nav-link (click)="setHamburgerMenu(false)" [countSubUrls]="false" [icon]="faHouse" label="Home"
-                    urlPath="/"></app-nav-link>
+      <app-link (click)="setHamburgerMenu(false)" [countSubUrls]="false" [icon]="faHouse" [color]="ColorType.Header"
+                text="Home"
+                urlPath="/"></app-link>
       <app-horizontal-divider></app-horizontal-divider>
-      <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faMusic" label="Levels" urlPath="/levels"></app-nav-link>
-      <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faCompactDisc" label="Albums"
-                    urlPath="/albums"></app-nav-link>
-      <app-nav-link (click)="setHamburgerMenu(false)" [icon]="faUsers" label="Users" urlPath="/users"></app-nav-link>
+      <app-link (click)="setHamburgerMenu(false)" [icon]="faMusic" [color]="ColorType.Header" text="Levels"
+                urlPath="/levels"></app-link>
+      <app-link (click)="setHamburgerMenu(false)" [icon]="faCompactDisc" [color]="ColorType.Header" text="Albums"
+                urlPath="/albums"></app-link>
+      <app-link (click)="setHamburgerMenu(false)" [icon]="faUsers" [color]="ColorType.Header" text="Users"
+                urlPath="/users"></app-link>
     </nav>
   }
 
