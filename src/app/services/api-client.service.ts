@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {IApiResponse} from "../types/api/responses/iapi.response";
 import {ApiResponse} from "../types/api/responses/api.response";
 import {CodeResponse} from "../types/api/responses/code.response";
-import {catchError, map, Observable, throwError} from "rxjs";
 import {EulaResponse} from "../types/api/responses/eula.response";
 import {IApiRequest} from "../types/api/requests/iapi.request";
 import {RegisterRequest} from "../types/api/requests/register.request";
@@ -15,6 +14,8 @@ import {RefreshTokenRequest} from "../types/api/requests/refresh.token.request";
 import {WebsiteConfig} from "../../../website.config";
 import {AuthorizationSettings} from "../types/api/authorizationSettings";
 import {UserResponse} from "../types/api/responses/user.response";
+import {CodeRequest} from "../types/api/requests/code-request";
+import {catchError, map, Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,10 @@ export class ApiClientService {
     } else {
       this.baseUrl = WebsiteConfig.remoteApiUrl;
     }
+  }
+
+  public verifyEmail(body: CodeRequest) {
+    return this.post<UserResponse>("verifyEmail", body);
   }
 
   public resendEmail() {
@@ -59,7 +64,7 @@ export class ApiClientService {
         catchError((e) => {
           this.onLogout.emit(false);
 
-          throw e;
+          return throwError(() => e);
         })
       );
   }
@@ -74,7 +79,7 @@ export class ApiClientService {
         catchError((e) => {
           this.onUnsuccessfulRefreshLogin.emit();
 
-          throw e;
+          return throwError(() => e);
         })
       );
   }
