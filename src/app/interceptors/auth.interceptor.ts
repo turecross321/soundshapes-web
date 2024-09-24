@@ -3,7 +3,7 @@ import {inject, PLATFORM_ID} from '@angular/core';
 import {ApiMeService} from '../services/api-me.service';
 import {isPlatformBrowser} from "@angular/common";
 import {ApiClientService} from "../services/api-client.service";
-import {catchError, map, Observable, shareReplay, switchMap, throwError} from "rxjs";
+import {catchError, Observable, shareReplay, switchMap, throwError} from "rxjs";
 import {LoginResponse} from "../types/api/responses/login.response";
 
 const authHeader = "Authorization";
@@ -29,16 +29,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
   // if we don't have a refresh token, but we DO have a refresh token, try to log in with the refresh token
   if (!accessToken && refreshToken) {
-
     // we're sharing the result of this login in case there are multiple requests at the same time
     loginObservable ??= apiClient.logInWithRefreshToken({refreshTokenId: refreshToken.id}).pipe(
-      map((response) => {
-        return response;
-      }),
       shareReplay(1)
     );
 
     return loginObservable.pipe(switchMap((loginResponse: LoginResponse) => {
+      if (new Date(loginResponse.accessToken.expiryDate) < new Date()) {
+        // the sharedReplay login response appears to have expired already... just remove it and try again
+        loginObservable = null;
+        return authInterceptor(req, next);
+      }
+
       const authReq = req.clone({
         headers: req.headers.set(authHeader, loginResponse.accessToken.id),
       });
@@ -47,8 +49,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     }));
 
   } else if (!accessToken) {
+
     return next(req);
   }
+
 
   // we have a good access token now, so we can stop using the shared request one
   loginObservable = null;
