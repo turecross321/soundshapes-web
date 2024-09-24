@@ -5,6 +5,8 @@ import {RegisterPageComponent} from "./pages/register-page/register-page.compone
 import {GameAuthPageComponent} from "./pages/game-auth-page/game-auth-page.component";
 import {ApiDocumentationPageComponent} from "./pages/api-documentation-page/api-documentation-page.component";
 import {VerifyEmailPageComponent} from "./pages/verify-email-page/verify-email-page.component";
+import {authGuard} from "./guards/auth.guard";
+import {guestGuard} from "./guards/guest.guard";
 
 export const routes: Routes = [
   {
@@ -13,11 +15,13 @@ export const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterPageComponent
+    component: RegisterPageComponent,
+    canActivate: [guestGuard]
   },
   {
     path: 'gameAuth',
-    component: GameAuthPageComponent
+    component: GameAuthPageComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'verifyEmail',
