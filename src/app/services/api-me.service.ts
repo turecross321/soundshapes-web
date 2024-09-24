@@ -42,22 +42,10 @@ export class ApiMeService {
   }
 
   public getAccessToken(): TokenResponse | null {
-    // if we dont have an access token or if its expired
-    if (!this.accessToken || new Date(this.accessToken.expiryDate) < new Date()) {
-      const refreshToken: RefreshTokenResponse | null = this.getRefreshToken();
-
-      // if we still have a refresh token, attempt to get a new access token
-      if (refreshToken) {
-        this.apiClient.logInWithRefreshToken({refreshTokenId: refreshToken.id})
-          .subscribe((response: LoginResponse) => {
-            return response.accessToken;
-          });
-      }
-      // otherwise, give up
-      else {
-        this.accessToken = null;
-        this.user = null;
-      }
+    // if its expired, remove it
+    if (this.accessToken != null && new Date(this.accessToken.expiryDate) < new Date()) {
+      this.invalidateAccessToken();
+      return null;
     }
 
     return this.accessToken;

@@ -1,11 +1,12 @@
 <app-generic-page name="Verify Email">
-  <form [formGroup]="verifyEmailForm" class="flex flex-col gap-2">
+  <form (submit)="submit()" [formGroup]="verifyEmailForm" class="flex flex-col gap-2">
     <app-tiny-gap-container>
       <label for="code">Verification Code</label>
       <app-input [fControl]="verifyEmailForm.controls.code" [icon]="faHashtag" [type]="InputContentType.Code"
                  class="w-auto" id="code"
                  placeholder="123456"></app-input>
     </app-tiny-gap-container>
-    <app-button [icon]="faCheckCircle" [type]="ButtonType.Submit" class="w-full md:w-min" text="Verify"></app-button>
+    <app-button [icon]="faCheckCircle" [loading]="loading" [type]="ButtonType.Submit" class="w-full md:w-min"
+                text="Verify"></app-button>
   </form>
 </app-generic-page>
