@@ -1,7 +1,19 @@
-import {ChangeDetectorRef, Component, ComponentRef, Type, ViewChild, ViewContainerRef} from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ComponentRef,
+  InjectionToken,
+  Injector,
+  Type,
+  ViewChild,
+  ViewContainerRef
+} from '@angular/core';
 import {PopupService} from "../../services/popup.service";
 import {NgIf} from "@angular/common";
 import {fade} from "../../animations";
+import {Popup} from "../../types/components/popup";
+
+export const EXTRA_ARGUMENTS_TOKEN = new InjectionToken<{ [key: string]: any }>('EXTRA_ARGUMENTS_TOKEN');
 
 @Component({
   selector: 'app-popup-outlet',
@@ -18,21 +30,27 @@ export class PopupOutletComponent {
   visible: boolean = false;
 
   constructor(private popup: PopupService, private cdr: ChangeDetectorRef) {
-    popup.onOpenPopup.subscribe((componentClass: Type<any>) => {
+    popup.onOpenPopup.subscribe((request: Popup) => {
       this.visible = true;
       cdr.detectChanges();
-      this.addComponent(componentClass);
+      this.addComponent(request);
     });
 
-    popup.onClosePopup.subscribe((componentClass: Type<any>) => {
-      this.removeComponent(componentClass);
+    popup.onClosePopup.subscribe((component: Type<any>) => {
+      this.removeComponent(component);
       if (this.components.length <= 0)
         this.visible = false;
     })
   }
 
-  addComponent(componentClass: Type<any>) {
-    const component = this.container.createComponent(componentClass);
+  addComponent(request: Popup) {
+    const injector = Injector.create({
+      providers: [
+        {provide: EXTRA_ARGUMENTS_TOKEN, useValue: request.extraArguments}
+      ],
+      parent: this.container.injector
+    })
+    const component = this.container.createComponent(request.component, {injector});
     this.components.push(component);
   }
 

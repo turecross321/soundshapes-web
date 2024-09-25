@@ -10,6 +10,10 @@ import {fadeIn} from "../../animations";
 import {ActivatedRoute} from "@angular/router";
 import {IconWithTextComponent} from "../../components/icon-with-text/icon-with-text.component";
 import {ButtonComponent} from "../../components/button/button.component";
+import {PopupService} from "../../services/popup.service";
+import {
+  RecommendedAuthSettingsPopupComponent
+} from "../../components/recommended-auth-settings-popup/recommended-auth-settings-popup.component";
 
 @Component({
   selector: 'app-game-auth-page',
@@ -33,7 +37,12 @@ export class GameAuthPageComponent {
   protected readonly faWrench = faWrench;
   protected readonly faTowerBroadcast = faTowerBroadcast;
 
-  constructor(private apiClient: ApiClientService, private activatedRoute: ActivatedRoute) {
+  constructor(private apiClient: ApiClientService, private activatedRoute: ActivatedRoute, private popup: PopupService) {
+    activatedRoute.queryParams.subscribe((params) => {
+      if (params['platformType']) {
+        this.popup.openPopup(RecommendedAuthSettingsPopupComponent);
+      }
+    })
     this.fetchSettings();
   }
 

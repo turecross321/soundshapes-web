@@ -28,7 +28,7 @@
       <app-icon-with-text [icon]="faTowerBroadcast" text="IP Authorization"></app-icon-with-text>
       <app-border [loading]="settings == null" class="h-full">
         <div class="flex flex-col items-center justify-center h-full w-full gap-2">
-          @if (!settings!.ipAuthorization) {
+          @if (settings?.ipAuthorization == false) {
             <p>IP Authentication is currently disabled.</p>
             <app-button [hideIcon]="true" text="Enable" (click)="setIp(true)"></app-button>
           } @else if (showIpWarning) {

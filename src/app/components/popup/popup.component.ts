@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {ButtonComponent} from "../button/button.component";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {HorizontalDividerComponent} from "../horizontal-divider/horizontal-divider.component";
@@ -20,21 +20,23 @@ import {fade, fadeIn} from "../../animations";
   templateUrl: './popup.component.html',
   animations: [fade, fadeIn]
 })
-export class PopupComponent {
+export class PopupComponent implements AfterViewInit {
   @Output() close = new EventEmitter<void>();
 
   @Input() name: string = "Title";
   @Input() loading: boolean = false;
-  timesClickedOutside: number = 0;
   protected readonly faSpinner = faSpinner;
   protected readonly faX = faX;
 
+  private isInitialized = false; // Flag to indicate initialization
+
+  ngAfterViewInit() {
+    this.isInitialized = true; // Set the flag when the component is fully initialized
+  }
+
   clickOutside() {
-    // Ignore first click outside, because it's triggered by the click that opens it
-    if (this.timesClickedOutside > 0) {
+    if (this.isInitialized) {
       this.close.emit();
     }
-
-    this.timesClickedOutside++;
   }
 }
