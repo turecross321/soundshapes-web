@@ -24,6 +24,7 @@ import {sha512} from "js-sha512";
 import {ApiMeService} from "../../services/api-me.service";
 import {ButtonComponent} from "../button/button.component";
 import {ColorType} from "../../types/components/color.type";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header-me',
@@ -62,7 +63,7 @@ export class HeaderMeComponent {
   protected readonly faCloud = faCloud;
   protected readonly ColorType = ColorType;
 
-  constructor(private apiClient: ApiClientService, public me: ApiMeService) {
+  constructor(private apiClient: ApiClientService, public me: ApiMeService, private router: Router) {
   }
 
   emitLinkClick() {
@@ -92,6 +93,7 @@ export class HeaderMeComponent {
       return EMPTY;
     })).subscribe(() => {
       this.loggingOut = false;
+      this.router.navigateByUrl("").then();
     })
   }
 }

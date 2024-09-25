@@ -21,6 +21,7 @@ export class ButtonComponent {
   @Input() loading: boolean = false;
   @Input() type: ButtonType = ButtonType.Button;
   @Input() color: ColorType = ColorType.Content;
+  @Input() hideIcon: boolean = false;
   protected readonly faSpinner = faSpinner;
   protected readonly ColorType = ColorType;
 }

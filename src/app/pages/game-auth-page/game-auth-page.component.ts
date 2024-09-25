@@ -9,6 +9,7 @@ import {faKey, faTowerBroadcast, faWrench} from "@fortawesome/free-solid-svg-ico
 import {fadeIn} from "../../animations";
 import {ActivatedRoute} from "@angular/router";
 import {IconWithTextComponent} from "../../components/icon-with-text/icon-with-text.component";
+import {ButtonComponent} from "../../components/button/button.component";
 
 @Component({
   selector: 'app-game-auth-page',
@@ -18,7 +19,8 @@ import {IconWithTextComponent} from "../../components/icon-with-text/icon-with-t
     BorderComponent,
     ToggleComponent,
     TinyGapContainerComponent,
-    IconWithTextComponent
+    IconWithTextComponent,
+    ButtonComponent
   ],
   templateUrl: './game-auth-page.component.html',
   animations: [fadeIn]
@@ -26,6 +28,7 @@ import {IconWithTextComponent} from "../../components/icon-with-text/icon-with-t
 export class GameAuthPageComponent {
 
   settings: AuthorizationSettings | null = null;
+  showIpWarning: boolean = true;
   protected readonly faKey = faKey;
   protected readonly faWrench = faWrench;
   protected readonly faTowerBroadcast = faTowerBroadcast;
@@ -60,6 +63,11 @@ export class GameAuthPageComponent {
 
   setIp(value: boolean) {
     this.settings!.ipAuthorization = value;
+
+    if (value) {
+      this.showIpWarning = false;
+    }
+
     this.putSettings();
   }
 }

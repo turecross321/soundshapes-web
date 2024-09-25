@@ -6,7 +6,6 @@ import {CodeResponse} from "../types/api/responses/code.response";
 import {EulaResponse} from "../types/api/responses/eula.response";
 import {IApiRequest} from "../types/api/requests/iapi.request";
 import {RegisterRequest} from "../types/api/requests/register.request";
-import {ApiError} from "../types/api/responses/api.error";
 import {ToastService} from "./toast.service";
 import {LoginRequest} from "../types/api/requests/login.request";
 import {LoginResponse} from "../types/api/responses/login.response";
@@ -43,6 +42,10 @@ export class ApiClientService {
 
   public resendEmail() {
     return this.post<IApiResponse>("verifyEmail/resend", null);
+  }
+
+  public getIps() {
+    //return this.getList()
   }
 
   public putAuthorizationSettings(body: AuthorizationSettings) {
@@ -117,6 +120,7 @@ export class ApiClientService {
     return this.makeRequest<TResponseData>("POST", endpoint, body);
   }
 
+
   private get<TResponseData extends IApiResponse>(endpoint: string): Observable<TResponseData> {
     return this.makeRequest<TResponseData>("GET", endpoint, null);
   }
@@ -124,35 +128,6 @@ export class ApiClientService {
   private makeRequest<TResponseData extends IApiResponse>(method: string, endpoint: string, body: object | null): Observable<TResponseData> {
     return this.http
       .request<ApiResponse<TResponseData>>(method, this.baseUrl + this.apiUrl + endpoint, {body: body})
-      .pipe(
-        catchError((e: any) => {
-          try {
-            let apiError: ApiError = e.error.error as ApiError;
-            let errorName = this.removeApiErrorPrefixAndSuffix(apiError.name);
-
-            this.toaster.error(`${apiError.statusCode}: ${this.addSpaceBetweenCapitalLetters(errorName)}`, apiError.message);
-          } catch (newError: any) {
-            if (e.status == 0) {
-              this.toaster.error("Unable to reach server", "The server is currently unreachable. Please try again later.");
-            } else {
-              this.toaster.error(`${e.status}: ${e.statusText ? this.addSpaceBetweenCapitalLetters(e.statusText) : "Unknown error"}`, "No explanation was given.");
-            }
-          }
-
-
-          return throwError(() => e);
-        }),
-        map(response => response.data)
-      );
+      .pipe(map(response => response.data));
   }
-
-  private removeApiErrorPrefixAndSuffix(input: string): string {
-    return input.replace(/^Api/, '').replace(/Error$/, '');
-  }
-
-  private addSpaceBetweenCapitalLetters(input: string): string {
-    return input.replace(/([A-Z])/g, ' $1').trim();
-  }
-
-
 }

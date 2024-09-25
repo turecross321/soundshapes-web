@@ -7,8 +7,12 @@
   'hover:bg-footer-hover': color == ColorType.Footer}"
   [type]="type" class="px-4 py-2 w-full flex items-center rounded-lg gap-1
 transition-all duration-150 hover:drop-shadow">
-  <fa-icon [fixedWidth]=true [icon]="loading ? faSpinner : icon"
-           [ngClass]="{'animate-spin': loading}"
-           size="lg"></fa-icon>
+  @if (!hideIcon) {
+    <fa-icon [fixedWidth]=true [icon]="loading ? faSpinner : icon"
+             [ngClass]="{'animate-spin': loading}"
+             size="lg"></fa-icon>
+  }
+
+
   {{ text }}
 </button>

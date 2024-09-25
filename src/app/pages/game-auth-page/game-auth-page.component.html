@@ -1,5 +1,5 @@
 <app-generic-page name="Authorization">
-  <div class="grid md:grid-cols-[1fr_3fr] gap-4">
+  <div class="grid md:grid-cols-[2fr_3fr] xl:grid-cols-[1fr_3fr] gap-4">
     <div class="flex flex-col gap-2">
       <app-icon-with-text [icon]="faWrench" text="Configuration"></app-icon-with-text>
       <app-border [loading]="settings == null" class="h-64">
@@ -26,8 +26,16 @@
     </div>
     <div class="flex flex-col gap-2">
       <app-icon-with-text [icon]="faTowerBroadcast" text="IP Authorization"></app-icon-with-text>
-      <app-border class="h-full">
-        <p>Yup</p>
+      <app-border [loading]="settings == null" class="h-full">
+        <div class="flex flex-col items-center justify-center h-full w-full gap-2">
+          @if (!settings!.ipAuthorization) {
+            <p>IP Authentication is currently disabled.</p>
+            <app-button [hideIcon]="true" text="Enable" (click)="setIp(true)"></app-button>
+          } @else if (showIpWarning) {
+            <p>This contains personal information. Proceed with caution.</p>
+            <app-button [hideIcon]="true" text="Understood" (click)="showIpWarning = false"></app-button>
+          }
+        </div>
       </app-border>
     </div>
   </div>
