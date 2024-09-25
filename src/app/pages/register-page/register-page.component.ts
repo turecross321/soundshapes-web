@@ -30,7 +30,6 @@ import {PopupService} from "../../services/popup.service";
 import {sha512} from "js-sha512";
 import {ToastService} from "../../services/toast.service";
 import {Router} from "@angular/router";
-import {UserResponse} from "../../types/api/responses/user.response";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
@@ -163,7 +162,7 @@ export class RegisterPageComponent {
           return EMPTY;
         })
       )
-      .subscribe((response: UserResponse) => {
+      .subscribe(() => {
         this.toast.success("Successfully verified email", "Your email has successfully been verified.");
         this.loading = false;
         this.registrationStep = 3;
@@ -184,10 +183,7 @@ export class RegisterPageComponent {
       )
       .subscribe(() => {
         this.loading = false;
-        let gameAuthUrl = "gameAuth";
-        if (this.code?.genuineNpTicket) {
-          gameAuthUrl += "?platformType=" + this.code.platformType;
-        }
+        let gameAuthUrl = `gameAuth?platform=${this.code!.platform}&genuineNpTicket=${this.code!.genuineNpTicket}`;
         this.router.navigateByUrl(gameAuthUrl);
       });
   }

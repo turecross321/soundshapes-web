@@ -1,1 +1,35 @@
-<app-popup (close)="closePopup()"></app-popup>
+<app-popup (close)="closePopup()" class="max-w-40" name="Recommended Settings">
+  <div class="flex flex-col gap-2">
+    <p>We recommend using the following authorization settings based on your login platform.</p>
+
+    <app-border class="h-64 pointer-events-none">
+      <div @fadeIn class="flex flex-col gap-2">
+        <app-tiny-gap-container>
+          <label for="rpcn">RPCN Authorization</label>
+          <app-toggle [value]="recommendedSettings.rpcnAuthorization" class="w-full"
+                      id="rpcn"></app-toggle>
+        </app-tiny-gap-container>
+        <app-tiny-gap-container>
+          <label for="psn">PSN Authorization</label>
+          <app-toggle
+            [value]="recommendedSettings.psnAuthorization"
+            class="w-full"
+            id="psn"></app-toggle>
+        </app-tiny-gap-container>
+        <app-tiny-gap-container>
+          <label for="ip">IP Authorization</label>
+          <app-toggle [value]="recommendedSettings.ipAuthorization" class="w-full"
+                      id="ip"></app-toggle>
+        </app-tiny-gap-container>
+      </div>
+    </app-border>
+
+    <br>
+
+    <p>Do you wish to apply these settings?</p>
+    <span class="inline-flex gap-2">
+      <app-button (click)="yes()" [icon]="faCheck" text="Yes"></app-button>
+      <app-button (click)="closePopup()" [icon]="faBan" text="No"></app-button>
+    </span>
+  </div>
+</app-popup>

@@ -1,6 +1,6 @@
 import {Type} from "@angular/core";
 
 export interface Popup {
-  component: Type<any>
+  component: Type<any>;
   extraArguments: { [key: string]: any };
 }

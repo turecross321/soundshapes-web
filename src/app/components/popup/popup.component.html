@@ -1,7 +1,7 @@
 <div (clickOutside)="clickOutside()" @fade class="bg-popup rounded-lg p-5 flex flex-col gap-4 lg:w-[70vw] w-[90vw]">
   <!-- top bar -->
-  <div class="w-full flex justify-between px-2">
-    <h1 class="font-bold text-4xl">{{ name }}</h1>
+  <div class="w-full flex justify-between px-2 gap-4 items-center">
+    <h1 class="font-bold text-2xl overflow-hidden">{{ name }}</h1>
     <div class="w-min">
       <app-button (click)="close.emit()" [icon]="faX" text=""></app-button>
     </div>

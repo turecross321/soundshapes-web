@@ -10,5 +10,5 @@ export interface CodeResponse extends IApiResponse {
   expiryDate: string;
   codeType: CodeType;
   genuineNpTicket: boolean | null;
-  platformType: PlatformType | null;
+  platform: PlatformType | null;
 }

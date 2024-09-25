@@ -1,13 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ComponentRef,
-  InjectionToken,
-  Injector,
-  Type,
-  ViewChild,
-  ViewContainerRef
-} from '@angular/core';
+import {ChangeDetectorRef, Component, InjectionToken, Injector, Type, ViewChild, ViewContainerRef} from '@angular/core';
 import {PopupService} from "../../services/popup.service";
 import {NgIf} from "@angular/common";
 import {fade} from "../../animations";
@@ -26,7 +17,6 @@ export const EXTRA_ARGUMENTS_TOKEN = new InjectionToken<{ [key: string]: any }>(
 })
 export class PopupOutletComponent {
   @ViewChild('container', {read: ViewContainerRef, static: false}) container!: ViewContainerRef;
-  components: ComponentRef<any>[] = [];
   visible: boolean = false;
 
   constructor(private popup: PopupService, private cdr: ChangeDetectorRef) {
@@ -38,27 +28,27 @@ export class PopupOutletComponent {
 
     popup.onClosePopup.subscribe((component: Type<any>) => {
       this.removeComponent(component);
-      if (this.components.length <= 0)
+      if (this.popup.getComponentRefs().length <= 0)
         this.visible = false;
     })
   }
 
-  addComponent(request: Popup) {
+  addComponent(data: Popup) {
     const injector = Injector.create({
       providers: [
-        {provide: EXTRA_ARGUMENTS_TOKEN, useValue: request.extraArguments}
+        {provide: EXTRA_ARGUMENTS_TOKEN, useValue: data.extraArguments}
       ],
       parent: this.container.injector
     })
-    const component = this.container.createComponent(request.component, {injector});
-    this.components.push(component);
+    const component = this.container.createComponent(data.component, {injector});
+    this.popup.addComponentRef(component);
   }
 
   removeComponent(componentClass: Type<any>) {
-    const component = this.components.find((component) => component.instance instanceof componentClass)!;
-    const componentIndex = this.components.indexOf(component);
+    const component = this.popup.getComponentRefs().find((component) => component.instance instanceof componentClass)!;
+    const componentIndex = this.popup.getComponentRefs().indexOf(component);
 
     this.container.remove(this.container.indexOf(component.hostView));
-    this.components.splice(componentIndex, 1);
+    this.popup.removeComponentRefAt(componentIndex);
   }
 }

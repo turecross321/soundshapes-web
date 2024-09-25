@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ComponentRef} from '@angular/core';
 import {GenericPageComponent} from "../../components/generic-page/generic-page.component";
 import {BorderComponent} from "../../components/border/border.component";
 import {ToggleComponent} from "../../components/toggle/toggle.component";
@@ -30,7 +30,6 @@ import {
   animations: [fadeIn]
 })
 export class GameAuthPageComponent {
-
   settings: AuthorizationSettings | null = null;
   showIpWarning: boolean = true;
   protected readonly faKey = faKey;
@@ -39,15 +38,29 @@ export class GameAuthPageComponent {
 
   constructor(private apiClient: ApiClientService, private activatedRoute: ActivatedRoute, private popup: PopupService) {
     activatedRoute.queryParams.subscribe((params) => {
-      if (params['platformType']) {
-        this.popup.openPopup(RecommendedAuthSettingsPopupComponent);
+      const platform = params['platform'];
+      const genuineNpTicket = params['genuineNpTicket'];
+      if (platform != null && genuineNpTicket != null) {
+        this.popup.onAddedComponentRef.subscribe((ref: ComponentRef<any>) => {
+          if (ref.componentType !== RecommendedAuthSettingsPopupComponent)
+            return;
+
+          const instance: RecommendedAuthSettingsPopupComponent = ref.instance as RecommendedAuthSettingsPopupComponent;
+          instance.clickYes.subscribe((newSettings: AuthorizationSettings) => {
+            this.putSettings(newSettings);
+          })
+        })
+
+        this.popup.openPopup(RecommendedAuthSettingsPopupComponent, {
+          "platform": platform,
+          "genuineNpTicket": genuineNpTicket as boolean
+        });
       }
     })
     this.fetchSettings();
   }
 
-  putSettings() {
-    const newSettings = this.settings!;
+  putSettings(newSettings: AuthorizationSettings) {
     this.settings = null;
     this.apiClient.putAuthorizationSettings(newSettings).subscribe((response) => {
       this.settings = response;
@@ -62,12 +75,12 @@ export class GameAuthPageComponent {
 
   setRpcn(value: boolean) {
     this.settings!.rpcnAuthorization = value;
-    this.putSettings();
+    this.putSettings(this.settings!);
   }
 
   setPsn(value: boolean) {
     this.settings!.psnAuthorization = value;
-    this.putSettings();
+    this.putSettings(this.settings!);
   }
 
   setIp(value: boolean) {
@@ -77,6 +90,6 @@ export class GameAuthPageComponent {
       this.showIpWarning = false;
     }
 
-    this.putSettings();
+    this.putSettings(this.settings!);
   }
 }
