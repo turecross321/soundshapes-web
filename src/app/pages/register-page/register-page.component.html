@@ -5,8 +5,8 @@
          priority
          width="480">
     <div class="w-full lg:p-4 xl:w-1/3 relative h-[500px]">
-      @if (!code) {
-        <form (submit)="fetchToken()" @slideToRight [formGroup]="getCodeForm"
+      @if (registrationStep == 0) {
+        <form (submit)="fetchCode()" @slideToRight [formGroup]="getCodeForm"
               [ngClass]="{'pointer-events-none': loading}"
               class="flex flex-col gap-2 absolute w-full z-0">
           <app-tiny-gap-container>
@@ -19,7 +19,7 @@
                       [type]="ButtonType.Submit" class="lg:w-min"
                       text="Proceed"></app-button>
         </form>
-      } @else {
+      } @else if (registrationStep == 1) {
         <form (submit)="register()" @slideToRight [formGroup]="registerForm"
               class="flex flex-col gap-2 absolute z-0 w-full">
           <app-tiny-gap-container>
@@ -52,6 +52,27 @@
                       [type]="ButtonType.Submit" class="lg:w-min"
                       text="Register"></app-button>
         </form>
+      } @else if (registrationStep == 2) {
+        <form (submit)="verifyEmail()" [formGroup]="verifyEmailForm" class="absolute flex flex-col gap-2" @slideToRight>
+          <p>A verification email has been sent to {{ registerForm.value.email }}. Please enter the code from the email
+            below.</p>
+
+          <app-tiny-gap-container>
+            <label for="code">Verification Code</label>
+            <app-input [fControl]="verifyEmailForm.controls.code" [icon]="faHashtag" [type]="InputContentType.Code"
+                       class="w-auto" id="code"
+                       placeholder="123456"></app-input>
+          </app-tiny-gap-container>
+          <app-button [icon]="faCheckCircle" [loading]="loading" [type]="ButtonType.Submit" class="w-full md:w-min"
+                      text="Verify"></app-button>
+        </form>
+      } @else if (registrationStep == 3) {
+        <div @slideToRight class="absolute">
+          <strong class="text-2xl font-normal text-center">Welcome to Eggshapes</strong>
+
+          <span class="flex gap-2"><fa-icon [icon]="faSpinner"
+                                            class="animate-spin"></fa-icon><p>Signing in...</p></span>
+        </div>
       }
     </div>
   </div>

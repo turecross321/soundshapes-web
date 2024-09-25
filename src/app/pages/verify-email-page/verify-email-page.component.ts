@@ -7,7 +7,7 @@ import {TinyGapContainerComponent} from "../../components/tiny-gap-container/tin
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {ButtonComponent} from "../../components/button/button.component";
 import {ButtonType} from "../../types/components/button.type";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 import {ApiClientService} from "../../services/api-client.service";
 import {ToastService} from "../../services/toast.service";
 import {UserResponse} from "../../types/api/responses/user.response";
@@ -36,14 +36,7 @@ export class VerifyEmailPageComponent {
   protected readonly ButtonType = ButtonType;
   protected readonly faCheckCircle = faCheckCircle;
 
-  constructor(private route: ActivatedRoute, private apiClient: ApiClientService, private router: Router, private me: ApiMeService, private toast: ToastService) {
-    route.queryParams.subscribe((params) => {
-      const code = params['code'];
-      if (code) {
-        this.verifyEmailForm.controls.code.setValue(code);
-        this.submit();
-      }
-    })
+  constructor(private apiClient: ApiClientService, private router: Router, private me: ApiMeService, private toast: ToastService) {
   }
 
   submit() {

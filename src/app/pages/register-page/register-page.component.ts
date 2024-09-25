@@ -7,7 +7,16 @@ import {PageHeaderComponent} from "../../components/page-header/page-header.comp
 import {InputComponent} from "../../components/input/input.component";
 import {NgClass, NgIf, NgOptimizedImage} from "@angular/common";
 import {FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
-import {faEnvelope, faHashtag, faKey, faPlay, faUser, faUserPlus} from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faEnvelope,
+  faHashtag,
+  faKey,
+  faPlay,
+  faSpinner,
+  faUser,
+  faUserPlus
+} from "@fortawesome/free-solid-svg-icons";
 import {ButtonComponent} from "../../components/button/button.component";
 import {InputContentType} from "../../types/components/input-content.type";
 import {ButtonType} from "../../types/components/button.type";
@@ -21,6 +30,8 @@ import {PopupService} from "../../services/popup.service";
 import {sha512} from "js-sha512";
 import {ToastService} from "../../services/toast.service";
 import {Router} from "@angular/router";
+import {UserResponse} from "../../types/api/responses/user.response";
+import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 
 @Component({
   selector: 'app-register-page',
@@ -38,12 +49,15 @@ import {Router} from "@angular/router";
     NgClass,
     NgIf,
     TinyGapContainerComponent,
-    EulaPopupComponent
+    EulaPopupComponent,
+    FaIconComponent
   ],
   templateUrl: './register-page.component.html',
   animations: [slideToRight]
 })
 export class RegisterPageComponent {
+  registrationStep: number = 0;
+
   getCodeForm = new FormGroup({
     code: new FormControl(''),
   });
@@ -55,6 +69,10 @@ export class RegisterPageComponent {
     confirmPassword: new FormControl('')
   });
 
+  verifyEmailForm = new FormGroup({
+    code: new FormControl('')
+  })
+
   loading: boolean = false;
   code: CodeResponse | null = null;
   protected readonly InputContentType = InputContentType;
@@ -65,12 +83,14 @@ export class RegisterPageComponent {
   protected readonly faEnvelope = faEnvelope;
   protected readonly faKey = faKey;
   protected readonly faUserPlus = faUserPlus;
+  protected readonly faCheckCircle = faCheckCircle;
+  protected readonly faSpinner = faSpinner;
 
   constructor(private apiClient: ApiClientService, private popupService: PopupService,
               private toast: ToastService, private router: Router) {
   }
 
-  fetchToken() {
+  fetchCode() {
     this.loading = true;
     this.apiClient.getRegistrationCode(this.getCodeForm.value.code!)
       .pipe(
@@ -84,6 +104,7 @@ export class RegisterPageComponent {
         this.code = code;
         this.loading = false;
         this.registerForm.controls.username.setValue(code.user.name);
+        this.registrationStep = 1;
       });
   }
 
@@ -127,6 +148,25 @@ export class RegisterPageComponent {
         })
       )
       .subscribe(() => {
+        this.loading = false;
+        this.registrationStep = 2;
+      });
+  }
+
+  verifyEmail() {
+    this.loading = true;
+    this.apiClient.verifyEmail({code: this.verifyEmailForm.value.code ?? ""})
+      .pipe(
+        catchError(() => {
+          this.loading = false;
+
+          return EMPTY;
+        })
+      )
+      .subscribe((response: UserResponse) => {
+        this.toast.success("Successfully verified email", "Your email has successfully been verified.");
+        this.loading = false;
+        this.registrationStep = 3;
         this.logIn();
       });
   }
@@ -143,9 +183,12 @@ export class RegisterPageComponent {
         })
       )
       .subscribe(() => {
-        this.router.navigateByUrl("gameAuth").then(() => {
-        });
         this.loading = false;
+        let gameAuthUrl = "gameAuth";
+        if (this.code?.genuineNpTicket) {
+          gameAuthUrl += "?platformType=" + this.code.platformType;
+        }
+        this.router.navigateByUrl(gameAuthUrl);
       });
   }
 
