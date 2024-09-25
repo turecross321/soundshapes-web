@@ -3,8 +3,8 @@
 <div class="flex flex-col h-screen">
   <app-header class="z-[9999]"></app-header>
   <app-banner-warning></app-banner-warning>
-  <div class="overflow-y-auto h-full flex flex-col justify-between gap-5">
-    <div>
+  <div class="h-full flex flex-col justify-between gap-5">
+    <div [@routeTransition]="o.isActivated ? o.activatedRoute : ''">
       <router-outlet #o="outlet"></router-outlet>
     </div>
     <app-footer></app-footer>
